@@ -246,9 +246,17 @@
   });
 
   const video = document.querySelector("[data-hero-video]");
+  const heroPlaybackRate = 2 / 3;
+
+  const setHeroPlaybackRate = () => {
+    if (!video) return;
+    video.defaultPlaybackRate = heroPlaybackRate;
+    video.playbackRate = heroPlaybackRate;
+  };
 
   const playVideo = async () => {
     if (!video) return;
+    setHeroPlaybackRate();
     try {
       await video.play();
       video.classList.remove("is-unavailable");
@@ -258,6 +266,9 @@
   };
 
   if (video) {
+    setHeroPlaybackRate();
+    video.addEventListener("loadedmetadata", setHeroPlaybackRate);
+
     if (reducedMotion.matches) {
       video.pause();
       video.currentTime = 0;
