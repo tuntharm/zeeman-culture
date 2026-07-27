@@ -356,9 +356,8 @@ body.nav-open .brand__mark {
 .hero {
   position: relative;
   display: flex;
-  min-height: 620px;
-  height: 78svh;
-  max-height: 840px;
+  min-height: 100svh;
+  height: 100svh;
   align-items: flex-end;
   color: var(--white);
   background: var(--ink-deep);
@@ -392,9 +391,12 @@ body.nav-open .brand__mark {
 .hero--inner {
   position: relative;
   z-index: 2;
+  display: flex;
   width: 100%;
-  padding-top: calc(var(--header-height) + 48px);
-  padding-bottom: 62px;
+  min-height: 100%;
+  align-items: center;
+  padding-top: calc(var(--header-height) + 32px);
+  padding-bottom: 32px;
 }
 
 .hero__content {
@@ -1114,6 +1116,18 @@ a.media-frame:hover img,
 
 .hero .button--ghost {
   color: var(--white);
+}
+
+.hero .button--light {
+  color: var(--white);
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.hero .button--light:hover {
+  color: var(--white);
+  border-color: var(--white);
+  background: var(--ink-deep);
 }
 
 .text-link {
@@ -2076,12 +2090,13 @@ a.media-frame:hover img,
   }
 
   .hero {
-    min-height: 570px;
-    height: 78svh;
+    min-height: 100svh;
+    height: 100svh;
   }
 
   .hero--inner {
-    padding-bottom: 50px;
+    padding-top: calc(var(--header-height) + 24px);
+    padding-bottom: 24px;
   }
 
   .hero__content {
@@ -2350,9 +2365,8 @@ a.media-frame:hover img,
   }
 
   .hero {
-    min-height: 560px;
-    height: 76svh;
-    max-height: 720px;
+    min-height: 100svh;
+    height: 100svh;
   }
 
   .hero__media video,
@@ -2365,7 +2379,8 @@ a.media-frame:hover img,
   }
 
   .hero--inner {
-    padding-bottom: 38px;
+    padding-top: calc(var(--header-height) + 20px);
+    padding-bottom: 20px;
   }
 
   .hero__content {
