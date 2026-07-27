@@ -123,23 +123,6 @@
     if (window.innerWidth > 820) closeNav();
   });
 
-  const revealItems = [...document.querySelectorAll(".reveal")];
-  if (reducedMotion.matches || !("IntersectionObserver" in window)) {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-  } else {
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
-    );
-    revealItems.forEach((item) => revealObserver.observe(item));
-  }
-
   const filterButtons = [...document.querySelectorAll("[data-filter]")];
   const cases = [...document.querySelectorAll("[data-case-category]")];
   const filterStatus = document.querySelector("[data-filter-status]");

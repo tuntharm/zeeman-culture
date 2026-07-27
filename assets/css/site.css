@@ -357,7 +357,7 @@ body.nav-open .brand__mark {
   position: relative;
   display: flex;
   min-height: 620px;
-  height: 82svh;
+  height: 78svh;
   max-height: 840px;
   align-items: flex-end;
   color: var(--white);
@@ -703,13 +703,116 @@ a.media-frame:hover img,
 .marquee__item {
   display: grid;
   min-width: 220px;
-  min-height: 104px;
+  min-height: 112px;
   padding: 24px;
   place-items: center;
   border-right: 1px solid var(--line);
-  font-family: var(--serif);
-  font-size: 23px;
   white-space: nowrap;
+}
+
+.marquee__item--azuki {
+  color: #d7c59d;
+  background: #221f1b;
+}
+
+.marquee__item--dram5 {
+  background: #171717;
+}
+
+.partner-mark {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 150px;
+  max-height: 48px;
+}
+
+.partner-mark--joybuy {
+  max-width: 136px;
+}
+
+.partner-mark--hazzys {
+  max-width: 142px;
+}
+
+.partner-mark--khao-soi {
+  max-width: 164px;
+  max-height: 55px;
+}
+
+.partner-mark--dram5 {
+  max-width: 160px;
+  max-height: 44px;
+}
+
+.partner-wordmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-deep);
+  line-height: 1;
+}
+
+.partner-wordmark strong,
+.partner-wordmark small {
+  font: inherit;
+}
+
+.partner-wordmark--sensen {
+  gap: 3px;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.partner-wordmark--sensen small {
+  color: var(--burgundy);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.partner-wordmark--azuki {
+  gap: 10px;
+  color: inherit;
+  font-family: var(--serif);
+  font-size: 17px;
+  text-transform: uppercase;
+}
+
+.partner-wordmark--azuki > span {
+  font-size: 25px;
+}
+
+.partner-wordmark--lotus {
+  gap: 8px;
+  color: var(--green);
+  font-family: var(--serif);
+  font-size: 22px;
+}
+
+.partner-wordmark--lotus > span {
+  color: var(--gold);
+  font-size: 25px;
+}
+
+.partner-wordmark--vclub {
+  gap: 7px;
+  color: var(--blue);
+  font-family: var(--serif);
+  text-transform: uppercase;
+}
+
+.partner-wordmark--vclub strong {
+  font-size: 36px;
+  font-weight: 400;
+}
+
+.partner-wordmark--vclub small {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 @keyframes marquee {
@@ -1109,11 +1212,8 @@ a.media-frame:hover img,
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 700ms ease,
-    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  opacity: 1;
+  transform: none;
 }
 
 .reveal.is-visible {
@@ -1128,7 +1228,7 @@ a.media-frame:hover img,
 }
 
 .home-intro {
-  padding: 88px 0 96px;
+  padding: 40px 0 88px;
   background: var(--paper);
 }
 
@@ -2009,7 +2109,7 @@ a.media-frame:hover img,
   }
 
   .home-intro {
-    padding: 74px 0 82px;
+    padding: 44px 0 74px;
   }
 
   .home-intro__layout {
@@ -2291,7 +2391,7 @@ a.media-frame:hover img,
   }
 
   .home-intro {
-    padding: 60px 0 68px;
+    padding: 34px 0 60px;
   }
 
   .home-intro__pull {
@@ -2447,7 +2547,29 @@ a.media-frame:hover img,
 
   .marquee__item {
     min-width: 170px;
-    min-height: 82px;
+    min-height: 92px;
+    padding: 20px;
+  }
+
+  .partner-mark {
+    max-width: 126px;
+    max-height: 42px;
+  }
+
+  .partner-mark--khao-soi {
+    max-width: 142px;
+  }
+
+  .partner-wordmark--sensen {
+    font-size: 20px;
+  }
+
+  .partner-wordmark--azuki {
+    gap: 7px;
+    font-size: 14px;
+  }
+
+  .partner-wordmark--lotus {
     font-size: 19px;
   }
 
