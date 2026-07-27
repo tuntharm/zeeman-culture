@@ -123,6 +123,90 @@
     if (window.innerWidth > 820) closeNav();
   });
 
+  const revealItems = [...document.querySelectorAll(".reveal")];
+  let revealObserver = null;
+
+  const staggerRevealItems = () => {
+    document
+      .querySelectorAll(
+        ".case-grid, .founder-grid, .process-grid, .related-services",
+      )
+      .forEach((group) => {
+        [...group.children]
+          .filter((item) => item.classList.contains("reveal"))
+          .forEach((item, index) => {
+            item.style.setProperty(
+              "--reveal-delay",
+              `${Math.min(index, 4) * 80}ms`,
+            );
+          });
+      });
+
+    document
+      .querySelectorAll(
+        ".service-gallery.reveal, .advantage-stack.reveal, .metric-row.reveal, .service-index.reveal, .image-strip.reveal, .trend-strip.reveal",
+      )
+      .forEach((group) => {
+        group.classList.add("stagger-group");
+        [...group.children].forEach((item, index) => {
+          item.style.setProperty("--stagger-index", Math.min(index, 5));
+        });
+      });
+  };
+
+  const setupRevealMotion = () => {
+    revealObserver?.disconnect();
+    revealObserver = null;
+    document.documentElement.classList.remove("motion-ready");
+
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+
+    if (
+      reducedMotion.matches ||
+      !("IntersectionObserver" in window) ||
+      revealItems.length === 0
+    ) {
+      return;
+    }
+
+    staggerRevealItems();
+
+    const initialBoundary = window.innerHeight * 0.92;
+    revealItems.forEach((item) => {
+      if (item.hidden) return;
+      const bounds = item.getBoundingClientRect();
+      item.classList.toggle(
+        "is-visible",
+        bounds.top <= initialBoundary && bounds.bottom >= 0,
+      );
+    });
+
+    document.documentElement.classList.add("motion-ready");
+
+    revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.06,
+      },
+    );
+
+    revealItems.forEach((item) => {
+      if (!item.classList.contains("is-visible") && !item.hidden) {
+        revealObserver.observe(item);
+      }
+    });
+  };
+
+  setupRevealMotion();
+  reducedMotion.addEventListener?.("change", setupRevealMotion);
+
   const filterButtons = [...document.querySelectorAll("[data-filter]")];
   const cases = [...document.querySelectorAll("[data-case-category]")];
   const filterStatus = document.querySelector("[data-filter-status]");
@@ -144,6 +228,12 @@
           .filter(Boolean);
         const visible = filter === "all" || categories.includes(filter);
         caseItem.hidden = !visible;
+        if (visible) {
+          caseItem.classList.remove("filter-enter");
+          window.requestAnimationFrame(() => {
+            caseItem.classList.add("filter-enter");
+          });
+        }
         if (visible) visibleCount += 1;
       });
 
