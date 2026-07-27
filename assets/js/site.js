@@ -144,7 +144,7 @@
 
     document
       .querySelectorAll(
-        ".service-gallery.reveal, .advantage-stack.reveal, .metric-row.reveal, .service-index.reveal, .image-strip.reveal, .trend-strip.reveal",
+        ".home-intro__copy.reveal, .home-intro__gallery.reveal, .service-gallery.reveal, .advantage-stack.reveal, .metric-row.reveal, .service-index.reveal, .image-strip.reveal, .trend-strip.reveal",
       )
       .forEach((group) => {
         group.classList.add("stagger-group");

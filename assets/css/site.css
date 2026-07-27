@@ -728,7 +728,7 @@ a.media-frame:hover img,
   padding: 4px 7px;
   color: var(--green);
   background: rgba(255, 253, 248, 0.94);
-  content: "View proof";
+  content: "Learn more";
   font-size: 9px;
   font-weight: 700;
   opacity: 0;
@@ -1299,6 +1299,14 @@ html.motion-ready .process-step.reveal:not(.is-visible) {
 html.motion-ready figure.reveal:not(.is-visible),
 html.motion-ready .social-case-media.reveal:not(.is-visible) {
   transform: translate3d(-22px, 28px, 0) scale(0.985);
+}
+
+html.motion-ready .home-intro__copy.reveal:not(.is-visible) {
+  transform: translate3d(-24px, 38px, 0);
+}
+
+html.motion-ready .home-intro__gallery.reveal:not(.is-visible) {
+  transform: translate3d(24px, 38px, 0) scale(0.985);
 }
 
 .reveal.is-visible {
