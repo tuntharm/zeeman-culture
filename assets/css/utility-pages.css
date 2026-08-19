@@ -116,6 +116,11 @@
   justify-self: start;
 }
 
+.contact-form button[type="submit"]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .honeypot {
   position: absolute;
   left: -10000px;

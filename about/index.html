@@ -20,9 +20,9 @@
     <meta property="og:image" content="https://zeemanculture.com/assets/images/og/zeeman-culture-og-v1.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <title>About Zeeman Culture | Built Between Cultures</title>
-    <link rel="icon" href="/assets/brand/favicon.png">
-    <link rel="stylesheet" href="/assets/css/site.css?v=48c83d3">
-    <script src="/assets/js/site.js?v=48c83d3" defer></script>
+    <link rel="icon" href="/assets/brand/favicon-2026.png">
+    <link rel="stylesheet" href="/assets/css/site.css?v=first-client-edit">
+    <script src="/assets/js/site.js?v=first-client-edit" defer></script>
   </head>
   <body class="page">
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -32,7 +32,7 @@
         <a class="brand" href="/" aria-label="Zeeman Culture home">
           <img
             class="brand__mark"
-            src="/assets/brand/zeeman-logo.webp"
+            src="/assets/brand/zeeman-seal-2026.webp"
             width="38"
             height="38"
             alt=""
@@ -50,22 +50,15 @@
         ><span></span></button>
 
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-          <a href="/work/">Work</a>
-          <div class="nav-dropdown">
-            <button
-              class="nav-dropdown__toggle"
-              type="button"
-              data-dropdown-toggle
-              aria-expanded="false"
-            >Services</button>
-            <div class="nav-dropdown__menu">
-              <a href="/services/influencer-marketing/">Influencer Marketing</a>
-              <a href="/services/social-media-management/">Social Media Management</a>
-              <a href="/services/offline-activations/">Offline Activations</a>
-            </div>
-          </div>
-          <a href="/about/" aria-current="page">About</a>
+          <a href="/">Home</a>
+          <a href="/#services">Services</a>
+          <a href="/#cases">Cases</a>
+          <a href="/about/" aria-current="page">About Us</a>
           <a class="nav-contact" href="/contact/">Contact</a>
+          <div class="site-nav__meta">
+            <span>London · Shanghai</span>
+            <a href="mailto:team@zeemanculture.com">team@zeemanculture.com</a>
+          </div>
         </nav>
       </div>
     </header>
@@ -88,6 +81,67 @@
             alt="Watercolour panorama joining the London and Shanghai skylines"
           >
         </figure>
+      </section>
+
+      <section class="section about-story" id="story" aria-labelledby="story-title">
+        <div class="section-shell about-story__layout">
+          <div class="about-story__copy reveal">
+            <p class="eyebrow">Who we are</p>
+            <h2 class="section-heading" id="story-title">Culture moves through people.</h2>
+            <div class="prose">
+              <p>
+                Zeeman Culture is a cross-cultural creative marketing agency,
+                with teams based in Shanghai and London. We are driven by a
+                dual-engine model: Brands × Creators.
+              </p>
+              <p>
+                We provide brands with integrated marketing solutions while
+                empowering creators to achieve sustainable growth and commercial
+                success. We do not simply connect brands and creators; we build
+                ecosystems that can travel across cultures.
+              </p>
+            </div>
+            <p class="about-story__pull">
+              Built in the conversations where creators, communities and brands meet.
+            </p>
+          </div>
+
+          <div class="about-story__gallery reveal">
+            <figure class="about-story__image about-story__image--primary">
+              <picture>
+                <source
+                  media="(max-width: 620px)"
+                  srcset="/assets/images/home/networking-01-900.webp"
+                >
+                <img
+                  src="/assets/images/home/networking-01-1400.webp"
+                  width="933"
+                  height="1400"
+                  alt="Creators and guests in conversation at a Zeeman Culture community gathering"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </picture>
+            </figure>
+            <figure class="about-story__image about-story__image--secondary">
+              <picture>
+                <source
+                  media="(max-width: 620px)"
+                  srcset="/assets/images/home/networking-02-900.webp"
+                >
+                <img
+                  src="/assets/images/home/networking-02-1400.webp"
+                  width="933"
+                  height="1400"
+                  alt="An international creator community connecting over dinner"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </picture>
+            </figure>
+            <span class="about-story__caption">Creator community · London</span>
+          </div>
+        </div>
       </section>
 
       <section
@@ -161,9 +215,14 @@
             <article class="founder-card reveal">
               <figure class="media-frame media-frame--portrait">
                 <img
-                  src="/assets/images/about/mengzhu-cao.webp"
-                  width="307"
-                  height="462"
+                  src="/assets/images/about/mengzhu-cao-2026-540.webp"
+                  srcset="
+                    /assets/images/about/mengzhu-cao-2026-540.webp 540w,
+                    /assets/images/about/mengzhu-cao-2026-900.webp 900w
+                  "
+                  sizes="(max-width: 820px) min(360px, 100vw), 307px"
+                  width="900"
+                  height="1200"
                   loading="lazy"
                   decoding="async"
                   alt="Portrait of Mengzhu Cao, founder of Zeeman Culture"
@@ -268,35 +327,27 @@
         </div>
       </section>
 
-      <section class="contact-band" id="contact" aria-labelledby="contact-title">
-        <div class="contact-band__inner section-shell reveal">
-          <div>
-            <p class="eyebrow">Start a project</p>
-            <h2 id="contact-title">Let’s make culture your advantage.</h2>
-            <p class="muted">
-              Tell us what you are building and where you want it to travel.
-            </p>
-          </div>
-          <div class="contact-band__actions">
-            <a class="button button--light" href="mailto:yang@zeemanculture.com">
-              yang@zeemanculture.com
-            </a>
-            <a class="button button--ghost" href="tel:+447422955426">
-              +44 7422 955426
-            </a>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer home-footer" id="contact">
       <div class="section-shell">
+        <div class="home-footer__cta reveal">
+          <div>
+            <p class="eyebrow">Start a conversation</p>
+            <h2>Let's create something impactful together.</h2>
+          </div>
+          <div class="home-footer__action">
+            <p>Tell us what you are building and where you want it to travel.</p>
+            <a class="button button--light" href="/contact/">Get in touch</a>
+          </div>
+        </div>
+
         <div class="footer-grid">
           <div>
             <a class="brand" href="/" aria-label="Zeeman Culture home">
               <img
                 class="brand__mark"
-                src="/assets/brand/zeeman-logo.webp"
+                src="/assets/brand/zeeman-seal-2026.webp"
                 width="38"
                 height="38"
                 alt=""
@@ -310,19 +361,20 @@
           </div>
           <nav class="footer-links" aria-label="Footer navigation">
             <strong>Explore</strong>
-            <a href="/work/">Work</a>
-            <a href="/about/" aria-current="page">About</a>
-            <a href="/contact/">Contact</a>
+            <a href="/#services">Services</a>
+            <a href="/#cases">Cases</a>
+            <a href="/about/" aria-current="page">About Us</a>
+            <a href="/work/">All work</a>
           </nav>
           <div class="footer-links">
             <strong>Contact</strong>
-            <a href="mailto:yang@zeemanculture.com">yang@zeemanculture.com</a>
+            <a href="mailto:team@zeemanculture.com">team@zeemanculture.com</a>
             <a href="tel:+447422955426">+44 7422 955426</a>
           </div>
         </div>
         <div class="footer-bottom">
           <span>© <span data-year></span> Zeeman Culture</span>
-          <span>Turning Culture into Connection.</span>
+          <a href="/privacy/">Privacy</a>
         </div>
       </div>
     </footer>

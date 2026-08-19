@@ -44,6 +44,8 @@
     ),
   ];
 
+  submitButton?.removeAttribute("disabled");
+
   fields.forEach((field) => {
     field.addEventListener("blur", () => validateField(field));
     field.addEventListener("input", () => {

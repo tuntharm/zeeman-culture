@@ -129,7 +129,7 @@
   const staggerRevealItems = () => {
     document
       .querySelectorAll(
-        ".case-grid, .founder-grid, .process-grid, .related-services",
+        ".case-grid, .founder-grid, .process-grid, .related-services, .advantage-editorial, .home-service-list, .selected-case-grid",
       )
       .forEach((group) => {
         [...group.children]
@@ -171,7 +171,7 @@
 
     staggerRevealItems();
 
-    const initialBoundary = window.innerHeight * 0.92;
+    const initialBoundary = window.innerHeight * 1.12;
     revealItems.forEach((item) => {
       if (item.hidden) return;
       const bounds = item.getBoundingClientRect();
@@ -192,7 +192,7 @@
         });
       },
       {
-        rootMargin: "0px 0px -10% 0px",
+        rootMargin: "0px 0px 12% 0px",
         threshold: 0.06,
       },
     );
@@ -206,6 +206,34 @@
 
   setupRevealMotion();
   reducedMotion.addEventListener?.("change", setupRevealMotion);
+
+  const brandExchange = document.querySelector(".brand-exchange");
+  const marqueeToggle = document.querySelector("[data-marquee-toggle]");
+  const marqueeLabel = marqueeToggle?.querySelector("[data-marquee-label]");
+  let marqueePausedByUser = false;
+
+  const setMarqueeState = () => {
+    if (!brandExchange || !marqueeToggle || !marqueeLabel) return;
+
+    const motionUnavailable = reducedMotion.matches;
+    const paused = marqueePausedByUser || document.hidden || motionUnavailable;
+    brandExchange.classList.toggle("is-paused", paused);
+    marqueeToggle.disabled = motionUnavailable;
+    marqueeToggle.setAttribute("aria-pressed", String(marqueePausedByUser));
+    marqueeLabel.textContent = motionUnavailable
+      ? "Motion reduced"
+      : marqueePausedByUser
+        ? "Play motion"
+        : "Pause motion";
+  };
+
+  marqueeToggle?.addEventListener("click", () => {
+    marqueePausedByUser = !marqueePausedByUser;
+    setMarqueeState();
+  });
+
+  setMarqueeState();
+  reducedMotion.addEventListener?.("change", setMarqueeState);
 
   const filterButtons = [...document.querySelectorAll("[data-filter]")];
   const cases = [...document.querySelectorAll("[data-case-category]")];
@@ -246,7 +274,13 @@
   });
 
   const video = document.querySelector("[data-hero-video]");
+  const connection =
+    navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const mobileVideo = window.matchMedia("(max-width: 620px)");
   const heroPlaybackRate = 2 / 3;
+
+  const shouldLoadVideo = () =>
+    Boolean(video) && !reducedMotion.matches && !connection?.saveData;
 
   const setHeroPlaybackRate = () => {
     if (!video) return;
@@ -255,7 +289,7 @@
   };
 
   const playVideo = async () => {
-    if (!video) return;
+    if (!shouldLoadVideo() || document.hidden) return;
     setHeroPlaybackRate();
     try {
       await video.play();
@@ -265,30 +299,77 @@
     }
   };
 
-  if (video) {
-    setHeroPlaybackRate();
-    video.addEventListener("loadedmetadata", setHeroPlaybackRate);
+  const clearVideoSources = () => {
+    if (!video) return;
+    video.pause();
+    video.removeAttribute("src");
+    video.querySelectorAll("source").forEach((source) => source.remove());
+    video.removeAttribute("data-source-mode");
+    video.classList.add("is-unavailable");
+    video.load();
+  };
 
-    if (reducedMotion.matches) {
-      video.pause();
-      video.currentTime = 0;
-    } else {
-      playVideo();
+  const addVideoSource = (src, type) => {
+    if (!video || !src) return;
+    const source = document.createElement("source");
+    source.src = src;
+    source.type = type;
+    video.append(source);
+  };
+
+  const syncVideoSource = () => {
+    if (!video) return;
+    if (!shouldLoadVideo()) {
+      clearVideoSources();
+      return;
     }
+
+    const sourceMode = mobileVideo.matches ? "mobile" : "desktop";
+    video.poster = mobileVideo.matches
+      ? video.dataset.mobilePoster
+      : video.dataset.desktopPoster;
+    if (video.dataset.sourceMode === sourceMode) {
+      playVideo();
+      return;
+    }
+
+    video.pause();
+    video.querySelectorAll("source").forEach((source) => source.remove());
+
+    if (sourceMode === "mobile") {
+      addVideoSource(video.dataset.mobileMp4, "video/mp4");
+    } else {
+      addVideoSource(video.dataset.desktopWebm, "video/webm");
+      addVideoSource(video.dataset.desktopMp4, "video/mp4");
+    }
+
+    video.dataset.sourceMode = sourceMode;
+    video.classList.remove("is-unavailable");
+    video.load();
+    setHeroPlaybackRate();
+    playVideo();
+  };
+
+  if (video) {
+    video.addEventListener("loadedmetadata", setHeroPlaybackRate);
+    video.addEventListener("canplay", playVideo);
 
     video.addEventListener("error", () => {
       video.classList.add("is-unavailable");
     });
 
-    reducedMotion.addEventListener?.("change", (event) => {
-      if (event.matches) {
-        video.pause();
-        video.currentTime = 0;
-      } else {
-        playVideo();
-      }
-    });
+    syncVideoSource();
+    reducedMotion.addEventListener?.("change", syncVideoSource);
+    mobileVideo.addEventListener?.("change", syncVideoSource);
+    connection?.addEventListener?.("change", syncVideoSource);
   }
+
+  document.addEventListener("visibilitychange", () => {
+    setMarqueeState();
+    if (!video) return;
+    if (document.hidden) video.pause();
+    else playVideo();
+  });
 
   document.querySelectorAll("[data-year]").forEach((item) => {
     item.textContent = new Date().getFullYear();
