@@ -1,0 +1,16 @@
+{
+  "name": "Zeeman Culture (static site)",
+  "terminals": [
+    {
+      "name": "static-server",
+      "command": "python3 -m http.server 8091",
+      "description": "Serves the static site from the repository root at http://127.0.0.1:8091/"
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 8091
+    }
+  ]
+}
