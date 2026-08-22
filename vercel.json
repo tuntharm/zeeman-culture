@@ -12,7 +12,7 @@
       ]
     },
     {
-      "source": "/assets/media/(.*v2.*)",
+      "source": "/assets/media/(.*v[0-9]+.*)",
       "headers": [
         {
           "key": "Cache-Control",

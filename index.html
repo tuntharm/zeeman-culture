@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <meta
       name="description"
       content="Zeeman Culture is a cross-cultural creative marketing agency connecting brands and audiences between China and Europe."
@@ -27,8 +28,23 @@
     <meta name="twitter:image" content="https://zeemanculture.com/assets/images/og/zeeman-culture-og-v1.jpg">
     <title>Zeeman Culture | Cross-cultural creative marketing</title>
     <link rel="icon" href="/assets/brand/favicon-2026.png" type="image/png">
-    <link rel="stylesheet" href="/assets/css/site.css?v=first-client-edit">
-    <script src="/assets/js/site.js?v=first-client-edit" defer></script>
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin-variable-v1.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    >
+    <link
+      rel="preload"
+      href="/assets/fonts/bluu-next-bold-latin-v1.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    >
+    <link rel="stylesheet" href="/assets/css/site.css?v=glass-vine-v9">
+    <script src="/assets/js/site.js?v=glass-vine-v5" defer></script>
+    <script src="/assets/js/home-vine.js?v=glass-vine-v9" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -43,6 +59,14 @@
     </script>
   </head>
   <body class="page page--home">
+    <!--
+      Homepage direction contract:
+      Thesis: culture travels when local creators make it relevant.
+      Own-world: one two-way London-Shanghai signal system, not a template gallery.
+      Story: position -> advantages and brands -> services -> proof -> contact.
+      First viewport: full-bleed place, name as the statement, two deliberate actions.
+      Form: sharp editorial grids, forest-led contrast, restrained directional motion.
+    -->
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="site-header">
@@ -55,7 +79,7 @@
             height="38"
             alt=""
           >
-          <span>Zeeman Culture</span>
+          <span class="brand__wordmark">Zeeman Culture</span>
         </a>
 
         <button
@@ -81,22 +105,153 @@
       </div>
     </header>
 
-    <main id="main">
+    <div class="home-story" data-home-story>
+      <div class="home-scroll-vine" data-scroll-vine data-vine-state="ready" aria-hidden="true">
+        <svg class="home-scroll-vine__art home-scroll-vine__art--desktop" viewBox="0 0 1440 4000" preserveAspectRatio="none" focusable="false">
+          <defs>
+            <linearGradient id="vine-ink-desktop" data-vine-gradient gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="4000">
+              <stop data-vine-tone-stop="base" offset="0" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="services-before" offset="0.54" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="services-start" offset="0.58" stop-color="#c7e0d1"></stop>
+              <stop data-vine-tone-stop="services-end" offset="0.69" stop-color="#c7e0d1"></stop>
+              <stop data-vine-tone-stop="services-after" offset="0.73" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="footer-before" offset="0.87" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="footer-start" offset="0.91" stop-color="#c7e0d1"></stop>
+              <stop data-vine-tone-stop="footer-end" offset="1" stop-color="#c7e0d1"></stop>
+            </linearGradient>
+            <pattern id="vine-distress-pattern-desktop" width="86" height="74" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)">
+              <rect width="86" height="74" fill="#fff"></rect>
+              <path fill="#000" fill-opacity="0.42" d="M13 19h7v2h-7zM49 8h3v8h-3zM69 42h9v2h-9zM30 57h5v3h-5z"></path>
+            </pattern>
+            <mask id="vine-distress-desktop" maskUnits="userSpaceOnUse" x="0" y="0" width="1440" height="4000">
+              <rect width="1440" height="4000" fill="url(#vine-distress-pattern-desktop)"></rect>
+            </mask>
+            <g id="vine-leaf-desktop-narrow"><path d="M0 0C18-24 48-30 78-11C60 12 32 17 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7 0C27-4 47-7 67-9"></path></g>
+            <g id="vine-leaf-desktop-broad"><path d="M0 0C8-34 37-52 74-42C80-11 52 15 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7-1C25-13 43-25 63-37"></path></g>
+            <g id="vine-leaf-desktop-hooked"><path d="M0 0C22-29 56-34 83-13C67-5 60 8 53 18C30 17 12 10 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7 0C29-5 50-9 71-12"></path></g>
+            <g id="vine-leaf-desktop-torn"><path d="M0 0C13-31 43-46 78-34L68-19L83-14C67 11 37 21 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7-1C26-11 46-21 67-30"></path></g>
+            <g id="vine-leaf-desktop-split"><path d="M0 0C20-28 52-38 84-20L72-8L84-2C64 20 34 22 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7 0C28-6 50-12 72-17"></path></g>
+            <g id="vine-leaf-desktop-cordate"><path d="M0 0C13-11 17-27 12-43C38-54 68-39 78-14C60 12 31 20 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7 0C26-11 46-22 67-32"></path></g>
+            <g id="vine-leaf-desktop-curled"><path d="M0 0C13-27 40-40 69-27C55-13 51 2 60 15C38 20 15 13 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M7 0C27-7 46-14 59-24"></path></g>
+          </defs>
+          <g class="home-scroll-vine__drawing">
+            <path class="home-scroll-vine__stroke home-scroll-vine__stroke--wash" stroke="url(#vine-ink-desktop)" d="M1440 1065C1424 1100 1400 1134 1382 1176C1358 1224 1334 1266 1318 1308C1300 1352 1314 1408 1354 1450C1398 1494 1432 1512 1424 1578C1432 1630 1434 1744 1388 1840C1368 1884 1370 1952 1408 2020C1434 2068 1420 2122 1388 2160C1348 2210 1310 2254 1286 2318C1262 2384 1298 2450 1360 2510C1422 2570 1426 2650 1388 2730C1348 2814 1288 2870 1266 2942C1244 3014 1292 3070 1360 3132C1424 3192 1432 3280 1398 3370C1368 3440 1324 3476 1288 3512C1244 3558 1268 3630 1330 3690C1392 3750 1424 3826 1410 3892C1398 3946 1420 3982 1440 4000"></path>
+            <path id="vine-d-main" class="home-scroll-vine__stroke home-scroll-vine__stroke--main" stroke="url(#vine-ink-desktop)" d="M1440 1065C1424 1100 1400 1134 1382 1176C1358 1224 1334 1266 1318 1308C1300 1352 1314 1408 1354 1450C1398 1494 1432 1512 1424 1578C1432 1630 1434 1744 1388 1840C1368 1884 1370 1952 1408 2020C1434 2068 1420 2122 1388 2160C1348 2210 1310 2254 1286 2318C1262 2384 1298 2450 1360 2510C1422 2570 1426 2650 1388 2730C1348 2814 1288 2870 1266 2942C1244 3014 1292 3070 1360 3132C1424 3192 1432 3280 1398 3370C1368 3440 1324 3476 1288 3512C1244 3558 1268 3630 1330 3690C1392 3750 1424 3826 1410 3892C1398 3946 1420 3982 1440 4000"></path>
+
+            <path id="vine-d-strategy-01" class="home-scroll-vine__branch home-scroll-vine__branch--wide" data-vine-segment data-anchor-x="1382" data-anchor-y="1176" data-duration="0.05" stroke="url(#vine-ink-desktop)" d="M1382 1176C1348 1132 1294 1112 1236 1128C1168 1146 1122 1198 1056 1192C992 1186 944 1146 882 1160C828 1172 784 1202 748 1238"></path>
+            <path id="vine-d-strategy-02" class="home-scroll-vine__branch" data-vine-segment data-anchor-x="1318" data-anchor-y="1308" data-duration="0.048" stroke="url(#vine-ink-desktop)" d="M1318 1308C1274 1274 1228 1258 1180 1268C1124 1280 1082 1312 1030 1306C980 1300 940 1274 892 1288"></path>
+            <path id="vine-d-strategy-03" class="home-scroll-vine__branch" data-vine-segment data-anchor-x="1354" data-anchor-y="1450" data-duration="0.046" stroke="url(#vine-ink-desktop)" d="M1354 1450C1388 1464 1412 1494 1416 1526C1420 1560 1402 1588 1370 1602C1346 1612 1324 1608 1304 1592"></path>
+            <path id="vine-d-services-01" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="1388" data-anchor-y="2160" data-duration="0.044" stroke="#c7e0d1" d="M1388 2160C1350 2200 1310 2242 1268 2250C1216 2260 1176 2230 1134 2248C1090 2268 1052 2300 1008 2290"></path>
+            <path id="vine-d-services-02" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="1360" data-anchor-y="2510" data-duration="0.044" stroke="#c7e0d1" d="M1360 2510C1318 2480 1276 2482 1244 2512C1208 2546 1172 2560 1128 2544C1090 2530 1052 2540 1018 2570"></path>
+            <path id="vine-d-cases-01" class="home-scroll-vine__branch home-scroll-vine__branch--desktop-case" data-vine-segment data-anchor-x="1266" data-anchor-y="2942" data-duration="0.034" stroke="url(#vine-ink-desktop)" d="M1266 2942C1218 2918 1170 2920 1128 2948C1086 2978 1046 2992 1002 2974C966 2960 930 2968 896 2996"></path>
+            <path id="vine-d-footer-upper" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="1288" data-anchor-y="3512" data-duration="0.048" stroke="#c7e0d1" d="M1288 3512C1218 3488 1140 3498 1066 3534C1002 3564 946 3566 894 3544"></path>
+            <path id="vine-d-footer-return" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="1330" data-anchor-y="3690" data-duration="0.08" stroke="#c7e0d1" d="M1330 3690C1388 3738 1424 3802 1448 3870C1468 3924 1466 3992 1438 4034C1180 4104 404 4106-30 4038C-56 4010-34 3980 24 3960C154 3916 272 3840 404 3796C520 3758 620 3770 708 3810C742 3826 770 3832 798 3818"></path>
+
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-01" data-leaf-at="0.25" data-leaf-angle="-56"><use href="#vine-leaf-desktop-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--medium home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-01" data-leaf-at="0.46" data-leaf-angle="52"><use href="#vine-leaf-desktop-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-01" data-leaf-at="0.67" data-leaf-angle="-46"><use href="#vine-leaf-desktop-split"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--medium home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-01" data-leaf-at="0.88" data-leaf-angle="58"><use href="#vine-leaf-desktop-hooked"></use></g></g>
+
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-02" data-leaf-at="0.34" data-leaf-angle="48"><use href="#vine-leaf-desktop-cordate"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-02" data-leaf-at="0.66" data-leaf-angle="-52"><use href="#vine-leaf-desktop-curled"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-02" data-leaf-at="0.9" data-leaf-angle="44"><use href="#vine-leaf-desktop-torn"></use></g></g>
+
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-03" data-leaf-at="0.3" data-leaf-angle="-48"><use href="#vine-leaf-desktop-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--medium home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-03" data-leaf-at="0.58" data-leaf-angle="52"><use href="#vine-leaf-desktop-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small home-scroll-vine__leaf--optional" data-vine-leaf data-vine-leaf-for="vine-d-strategy-03" data-leaf-at="0.84" data-leaf-angle="-44"><use href="#vine-leaf-desktop-curled"></use></g></g>
+
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--medium" data-vine-leaf data-vine-leaf-for="vine-d-services-01" data-leaf-at="0.34" data-leaf-angle="-48"><use href="#vine-leaf-desktop-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-services-01" data-leaf-at="0.62" data-leaf-angle="52"><use href="#vine-leaf-desktop-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-services-01" data-leaf-at="0.88" data-leaf-angle="-36"><use href="#vine-leaf-desktop-hooked"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-services-02" data-leaf-at="0.38" data-leaf-angle="48"><use href="#vine-leaf-desktop-curled"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-services-02" data-leaf-at="0.78" data-leaf-angle="-52"><use href="#vine-leaf-desktop-narrow"></use></g></g>
+
+            <g class="home-scroll-vine__leaf-node home-scroll-vine__leaf-node--desktop-case"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-cases-01" data-leaf-at="0.46" data-leaf-angle="-48"><use href="#vine-leaf-desktop-split"></use></g></g>
+            <g class="home-scroll-vine__leaf-node home-scroll-vine__leaf-node--desktop-case"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-cases-01" data-leaf-at="0.82" data-leaf-angle="46"><use href="#vine-leaf-desktop-narrow"></use></g></g>
+
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-footer-upper" data-leaf-at="0.4" data-leaf-angle="48"><use href="#vine-leaf-desktop-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-footer-upper" data-leaf-at="0.76" data-leaf-angle="-44"><use href="#vine-leaf-desktop-split"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-footer-return" data-leaf-at="0.76" data-leaf-angle="-46"><use href="#vine-leaf-desktop-hooked"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-d-footer-return" data-leaf-at="0.84" data-leaf-angle="48"><use href="#vine-leaf-desktop-torn"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--medium" data-vine-leaf data-vine-leaf-for="vine-d-footer-return" data-leaf-at="0.9" data-leaf-angle="-42"><use href="#vine-leaf-desktop-cordate"></use></g></g>
+          </g>
+        </svg>
+
+        <svg class="home-scroll-vine__art home-scroll-vine__art--mobile" viewBox="0 0 390 4400" preserveAspectRatio="none" focusable="false">
+          <defs>
+            <linearGradient id="vine-ink-mobile" data-vine-gradient gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="4400">
+              <stop data-vine-tone-stop="base" offset="0" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="services-before" offset="0.53" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="services-start" offset="0.58" stop-color="#c7e0d1"></stop>
+              <stop data-vine-tone-stop="services-end" offset="0.71" stop-color="#c7e0d1"></stop>
+              <stop data-vine-tone-stop="services-after" offset="0.76" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="footer-before" offset="0.87" stop-color="#0b412f"></stop>
+              <stop data-vine-tone-stop="footer-start" offset="0.91" stop-color="#c7e0d1"></stop>
+              <stop data-vine-tone-stop="footer-end" offset="1" stop-color="#c7e0d1"></stop>
+            </linearGradient>
+            <pattern id="vine-distress-pattern-mobile" width="54" height="62" patternUnits="userSpaceOnUse" patternTransform="rotate(-7)">
+              <rect width="54" height="62" fill="#fff"></rect>
+              <path fill="#000" fill-opacity="0.38" d="M8 15h5v2H8zM31 6h3v7h-3zM42 38h7v2h-7zM19 50h4v3h-4z"></path>
+            </pattern>
+            <mask id="vine-distress-mobile" maskUnits="userSpaceOnUse" x="0" y="0" width="390" height="4400">
+              <rect width="390" height="4400" fill="url(#vine-distress-pattern-mobile)"></rect>
+            </mask>
+            <g id="vine-leaf-mobile-narrow"><path d="M0 0C10-20 30-26 52-12C41 8 21 12 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5 0C17-4 30-7 44-10"></path></g>
+            <g id="vine-leaf-mobile-broad"><path d="M0 0C5-26 25-38 50-31C53-8 34 10 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5-1C17-9 29-18 42-27"></path></g>
+            <g id="vine-leaf-mobile-hooked"><path d="M0 0C15-23 38-27 57-10C45-4 40 6 36 13C20 12 8 7 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5 0C19-4 33-7 49-9"></path></g>
+            <g id="vine-leaf-mobile-torn"><path d="M0 0C8-25 29-34 53-24L46-13L56-9C44 9 25 14 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5-1C18-8 31-15 45-21"></path></g>
+            <g id="vine-leaf-mobile-split"><path d="M0 0C13-22 35-30 57-14L49-6L57-1C43 14 23 15 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5 0C19-5 34-9 49-12"></path></g>
+            <g id="vine-leaf-mobile-cordate"><path d="M0 0C8-8 11-20 8-31C26-39 47-28 54-10C41 9 21 14 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5 0C18-8 31-16 46-23"></path></g>
+            <g id="vine-leaf-mobile-curled"><path d="M0 0C9-21 27-30 47-20C38-10 35 2 41 11C26 15 10 9 0 0Z"></path><path class="home-scroll-vine__leaf-cut" d="M5 0C18-5 31-11 40-18"></path></g>
+          </defs>
+          <g class="home-scroll-vine__drawing">
+            <path class="home-scroll-vine__stroke home-scroll-vine__stroke--wash" stroke="url(#vine-ink-mobile)" d="M390 820C384 880 376 940 366 1000C356 1060 350 1120 360 1180C372 1240 388 1300 384 1380C380 1500 374 1650 386 1770C390 1850 388 1930 384 1990C376 2100 366 2200 374 2320C380 2420 390 2500 386 2580C382 2700 372 2860 380 3000C388 3180 390 3420 386 3615C382 3720 374 3820 380 3940C386 4080 382 4240 356 4400"></path>
+            <path id="vine-m-main" class="home-scroll-vine__stroke home-scroll-vine__stroke--main" stroke="url(#vine-ink-mobile)" d="M390 820C384 880 376 940 366 1000C356 1060 350 1120 360 1180C372 1240 388 1300 384 1380C380 1500 374 1650 386 1770C390 1850 388 1930 384 1990C376 2100 366 2200 374 2320C380 2420 390 2500 386 2580C382 2700 372 2860 380 3000C388 3180 390 3420 386 3615C382 3720 374 3820 380 3940C386 4080 382 4240 356 4400"></path>
+            <path id="vine-m-strategy-01" class="home-scroll-vine__branch" data-vine-segment data-anchor-x="366" data-anchor-y="1000" data-duration="0.044" stroke="url(#vine-ink-mobile)" d="M366 1000C356 1000 346 1008 340 1020C334 1032 326 1038 316 1036"></path>
+            <path id="vine-m-strategy-02" class="home-scroll-vine__branch" data-vine-segment data-anchor-x="360" data-anchor-y="1180" data-duration="0.044" stroke="url(#vine-ink-mobile)" d="M360 1180C350 1188 342 1200 340 1214C338 1228 330 1236 318 1238"></path>
+            <path id="vine-m-strategy-03" class="home-scroll-vine__branch" data-vine-segment data-anchor-x="384" data-anchor-y="1380" data-duration="0.044" stroke="url(#vine-ink-mobile)" d="M384 1380C374 1372 364 1374 356 1384C348 1394 340 1398 330 1394"></path>
+            <path id="vine-m-services-01" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="384" data-anchor-y="1990" data-duration="0.044" stroke="#c7e0d1" d="M384 1990C374 2000 364 2006 352 2004C340 2002 330 2008 322 2018"></path>
+            <path id="vine-m-services-02" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="374" data-anchor-y="2320" data-duration="0.044" stroke="#c7e0d1" d="M374 2320C364 2312 354 2314 346 2324C338 2336 328 2340 316 2336"></path>
+            <path id="vine-m-footer-01" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="386" data-anchor-y="3615" data-duration="0.044" stroke="#c7e0d1" d="M386 3615C374 3602 360 3604 348 3616C336 3628 324 3636 310 3634"></path>
+            <path id="vine-m-footer-02" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="380" data-anchor-y="3940" data-duration="0.044" stroke="#c7e0d1" d="M380 3940C368 3928 354 3930 342 3942C330 3954 318 3960 304 3956"></path>
+            <path id="vine-m-footer-03" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="382" data-anchor-y="4240" data-duration="0.048" stroke="#c7e0d1" d="M382 4240C370 4216 356 4198 340 4192C324 4186 310 4192 298 4204"></path>
+            <path id="vine-m-footer-04" class="home-scroll-vine__branch home-scroll-vine__branch--light" data-vine-segment data-anchor-x="382" data-anchor-y="4240" data-duration="0.052" stroke="#c7e0d1" d="M382 4240C370 4228 358 4210 352 4188C346 4164 334 4148 316 4138"></path>
+
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-strategy-01" data-leaf-at="0.48" data-leaf-angle="-54"><use href="#vine-leaf-mobile-hooked"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-strategy-01" data-leaf-at="0.86" data-leaf-angle="48"><use href="#vine-leaf-mobile-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-strategy-02" data-leaf-at="0.46" data-leaf-angle="48"><use href="#vine-leaf-mobile-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-strategy-02" data-leaf-at="0.84" data-leaf-angle="-48"><use href="#vine-leaf-mobile-curled"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-strategy-03" data-leaf-at="0.5" data-leaf-angle="48"><use href="#vine-leaf-mobile-split"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-strategy-03" data-leaf-at="0.86" data-leaf-angle="-46"><use href="#vine-leaf-mobile-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-services-01" data-leaf-at="0.48" data-leaf-angle="-48"><use href="#vine-leaf-mobile-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-services-01" data-leaf-at="0.86" data-leaf-angle="46"><use href="#vine-leaf-mobile-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-services-02" data-leaf-at="0.76" data-leaf-angle="-48"><use href="#vine-leaf-mobile-curled"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-01" data-leaf-at="0.8" data-leaf-angle="46"><use href="#vine-leaf-mobile-torn"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-02" data-leaf-at="0.34" data-leaf-angle="48"><use href="#vine-leaf-mobile-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-02" data-leaf-at="0.78" data-leaf-angle="-46"><use href="#vine-leaf-mobile-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-03" data-leaf-at="0.42" data-leaf-angle="48"><use href="#vine-leaf-mobile-hooked"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-03" data-leaf-at="0.82" data-leaf-angle="-46"><use href="#vine-leaf-mobile-narrow"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-04" data-leaf-at="0.42" data-leaf-angle="48"><use href="#vine-leaf-mobile-broad"></use></g></g>
+            <g class="home-scroll-vine__leaf-node"><g class="home-scroll-vine__leaf home-scroll-vine__leaf--light home-scroll-vine__leaf--small" data-vine-leaf data-vine-leaf-for="vine-m-footer-04" data-leaf-at="0.82" data-leaf-angle="-46"><use href="#vine-leaf-mobile-hooked"></use></g></g>
+          </g>
+        </svg>
+      </div>
+
+      <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero__media hero__media--poster">
           <video
             autoplay
-            loop
             muted
             playsinline
             preload="none"
-            poster="/assets/media/zeeman-hero-poster-desktop-v2.webp"
+            poster="/assets/media/zeeman-hero-poster-desktop-v3.webp"
             data-hero-video
-            data-desktop-webm="/assets/media/zeeman-hero-desktop-v2.webm"
-            data-desktop-mp4="/assets/media/zeeman-hero-desktop-v2.mp4"
-            data-mobile-mp4="/assets/media/zeeman-hero-mobile-v2.mp4"
-            data-desktop-poster="/assets/media/zeeman-hero-poster-desktop-v2.webp"
-            data-mobile-poster="/assets/media/zeeman-hero-poster-mobile-v2.webp"
+            data-desktop-webm="/assets/media/zeeman-hero-desktop-v3.webm"
+            data-desktop-mp4="/assets/media/zeeman-hero-desktop-v3.mp4"
+            data-mobile-mp4="/assets/media/zeeman-hero-mobile-v3.mp4"
+            data-desktop-poster="/assets/media/zeeman-hero-poster-desktop-v3.webp"
+            data-mobile-poster="/assets/media/zeeman-hero-poster-mobile-v3.webp"
             aria-hidden="true"
             tabindex="-1"
           ></video>
@@ -105,52 +260,53 @@
 
         <div class="hero--inner">
           <div class="hero__content section-shell">
-            <p class="eyebrow">London · Shanghai</p>
-            <h1 class="display" id="hero-title">Zeeman Culture</h1>
-            <p class="lede">A cross-cultural creative marketing agency.</p>
-            <div class="hero__meta">
-              <a class="button button--primary" href="/contact/">Start a project</a>
-              <a class="button button--ghost" href="/#cases">View selected work</a>
+            <div class="hero__message">
+              <p class="hero__location">
+                London <i aria-hidden="true">·</i> Shanghai
+              </p>
+              <div class="hero__title-clip">
+                <h1 class="display" id="hero-title">
+                  <span>Zeeman</span>
+                  <span>Culture</span>
+                </h1>
+              </div>
+              <p class="lede">A cross-cultural creative marketing agency.</p>
+            </div>
+            <div class="hero__actions">
+              <a class="button button--primary" href="/#services">Our Services</a>
+              <a class="hero__text-link" href="/#cases">
+                View selected work <span aria-hidden="true">↘</span>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section home-advantages" id="advantages" aria-labelledby="advantages-title">
+      <section class="home-chapter" id="advantages" aria-labelledby="chapter-title">
+        <div class="section-shell home-chapter__intro">
+          <h2 class="home-chapter__title reveal" id="chapter-title">
+            <span class="home-chapter__line"><strong>Culture</strong> <span>is the strategy.</span></span>
+            <span class="home-chapter__line"><strong>Connection</strong> <span>is the outcome.</span></span>
+          </h2>
+        </div>
         <div class="section-shell">
-          <div class="home-section-heading reveal">
-            <p class="eyebrow">What moves us</p>
-            <h2 class="section-heading" id="advantages-title">
-              Culture becomes powerful when people choose to carry it.
-            </h2>
-          </div>
-
           <div class="advantage-editorial" aria-label="Our three advantages">
             <article class="advantage-editorial__item reveal">
-              <span class="advantage-editorial__number">01</span>
-              <span class="advantage-editorial__signal" aria-hidden="true">
-                <i></i><i></i><i></i>
-              </span>
-              <h3>Creator<br>Network</h3>
+              <span class="advantage-editorial__number" aria-hidden="true">01</span>
+              <h3>Creator Network</h3>
               <p>
                 Relationships with creators and communities across both markets.
               </p>
             </article>
             <article class="advantage-editorial__item reveal">
-              <span class="advantage-editorial__number">02</span>
-              <span class="advantage-editorial__signal" aria-hidden="true">
-                <i></i><i></i><i></i>
-              </span>
+              <span class="advantage-editorial__number" aria-hidden="true">02</span>
               <h3>Virality</h3>
               <p>
                 Ideas designed to travel naturally across platforms and cultures.
               </p>
             </article>
             <article class="advantage-editorial__item reveal">
-              <span class="advantage-editorial__number">03</span>
-              <span class="advantage-editorial__signal" aria-hidden="true">
-                <i></i><i></i><i></i>
-              </span>
+              <span class="advantage-editorial__number" aria-hidden="true">03</span>
               <h3>Authenticity</h3>
               <p>
                 Local insight that makes brands feel understood, not simply translated.
@@ -158,33 +314,12 @@
             </article>
           </div>
         </div>
-      </section>
 
-      <section class="brand-exchange" id="partners" aria-labelledby="partners-title">
-        <div class="section-shell brand-exchange__heading reveal">
-          <div>
-            <p class="eyebrow">Brand exchange</p>
-            <h2 class="section-heading" id="partners-title">
-              Moving relevance in both directions.
-            </h2>
-          </div>
-          <div class="brand-exchange__controls">
-            <span class="brand-exchange__status">Partner list in review</span>
-            <button
-              class="marquee-toggle"
-              type="button"
-              data-marquee-toggle
-              aria-pressed="false"
-            >
-              <span class="marquee-toggle__icon" aria-hidden="true"></span>
-              <span data-marquee-label>Pause motion</span>
-            </button>
-          </div>
-        </div>
+        <div class="brand-exchange" id="partners" role="region" aria-labelledby="partners-title">
+          <h2 class="sr-only" id="partners-title">Brand exchange</h2>
 
-        <div class="brand-lane brand-lane--sparse" data-marquee>
+        <div class="brand-lane" data-marquee>
           <div class="section-shell brand-lane__label">
-            <span>01</span>
             <h3>Chinese brands going to Europe</h3>
           </div>
           <div class="brand-lane__viewport">
@@ -196,17 +331,35 @@
                   aria-label="View Joybuy case proof"
                 >
                   <img src="/assets/brand/partners/joybuy.svg" width="187" height="52" alt="Joybuy">
-                  <span>View case proof</span>
+                  <span class="brand-lane__proof" aria-hidden="true">↗</span>
                 </a>
-                <div class="brand-lane__item brand-lane__item--pending">
-                  <span>Official partner logos<br>pending client approval</span>
-                </div>
+                <a
+                  class="brand-lane__item brand-lane__item--dram5 brand-lane__item--proof"
+                  href="/services/social-media-management/#dram5"
+                  aria-label="View DRAM5 case proof"
+                >
+                  <img src="/assets/brand/partners/dram5.svg" width="1778" height="323" alt="DRAM5">
+                  <span class="brand-lane__proof" aria-hidden="true">↗</span>
+                </a>
+                <a
+                  class="brand-lane__item brand-lane__item--proof"
+                  href="/services/social-media-management/#lotus-realm"
+                  aria-label="View Lotus Realm case proof"
+                >
+                  <span class="partner-wordmark partner-wordmark--lotus"><span aria-hidden="true">◇</span><strong>Lotus Realm</strong></span>
+                  <span class="brand-lane__proof" aria-hidden="true">↗</span>
+                </a>
               </div>
               <div class="brand-lane__group" aria-hidden="true">
                 <div class="brand-lane__item">
                   <img src="/assets/brand/partners/joybuy.svg" width="187" height="52" alt="">
                 </div>
-                <div class="brand-lane__item brand-lane__item--pending"><span>Official partner logos<br>pending client approval</span></div>
+                <div class="brand-lane__item brand-lane__item--dram5">
+                  <img src="/assets/brand/partners/dram5.svg" width="1778" height="323" alt="">
+                </div>
+                <div class="brand-lane__item">
+                  <span class="partner-wordmark partner-wordmark--lotus"><span aria-hidden="true">◇</span><strong>Lotus Realm</strong></span>
+                </div>
               </div>
             </div>
           </div>
@@ -214,7 +367,6 @@
 
         <div class="brand-lane brand-lane--reverse" data-marquee>
           <div class="section-shell brand-lane__label">
-            <span>02</span>
             <h3>UK brands and local restaurants reaching Chinese audiences</h3>
           </div>
           <div class="brand-lane__viewport">
@@ -226,7 +378,7 @@
                   aria-label="View Khao So-i case proof"
                 >
                   <img class="partner-mark--khao-soi" src="/assets/brand/partners/khao-soi.webp" width="1500" height="435" alt="Khao So-i">
-                  <span>View case proof</span>
+                  <span class="brand-lane__proof" aria-hidden="true">↗</span>
                 </a>
                 <a
                   class="brand-lane__item brand-lane__item--proof"
@@ -234,7 +386,7 @@
                   aria-label="View Sen Sen case proof"
                 >
                   <span class="partner-wordmark partner-wordmark--sensen"><strong>SEN-SEN</strong><small>Noodle Bar</small></span>
-                  <span>View case proof</span>
+                  <span class="brand-lane__proof" aria-hidden="true">↗</span>
                 </a>
                 <a
                   class="brand-lane__item brand-lane__item--azuki brand-lane__item--proof"
@@ -242,139 +394,97 @@
                   aria-label="View The Azuki Room case proof"
                 >
                   <span class="partner-wordmark partner-wordmark--azuki"><span lang="ja" aria-hidden="true">紅豆</span><strong>The Azuki Room</strong></span>
-                  <span>View case proof</span>
-                </a>
-                <a
-                  class="brand-lane__item brand-lane__item--dram5 brand-lane__item--proof"
-                  href="/services/social-media-management/#dram5"
-                  aria-label="View DRAM5 case proof"
-                >
-                  <img src="/assets/brand/partners/dram5.svg" width="1778" height="323" alt="DRAM5">
-                  <span>View case proof</span>
-                </a>
-                <a
-                  class="brand-lane__item brand-lane__item--proof"
-                  href="/services/social-media-management/#lotus-realm"
-                  aria-label="View Lotus Realm case proof"
-                >
-                  <span class="partner-wordmark partner-wordmark--lotus"><span aria-hidden="true">◇</span><strong>Lotus Realm</strong></span>
-                  <span>View case proof</span>
+                  <span class="brand-lane__proof" aria-hidden="true">↗</span>
                 </a>
               </div>
               <div class="brand-lane__group" aria-hidden="true">
                 <div class="brand-lane__item"><img class="partner-mark--khao-soi" src="/assets/brand/partners/khao-soi.webp" width="1500" height="435" alt=""></div>
                 <div class="brand-lane__item"><span class="partner-wordmark partner-wordmark--sensen"><strong>SEN-SEN</strong><small>Noodle Bar</small></span></div>
                 <div class="brand-lane__item brand-lane__item--azuki"><span class="partner-wordmark partner-wordmark--azuki"><span lang="ja">紅豆</span><strong>The Azuki Room</strong></span></div>
-                <div class="brand-lane__item brand-lane__item--dram5"><img src="/assets/brand/partners/dram5.svg" width="1778" height="323" alt=""></div>
-                <div class="brand-lane__item"><span class="partner-wordmark partner-wordmark--lotus"><span>◇</span><strong>Lotus Realm</strong></span></div>
               </div>
             </div>
           </div>
         </div>
+        </div>
       </section>
 
-      <section class="section home-services" id="services" aria-labelledby="services-title">
+      <section class="section home-services reveal" id="services" aria-labelledby="services-title">
         <div class="section-shell">
-          <div class="home-services__heading reveal">
-            <p class="eyebrow">What we do</p>
-            <h2 class="section-heading" id="services-title">
-              One connected practice. Two market directions.
-            </h2>
+          <div class="home-services__heading">
+            <h2 class="section-heading" id="services-title">Working in both directions.</h2>
           </div>
 
-          <div class="market-directions reveal" aria-label="Markets we connect">
-            <div class="market-direction">
+          <div class="market-directions" aria-label="Markets we connect">
+            <article class="market-direction">
               <span>London to Shanghai</span>
               <h3>For UK brands reaching Chinese audiences</h3>
               <p>Creator, social and cultural strategy built for Chinese-speaking communities.</p>
-            </div>
-            <div class="market-direction">
+            </article>
+            <article class="market-direction">
               <span>Shanghai to London</span>
               <h3>For Chinese brands entering Europe</h3>
               <p>Cultural translation, positioning and creator-led campaigns for European growth.</p>
-            </div>
-          </div>
-
-          <div class="home-service-list" aria-label="Our three services">
-            <article class="home-service reveal">
-              <span class="home-service__number">01</span>
-              <svg class="home-service__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-              <h3>Influencer Marketing</h3>
-              <p>Creator identification, cultural briefing, co-creation and campaign delivery.</p>
-            </article>
-            <article class="home-service reveal">
-              <span class="home-service__number">02</span>
-              <svg class="home-service__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path>
-                <path d="M8 9h8M8 13h5"></path>
-              </svg>
-              <h3>Social Media Management</h3>
-              <p>Channel strategy, founder voice and always-on content shaped for each market.</p>
-            </article>
-            <article class="home-service reveal">
-              <span class="home-service__number">03</span>
-              <svg class="home-service__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"></path>
-                <circle cx="12" cy="10" r="2.5"></circle>
-              </svg>
-              <h3>Offline Activations</h3>
-              <p>Launches, events and community moments designed to travel beyond the room.</p>
             </article>
           </div>
         </div>
       </section>
 
       <section class="section selected-cases" id="cases" aria-labelledby="cases-title">
-        <div class="section-shell">
-          <div class="selected-cases__heading reveal">
-            <div>
-              <p class="eyebrow">Selected cases</p>
-              <h2 class="section-heading" id="cases-title">Proof across every service.</h2>
-            </div>
+        <div class="section-shell reveal">
+          <div class="selected-cases__heading">
+            <h2 class="section-heading" id="cases-title">Work in action.</h2>
             <a class="text-link" href="/work/">View all cases <span aria-hidden="true">→</span></a>
           </div>
 
           <div class="selected-case-grid">
-            <a class="selected-case reveal" href="/services/influencer-marketing/#khao-soi" aria-label="View Khao So-i influencer marketing case">
-              <span class="selected-case__service">Influencer Marketing</span>
-              <span class="selected-case__logo">
-                <img src="/assets/brand/partners/khao-soi.webp" width="1500" height="435" alt="Khao So-i">
+            <a class="selected-case" href="/services/influencer-marketing/" aria-label="Explore influencer marketing work">
+              <picture>
+                <source
+                  srcset="/assets/images/home/networking-01-900.webp 900w, /assets/images/home/networking-01-1400.webp 1400w, /assets/images/home/networking-01.webp 2400w"
+                  sizes="(max-width: 620px) calc(100vw - 32px), 33vw"
+                >
+                <img src="/assets/images/home/networking-01-1400.webp" width="1400" height="2100" alt="Creators meeting at a Zeeman Culture gathering in London" loading="lazy" decoding="async">
+              </picture>
+              <span class="selected-case__overlay" aria-hidden="true"></span>
+              <span class="selected-case__content">
+                <small>Creator networking · London</small>
+                <strong>Influencer Marketing</strong>
+                <span>View work <i aria-hidden="true">↗</i></span>
               </span>
-              <span class="selected-case__link">View case proof <span aria-hidden="true">→</span></span>
             </a>
-            <a class="selected-case selected-case--dram5 reveal" href="/services/social-media-management/#dram5" aria-label="View DRAM5 social media management case">
-              <span class="selected-case__service">Social Media Management</span>
-              <span class="selected-case__logo">
-                <img src="/assets/brand/partners/dram5.svg" width="1778" height="323" alt="DRAM5">
+            <a class="selected-case" href="/services/social-media-management/" aria-label="Explore DRAM5 social media management work">
+              <img src="/assets/images/social/dram5-team.webp" width="1229" height="692" alt="DRAM5 creator campaign team in London" loading="lazy" decoding="async">
+              <span class="selected-case__overlay" aria-hidden="true"></span>
+              <span class="selected-case__content">
+                <small>DRAM5</small>
+                <strong>Social Media Management</strong>
+                <span>View work <i aria-hidden="true">↗</i></span>
               </span>
-              <span class="selected-case__link">View case proof <span aria-hidden="true">→</span></span>
             </a>
-            <a class="selected-case reveal" href="/services/offline-activations/#joybuy" aria-label="View Joybuy offline activation case">
-              <span class="selected-case__service">Offline Activations</span>
-              <span class="selected-case__logo">
-                <img src="/assets/brand/partners/joybuy.svg" width="187" height="52" alt="Joybuy">
+            <a class="selected-case" href="/services/offline-activations/" aria-label="Explore Joybuy offline activation work">
+              <img src="/assets/images/offline/joybuy-popup.webp" width="1401" height="653" alt="Joybuy London activation beside Tower Bridge" loading="lazy" decoding="async">
+              <span class="selected-case__overlay" aria-hidden="true"></span>
+              <span class="selected-case__content">
+                <small>Joybuy · London</small>
+                <strong>Offline Activations</strong>
+                <span>View work <i aria-hidden="true">↗</i></span>
               </span>
-              <span class="selected-case__link">View case proof <span aria-hidden="true">→</span></span>
             </a>
           </div>
         </div>
       </section>
-    </main>
+      </main>
 
-    <footer class="site-footer home-footer" id="contact">
+      <footer class="site-footer home-footer" id="contact">
       <div class="section-shell">
         <div class="home-footer__cta reveal">
           <div>
-            <p class="eyebrow">Start a conversation</p>
+            <p class="home-footer__label">London · Shanghai</p>
             <h2>Let's create something impactful together.</h2>
           </div>
           <div class="home-footer__action">
             <p>Tell us what you are building and where you want it to travel.</p>
-            <a class="button button--light" href="/contact/">Get in touch</a>
+            <a class="button button--light" href="/contact/">Start a project</a>
           </div>
         </div>
 
@@ -382,7 +492,7 @@
           <div>
             <a class="brand" href="/" aria-label="Zeeman Culture home">
               <img class="brand__mark" src="/assets/brand/zeeman-seal-2026.webp" width="38" height="38" alt="">
-              <span>Zeeman Culture</span>
+              <span class="brand__wordmark">Zeeman Culture</span>
             </a>
             <p class="muted">Cross-cultural creative marketing.<br>London · Shanghai</p>
           </div>
@@ -404,6 +514,7 @@
           <a href="/privacy/">Privacy</a>
         </div>
       </div>
-    </footer>
+      </footer>
+    </div>
   </body>
 </html>

@@ -3,8 +3,9 @@
 ## Purpose
 
 Zeeman Culture is an English-first showcase website for brands seeking creator-led,
-cross-cultural marketing between China and Europe. Its primary action is a project
-enquiry; its secondary action is reviewing attributable case work.
+cross-cultural marketing between China and Europe. The homepage leads with
+services and selected work; the primary conversion remains a project enquiry
+on Contact.
 
 ## Audience
 
@@ -42,8 +43,53 @@ enquiry; its secondary action is reviewing attributable case work.
 
 - Warm ivory, forest green, restrained burgundy and muted gold.
 - Editorial serif headlines with clear sans-serif supporting copy.
+- Homepage display uses self-hosted Bluu Next Bold for the hero name, Culture
+  and Connection, and chapter display headings. Instrument Serif italic carries
+  the lighter strategy/outcome clause and the three mission words. Manrope
+  400/500/600 remains the homepage body and UI face. Existing subpages retain
+  their established serif-led editorial system.
 - The approved Zeeman seal retains its distressed printed character.
 - Motion supports hierarchy and remains optional under reduced-motion or Data Saver settings.
+
+## Homepage Visual Direction
+
+- The homepage alone uses the `Two-Way Signal` direction: a confident, modern
+  London-Shanghai agency world built around directional movement and proof.
+- Homepage colours are charcoal `#101512`, forest `#0F4A36`, canvas `#F7F8F4`,
+  pale mint `#C7E0D1` and white. Burgundy `#7A3340` is the homepage 10% accent.
+  Gold `#735F24` is reserved for hairlines and marquee hover.
+- The homepage uses a 12/8/4 responsive grid, asymmetric compositions, sharp
+  surfaces and restrained motion. It does not use generic icon tiles,
+  scroll hijacking or third-party animation libraries. The two market
+  directions sit as framed panels on the forest band; service blurbs stay
+  on Work in action.
+- The homepage story is fixed as hero, one advantages-and-brands chapter,
+  market directions, image-led work, then contact. Company narrative
+  and founders remain on About. Service names appear on the Work in action
+  cards, not as duplicate text columns inside the green band.
+- The first viewport uses an oversized two-line Zeeman Culture H1 and positioning
+  statement at middle-left, while both actions sit on a separate bottom baseline.
+  The message and actions remain clear of the fixed overlay header at every
+  supported viewport.
+- The second viewport is one full chapter: a two-line strategy statement,
+  three display-scale advantages, and full-bleed partner rows. One continuous
+  living-ink SVG begins completely absent at the top and paints or erases with
+  scroll. Every branch shares an exact anchor with the stem; the route follows
+  intentional gutters, changes to pale mint across green sections, then sweeps
+  behind the footer CTA and exits through the bottom edge. There is no Three.js,
+  WebGL or idle animation. Reduced-motion, Data Saver and no-JavaScript modes
+  show a static illustration.
+- The homepage header is transparent over the opening frame. Once scrolling
+  begins, the complete brand and navigation row becomes one compact frosted
+  off-white surface; the outer fixed header remains transparent.
+- The homepage footer is sized for laptop browsers first: compact CTA,
+  brand, Explore and Contact spacing, with Start a project remaining the
+  contact path.
+- The hero uses responsive versioned derivatives of the approved 15-second
+  London-Shanghai film. It plays silently at `0.667x`, uses a scene-aware portrait
+  crop on mobile and fades through the London poster when resetting after Shanghai.
+- The hero primary action is Our Services (`/#services`). View selected work
+  remains the secondary action. Start a project stays on the contact path.
 
 ## Release Boundary
 

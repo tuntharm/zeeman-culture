@@ -1,0 +1,292 @@
+.page--about .about-think {
+  padding: 24px 0 8px;
+  background: var(--paper);
+}
+
+.page--about .about-think__panel {
+  position: relative;
+  display: grid;
+  gap: 28px;
+  padding: 36px 40px 28px;
+  color: var(--white);
+  background: var(--green);
+}
+
+.page--about .about-think__copy .eyebrow {
+  color: #e2cd86;
+}
+
+.page--about .about-think__copy .section-heading {
+  max-width: none;
+  margin-bottom: 0;
+  color: var(--white);
+}
+
+.page--about .about-think__board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.page--about .about-think__card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px 24px 24px;
+  color: var(--ink);
+  background: var(--white);
+}
+
+.page--about .about-think__card span {
+  color: var(--burgundy);
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+.page--about .about-think__card h3 {
+  margin: 0;
+  color: var(--green);
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.page--about .about-think__card p {
+  margin: 0;
+  color: rgba(24, 55, 46, 0.78);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.page--about .about-think__caption,
+.page--about .about-engine__caption {
+  justify-self: end;
+  width: max-content;
+  padding: 12px 16px;
+  color: var(--white);
+  background: var(--burgundy);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.page--about .section--paper {
+  padding: 28px 0 48px;
+}
+
+.page--about .section--paper .section-heading {
+  margin-bottom: 28px;
+}
+
+.page--about .about-engine {
+  padding: 48px 0 36px;
+  color: var(--white);
+  background: var(--green);
+}
+
+.page--about .about-engine__layout {
+  display: grid;
+  align-items: stretch;
+  gap: 40px;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+}
+
+.page--about .about-engine .eyebrow {
+  color: #e2cd86;
+}
+
+.page--about .about-engine .section-heading {
+  max-width: 12ch;
+  margin-bottom: 18px;
+}
+
+.page--about .about-engine .section-intro {
+  max-width: 36em;
+  margin: 0;
+  color: rgba(255, 253, 248, 0.84);
+}
+
+.page--about .about-engine__board {
+  display: grid;
+  align-content: start;
+  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 24px;
+  background: #0f4a36;
+}
+
+.page--about .about-engine__caption {
+  grid-column: 1 / -1;
+  align-self: start;
+}
+
+.page--about .about-engine__card {
+  display: grid;
+  gap: 8px;
+  padding: 28px 26px;
+  color: var(--ink);
+  background: var(--white);
+}
+
+.page--about .about-engine__card span {
+  color: var(--burgundy);
+  font-family: var(--serif);
+  font-size: 18px;
+}
+
+.page--about .about-engine__card h3 {
+  margin: 0;
+  color: var(--green);
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.page--about .about-engine__card p {
+  margin: 0;
+  color: rgba(24, 55, 46, 0.78);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.page--about .about-close {
+  padding: 48px 0;
+  color: var(--ink);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+
+.page--about .about-close__layout {
+  display: grid;
+  align-items: end;
+  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.38fr);
+}
+
+.page--about .about-close .section-heading {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--green);
+  font-size: clamp(2rem, 3.4vw, 3.1rem);
+}
+
+.page--about .about-close__action p {
+  margin: 0 0 18px;
+  color: rgba(24, 55, 46, 0.72);
+}
+
+.page--about .about-close .button {
+  color: var(--white);
+  border-color: var(--burgundy);
+  background: var(--burgundy);
+}
+
+.page--about .about-close .button:hover {
+  color: var(--white);
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.page--about .about-footer {
+  padding-top: 36px;
+  background: var(--green);
+}
+
+.page--about .about-footer .footer-grid {
+  padding-top: 0;
+}
+
+.page--about .about-footer .footer-links a:hover,
+.page--about .about-footer .footer-bottom a:hover {
+  color: #e2cd86;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .page--about .about-close .button:hover {
+    color: var(--white);
+    border-color: var(--green);
+    background: var(--green);
+  }
+}
+
+@media (max-width: 1020px) {
+  .page--about .about-think {
+    padding: 24px 0 8px;
+  }
+
+  .page--about .about-think__panel {
+    gap: 24px;
+    padding: 28px 28px 24px;
+  }
+
+  .page--about .about-engine {
+    padding: 44px 0 32px;
+  }
+
+  .page--about .about-engine__layout {
+    gap: 32px;
+  }
+
+  .page--about .section--paper {
+    padding: 28px 0 44px;
+  }
+}
+
+@media (max-width: 820px) {
+  .page--about .about-think__board,
+  .page--about .about-engine__layout,
+  .page--about .about-engine__board,
+  .page--about .about-close__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .page--about .about-think__copy,
+  .page--about .about-engine .editorial-copy {
+    max-width: 680px;
+  }
+
+  .page--about .about-close {
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .page--about .about-think {
+    padding: 28px 0 8px;
+  }
+
+  .page--about .about-think__panel {
+    gap: 22px;
+    padding: 24px 20px 24px;
+  }
+
+  .page--about .about-think__card,
+  .page--about .about-engine__card {
+    padding: 20px 18px;
+  }
+
+  .page--about .about-think__card h3 {
+    font-size: 20px;
+  }
+
+  .page--about .about-engine {
+    padding: 36px 0 28px;
+  }
+
+  .page--about .about-engine__board {
+    padding: 16px 16px 20px;
+  }
+
+  .page--about .about-engine__card h3 {
+    font-size: 28px;
+  }
+
+  .page--about .section--paper {
+    padding: 28px 0 40px;
+  }
+
+  .page--about .about-close .section-heading {
+    font-size: 2rem;
+  }
+}
