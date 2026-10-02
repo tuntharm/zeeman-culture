@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">A shared idea, a local expression</title>
+  <desc id="desc">An original editorial illustration of two creator-brief pages, one forest green and one ivory, connected by a botanical ink stem. The pages distinguish a shared idea from local expression.</desc>
+  <defs>
+    <g id="leaf">
+      <path d="M0 0C9-20 31-30 52-25C46-7 26 7 0 0Z" fill="#0F4A36"/>
+      <path d="M3-1Q25-9 43-20" fill="none" stroke="#C7E0D1" stroke-width="1.5"/>
+    </g>
+    <g id="broad-leaf">
+      <path d="M0 0C-1-21 14-40 36-43C47-23 33 1 0 0Z" fill="#0F4A36"/>
+      <path d="M3-3Q18-16 31-36" fill="none" stroke="#C7E0D1" stroke-width="1.5"/>
+    </g>
+    <g id="bud">
+      <path d="M0 0C2-14 11-26 24-29C26-15 18-3 0 0Z" fill="#0F4A36"/>
+    </g>
+  </defs>
+  <rect width="1200" height="900" fill="#E2EBDD"/>
+  <path d="M86 92H1114M86 808H1114" stroke="#0F4A36" stroke-opacity=".2"/>
+  <text x="88" y="64" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="4">THE CREATOR BRIEF</text>
+  <text x="1112" y="64" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" text-anchor="end">02</text>
+  <g transform="translate(131 163) rotate(-4 227 252)">
+    <rect x="9" y="12" width="454" height="513" fill="#0F4A36" opacity=".05"/>
+    <rect width="454" height="513" fill="#0F4A36"/>
+    <text x="43" y="58" fill="#C7E0D1" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3">THE CONSTANT</text>
+    <path d="M43 82H411" stroke="#C7E0D1" stroke-opacity=".4"/>
+    <text x="39" y="196" fill="#F7F8F4" font-family="Georgia, Times New Roman, serif" font-size="73">Shared</text>
+    <text x="40" y="273" fill="#F7F8F4" font-family="Georgia, Times New Roman, serif" font-size="73">idea.</text>
+    <path d="M44 330H349M44 348H280M44 366H328" stroke="#C7E0D1" stroke-width="3" stroke-opacity=".35"/>
+    <text x="43" y="457" fill="#C7E0D1" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="2">PURPOSE · PROMISE</text>
+  </g>
+  <g transform="translate(627 221) rotate(4 214 246)">
+    <rect x="9" y="12" width="427" height="493" fill="#0F4A36" opacity=".04"/>
+    <rect width="427" height="493" fill="#FCFCF7" stroke="#0F4A36" stroke-opacity=".16"/>
+    <text x="40" y="56" fill="#7A3340" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3">THE INTERPRETATION</text>
+    <path d="M40 80H387" stroke="#0F4A36" stroke-opacity=".25"/>
+    <text x="35" y="187" fill="#0F4A36" font-family="Georgia, Times New Roman, serif" font-size="70" font-style="italic">Local</text>
+    <text x="35" y="259" fill="#0F4A36" font-family="Georgia, Times New Roman, serif" font-size="63" font-style="italic">expression.</text>
+    <path d="M40 288C137 278 242 282 376 276" fill="none" stroke="#7A3340" stroke-width="2.5"/>
+    <path d="M41 331H312M41 349H366M41 367H260" stroke="#0F4A36" stroke-width="3" stroke-opacity=".17"/>
+    <text x="40" y="443" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="2">VOICE · CONTEXT</text>
+  </g>
+  <path d="M502 147C524 140 547 142 565 154" fill="none" stroke="#7A3340" stroke-width="3" stroke-linecap="round"/>
+  <path d="M556 142L565 154L550 158" fill="none" stroke="#7A3340" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="none" stroke="#0F4A36" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M436 766C490 732 521 689 543 637C567 580 569 522 594 469C619 415 620 365 592 319" stroke-width="3.5"/>
+    <path d="M514 690C537 700 558 696 577 678M549 621C528 610 516 591 515 571M610 416C591 411 578 398 573 382M602 341C620 335 629 322 632 308" stroke-width="2"/>
+  </g>
+  <use href="#leaf" transform="translate(577 678) rotate(4) scale(.9)"/>
+  <use href="#broad-leaf" transform="translate(515 571) rotate(-72) scale(.93)"/>
+  <use href="#leaf" transform="translate(573 382) rotate(-135) scale(.85)"/>
+  <use href="#bud" transform="translate(632 308) rotate(20) scale(.85)"/>
+  <text x="88" y="848" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2.5">MAKE ROOM FOR A LOCAL VOICE.</text>
+</svg>

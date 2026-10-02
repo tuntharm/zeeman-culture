@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Meaning and context, between London and Shanghai</title>
+  <desc id="desc">An original editorial illustration of two offset paper compositions connected by a fine botanical line. Forest green and burgundy typography identifies London and Shanghai.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F7F8F4"/>
+      <stop offset="1" stop-color="#E9EBDD"/>
+    </linearGradient>
+    <g id="leaf">
+      <path d="M0 0C9-20 31-30 52-25C46-7 26 7 0 0Z" fill="#0F4A36"/>
+      <path d="M3-1Q25-9 43-20" fill="none" stroke="#C7E0D1" stroke-width="1.5"/>
+    </g>
+    <g id="bud">
+      <path d="M0 0C2-14 11-26 24-29C26-15 18-3 0 0Z" fill="#0F4A36"/>
+    </g>
+  </defs>
+  <rect width="1200" height="900" fill="url(#paper)"/>
+  <path d="M86 92H1114M86 808H1114" stroke="#0F4A36" stroke-opacity=".2"/>
+  <text x="88" y="64" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="4">BETWEEN CULTURES</text>
+  <text x="1112" y="64" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" text-anchor="end">01</text>
+  <g transform="translate(122 177) rotate(-5 216 254)">
+    <rect x="8" y="11" width="426" height="508" fill="#0F4A36" opacity=".035"/>
+    <rect width="426" height="508" fill="#FCFCF7" stroke="#0F4A36" stroke-opacity=".18"/>
+    <text x="40" y="56" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="4">LONDON</text>
+    <path d="M40 80H386" stroke="#0F4A36" stroke-opacity=".25"/>
+    <text x="37" y="211" fill="#0F4A36" font-family="Georgia, Times New Roman, serif" font-size="70">Meaning</text>
+    <path d="M42 256H253M42 271H341M42 286H295" stroke="#0F4A36" stroke-opacity=".17" stroke-width="3"/>
+    <circle cx="79" cy="412" r="38" fill="none" stroke="#0F4A36" stroke-opacity=".32"/>
+    <path d="M52 412H106M79 385V439" stroke="#0F4A36" stroke-opacity=".32"/>
+    <path d="M284 428H380M359 413L380 428L359 443" stroke="#0F4A36" stroke-width="2" fill="none"/>
+  </g>
+  <g transform="translate(653 224) rotate(5 210 241)">
+    <rect x="8" y="11" width="412" height="485" fill="#0F4A36" opacity=".035"/>
+    <rect width="412" height="485" fill="#E1EBDE" stroke="#0F4A36" stroke-opacity=".18"/>
+    <text x="38" y="55" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="4">SHANGHAI</text>
+    <path d="M38 80H374" stroke="#0F4A36" stroke-opacity=".25"/>
+    <text x="33" y="210" fill="#7A3340" font-family="Georgia, Times New Roman, serif" font-size="72" font-style="italic">Context</text>
+    <path d="M40 256H303M40 271H240M40 286H344" stroke="#0F4A36" stroke-opacity=".17" stroke-width="3"/>
+    <path d="M36 410H132M57 395L36 410L57 425" stroke="#0F4A36" stroke-width="2" fill="none"/>
+    <circle cx="335" cy="409" r="32" fill="#7A3340" opacity=".88"/>
+    <circle cx="335" cy="409" r="23" fill="none" stroke="#F7F8F4" stroke-opacity=".6"/>
+  </g>
+  <g fill="none" stroke="#0F4A36" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M320 745C372 700 383 635 428 589C475 541 542 540 577 494C611 451 594 385 629 342C665 298 724 281 776 298" stroke-width="3.5"/>
+    <path d="M421 597C445 610 465 609 483 592M493 548C478 523 481 503 501 486M571 502C600 515 619 510 634 490M614 372C592 366 580 353 577 335M658 316C682 328 703 325 722 312" stroke-width="2"/>
+  </g>
+  <use href="#leaf" transform="translate(483 592) rotate(-18) scale(.9)"/>
+  <use href="#leaf" transform="translate(501 486) rotate(-97) scale(1.03)"/>
+  <use href="#leaf" transform="translate(634 490) rotate(15) scale(.86)"/>
+  <use href="#leaf" transform="translate(577 335) rotate(-158) scale(.94)"/>
+  <use href="#bud" transform="translate(722 312) rotate(55) scale(.8)"/>
+  <text x="88" y="848" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2.5">ONE CONVERSATION. TWO PERSPECTIVES.</text>
+</svg>

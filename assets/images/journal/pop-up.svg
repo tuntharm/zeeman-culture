@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">An invitation becomes a shared story</title>
+  <desc id="desc">An original editorial illustration pairing a burgundy invitation with a mint photographic viewfinder. A delicate botanical stem connects the physical gathering to its story.</desc>
+  <defs>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#D7E7D9"/>
+      <stop offset="1" stop-color="#B3CDBA"/>
+    </linearGradient>
+    <g id="leaf">
+      <path d="M0 0C9-20 31-30 52-25C46-7 26 7 0 0Z" fill="#0F4A36"/>
+      <path d="M3-1Q25-9 43-20" fill="none" stroke="#C7E0D1" stroke-width="1.5"/>
+    </g>
+    <g id="broad-leaf">
+      <path d="M0 0C-1-21 14-40 36-43C47-23 33 1 0 0Z" fill="#0F4A36"/>
+      <path d="M3-3Q18-16 31-36" fill="none" stroke="#C7E0D1" stroke-width="1.5"/>
+    </g>
+    <g id="bud">
+      <path d="M0 0C2-14 11-26 24-29C26-15 18-3 0 0Z" fill="#0F4A36"/>
+    </g>
+  </defs>
+  <rect width="1200" height="900" fill="#F0F0E7"/>
+  <path d="M86 92H1114M86 808H1114" stroke="#0F4A36" stroke-opacity=".2"/>
+  <text x="88" y="64" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="4">OFFLINE TO ONLINE</text>
+  <text x="1112" y="64" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" text-anchor="end">03</text>
+  <g transform="translate(631 166) rotate(6 216 255)">
+    <rect x="9" y="12" width="431" height="526" fill="#0F4A36" opacity=".04"/>
+    <rect width="431" height="526" fill="#FCFCF7" stroke="#0F4A36" stroke-opacity=".15"/>
+    <rect x="26" y="26" width="379" height="371" fill="url(#frame)"/>
+    <circle cx="215" cy="210" r="99" fill="#F7F8F4" opacity=".45"/>
+    <circle cx="215" cy="210" r="65" fill="none" stroke="#0F4A36" stroke-opacity=".22"/>
+    <path d="M61 105V62H104M327 62H370V105M370 318V361H327M104 361H61V318" fill="none" stroke="#0F4A36" stroke-width="2.5"/>
+    <path d="M196 210H234M215 191V229" fill="none" stroke="#0F4A36" stroke-opacity=".4" stroke-width="1.5"/>
+    <text x="27" y="452" fill="#0F4A36" font-family="Georgia, Times New Roman, serif" font-size="43" font-style="italic">A story to share.</text>
+    <path d="M28 484H202" stroke="#0F4A36" stroke-opacity=".23"/>
+  </g>
+  <g transform="translate(128 237) rotate(-6 226 244)">
+    <rect x="9" y="12" width="453" height="480" fill="#0F4A36" opacity=".045"/>
+    <rect width="453" height="480" fill="#7A3340"/>
+    <rect x="23" y="23" width="407" height="434" fill="none" stroke="#F7F8F4" stroke-opacity=".35"/>
+    <text x="48" y="75" fill="#F7F8F4" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="4">AN INVITATION</text>
+    <path d="M49 101H401" stroke="#F7F8F4" stroke-opacity=".3"/>
+    <text x="44" y="215" fill="#F7F8F4" font-family="Georgia, Times New Roman, serif" font-size="74">Come</text>
+    <text x="44" y="293" fill="#F7F8F4" font-family="Georgia, Times New Roman, serif" font-size="74">together.</text>
+    <path d="M49 349H206" stroke="#F7F8F4" stroke-opacity=".45"/>
+    <text x="49" y="407" fill="#F7F8F4" font-family="Arial, Helvetica, sans-serif" font-size="17" letter-spacing="3">LONDON</text>
+    <circle cx="366" cy="394" r="23" fill="none" stroke="#F7F8F4" stroke-opacity=".6"/>
+    <path d="M354 394H377M369 386L377 394L369 402" fill="none" stroke="#F7F8F4" stroke-width="1.5"/>
+  </g>
+  <g fill="none" stroke="#0F4A36" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M455 777C506 732 535 684 550 627C565 569 578 522 619 480C660 438 696 414 718 368C742 319 737 280 772 234" stroke-width="3.5"/>
+    <path d="M526 692C549 700 570 693 586 675M562 580C541 569 532 551 535 531M617 482C644 493 666 486 682 468M703 395C681 387 669 371 668 350M739 292C764 300 782 293 795 276" stroke-width="2"/>
+  </g>
+  <use href="#leaf" transform="translate(586 675) rotate(2) scale(.95)"/>
+  <use href="#broad-leaf" transform="translate(535 531) rotate(-71) scale(.93)"/>
+  <use href="#leaf" transform="translate(682 468) rotate(-8) scale(.88)"/>
+  <use href="#leaf" transform="translate(668 350) rotate(-140) scale(.9)"/>
+  <use href="#bud" transform="translate(795 276) rotate(50) scale(.9)"/>
+  <text x="88" y="848" fill="#0F4A36" font-family="Arial, Helvetica, sans-serif" font-size="15" letter-spacing="2.5">A MOMENT THAT TRAVELS FURTHER.</text>
+</svg>

@@ -1,4 +1,6 @@
 (() => {
+  document.documentElement.classList.remove("no-js");
+  document.documentElement.classList.add("js");
   const body = document.body;
   const header = document.querySelector(".site-header");
   const nav = document.querySelector(".site-nav");

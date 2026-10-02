@@ -24,7 +24,11 @@ on Contact.
 ## Routes
 
 - `/` - positioning, advantages, brand exchange, services, selected cases and contact.
-- `/work/` - filterable case-study overview.
+- `/work/` - filterable case-study overview, reached directly from Cases navigation.
+- `/journal/` - editorial overview with three clearly labelled sample articles.
+- `/journal/translation-beyond-language/`, `/journal/creator-brief-local-voice/`
+  and `/journal/london-pop-up-shared-story/` - static sample articles. All Journal
+  pages remain `noindex,follow` until approved editorial content replaces the demos.
 - `/services/influencer-marketing/` - influencer and creator-network proof.
 - `/services/social-media-management/` - social strategy and account-development proof.
 - `/services/offline-activations/` - event, launch and activation proof.
@@ -64,7 +68,7 @@ on Contact.
   directions sit as framed panels on the forest band; service blurbs stay
   on Work in action.
 - The homepage story is fixed as hero, one advantages-and-brands chapter,
-  market directions, image-led work, then contact. Company narrative
+  market directions, image-led work, Journal articles, then contact. Company narrative
   and founders remain on About. Service names appear on the Work in action
   cards, not as duplicate text columns inside the green band.
 - The first viewport uses an oversized two-line Zeeman Culture H1 and positioning
@@ -73,12 +77,26 @@ on Contact.
   supported viewport.
 - The second viewport is one full chapter: a two-line strategy statement,
   three display-scale advantages, and full-bleed partner rows. One continuous
-  living-ink SVG begins completely absent at the top and paints or erases with
-  scroll. Every branch shares an exact anchor with the stem; the route follows
-  intentional gutters, changes to pale mint across green sections, then sweeps
-  behind the footer CTA and exits through the bottom edge. There is no Three.js,
-  WebGL or idle animation. Reduced-motion, Data Saver and no-JavaScript modes
-  show a static illustration.
+  botanical SVG begins completely absent at the top and paints or erases with
+  scroll. The original sweeping composition, broad branches and footer return
+  use measured page-pixel coordinates, with a new tangent-matched section for
+  the added Journal length. Three coherent leaf forms stay at a uniform pixel
+  scale; branches share exact sampled anchors with the stem. Length-based leaf
+  clusters alternate fuller and narrow forms, with buds near branch tips.
+  Section positions control geometry and forest/mint colour changes. Leaves unfold
+  around a fixed petiole only after their supporting branch reaches them; reverse
+  scrolling folds them back. Placement protects actual text lines and controls,
+  trying nearby positions before omitting a leaf. The artwork travels behind
+  cards and through spare section space; individual leaves are kept clear of
+  text and links. The footer return completes at the bottom and erases in reverse.
+  There is no Three.js, WebGL or idle animation. Reduced-motion and Data Saver
+  show the complete calibrated illustration; no-JavaScript mode has a connected
+  static stem and fixed-size sprigs, plus visible mobile navigation.
+- After Work in action, “Between cultures.” introduces a manual Journal carousel:
+  two articles and a next-card preview on desktop, one and a preview on mobile.
+  Previous/next controls enhance native scrolling; article links remain available
+  without JavaScript. The sample editorial artwork is original SVG, and the three
+  roughly 500-word articles make no invented client-result claims.
 - The homepage header is transparent over the opening frame. Once scrolling
   begins, the complete brand and navigation row becomes one compact frosted
   off-white surface; the outer fixed header remains transparent.
@@ -106,5 +124,6 @@ Local review comes first. A branch preview may be pushed only after local approv
 ## Non-goals
 
 - No ecommerce, authentication, CMS, analytics or cookie tracking in this version.
+- Client self-authoring and hosted deployment are subsequent phases.
 - No China Business Forum agenda or event-led homepage positioning.
 - No invented evidence, partnership claims or generated testimonials.
