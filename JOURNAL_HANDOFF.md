@@ -61,6 +61,19 @@ Avoid changing or deleting published addresses without a redirect migration. Pub
 - Server credentials absent from all 417 generated build files; private-file and draft URL checks return 404.
 - Local Studio sign-in, draft editing, custom-cover selection and article preview were checked in the browser. A private custom-cover practice draft is available; it has not been published.
 - Dependency audit: no high or critical findings; six moderate entries trace to the inherited `typeid-js` / `uuid` advisory. Do not force an incompatible major override without an upstream update or compatibility review.
-- Customer invitations have not been sent. Production release verification is recorded below after deployment.
+- Customer invitations have not been sent. The production website was released on 2 October 2026; hosted editor permission is the remaining handover gate.
 
 For ongoing environment management and deployment, install the Vercel CLI with `npm i -g vercel`. Setup in this session used `npx vercel@latest`.
+
+## Production release (2 October 2026)
+
+- Website: https://zeeman-culture.vercel.app/
+- Journal: https://zeeman-culture.vercel.app/journal/
+- Team login: https://zeeman-culture.vercel.app/studio/
+- Release commit: `57c120f` on `codex/journal-studio`, pushed and read back from GitHub.
+- Vercel deployment `dpl_3Gdbn5mdEesSAyGBL4HUxWE8uY5e` reached READY and was assigned the production alias.
+- Sanity resource is connected to Production, Preview and Development.
+- Live homepage, Journal, all three sample articles, static service/site pages and Studio assets returned 200. Unknown articles and private source/environment paths returned 404.
+- Cases navigation points to `/work/` on all inspected pages. Live browser filters retain 9 / 3 / 2 / 4 counts.
+- CMS pages return `private, no-store`; sample articles retain `noindex,follow`.
+- The deployed Studio currently requests an authenticated CORS origin for `https://zeeman-culture.vercel.app`. The exact permission form is prepared; confirmation is required before enabling it. This permission allows signed-in editors from the hosted Studio, not anonymous editing access.
