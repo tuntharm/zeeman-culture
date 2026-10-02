@@ -1,0 +1,38 @@
+{
+  "name": "zeeman-culture",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node --watch --env-file=.env.local scripts/dev-server.mjs",
+    "seed:journal": "node --env-file=.env.local scripts/seed-journal.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@sanity/client": "^8.9.0",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/ui": "^4.3.0",
+    "cheerio": "^1.2.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sanity": "^6.17.0",
+    "styled-components": "^6.5.3"
+  },
+  "overrides": {
+    "@module-federation/dts-plugin@2.9.1": {
+      "adm-zip": "0.6.1",
+      "undici": "7.30.0"
+    },
+    "@vercel/frameworks@3.29.0": {
+      "js-yaml": "3.15.2",
+      "smol-toml": "1.9.0"
+    }
+  },
+  "dependencyOverrideNotes": {
+    "@module-federation/dts-plugin@2.9.1": "Replace vulnerable exact ZIP and HTTP/WebSocket dependency pins with patched versions in the same major lines. Remove when the upstream pins are patched.",
+    "@vercel/frameworks@3.29.0": "Replace vulnerable exact YAML/TOML parser pins while retaining their major versions. Remove when the upstream pins are patched."
+  }
+}

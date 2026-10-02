@@ -6,6 +6,7 @@
   const next = carousel.querySelector('[data-journal-next]');
   const position = carousel.querySelector('[data-journal-position]');
   const cards = [...rail.children];
+  if (!cards.length) return;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   let frame = 0;
   const sync = () => {

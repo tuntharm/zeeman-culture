@@ -46,5 +46,25 @@
         }
       ]
     }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/site?path=/"
+    },
+    {
+      "source": "/journal/",
+      "destination": "/api/site?path=/journal/"
+    },
+    {
+      "source": "/journal/:slug/",
+      "destination": "/api/site?path=/journal/:slug/"
+    },
+    {
+      "source": "/studio/:path*",
+      "destination": "/studio/index.html"
+    }
   ]
 }

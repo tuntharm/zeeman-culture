@@ -1,0 +1,8 @@
+deliverables/
+tmp/
+tests/
+.env*
+.sanity/
+.git/
+README.md
+JOURNAL_HANDOFF.md

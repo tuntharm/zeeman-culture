@@ -2,3 +2,9 @@
 .vercel
 
 __pycache__/
+.env*
+node_modules/
+dist/
+lib/generated-templates.mjs
+
+.sanity/
