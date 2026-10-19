@@ -6,7 +6,7 @@
   const stem = svg.querySelector('.home-scroll-vine__stroke--main');
   const strokes = [...svg.querySelectorAll('.home-scroll-vine__stroke')];
   const details = svg.querySelector('[data-vine-details]');
-  const sections = ['advantages', 'services', 'cases', 'journal', 'contact']
+  const sections = ['advantages', 'services', 'cases', 'founders', 'journal', 'contact']
     .map(id => document.getElementById(id)).filter(Boolean);
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -170,6 +170,7 @@
     const width = story.clientWidth;
     height = storyRect.height;
     const mobile = width <= 620;
+    const tablet = width > 620 && width <= 820;
     const relativeY = el => {
       let top = 0;
       for (let node = el; node && node !== story; node = node.offsetParent) top += node.offsetTop;
@@ -181,19 +182,69 @@
     svg.setAttribute('height', height);
     const route = mobile ? routes.mobile : routes.desktop;
     const journal = document.getElementById('journal');
-    const journalTop = relativeY(journal);
-    const journalHeight = journal.getBoundingClientRect().height;
+    const journalTop = journal ? relativeY(journal) : height;
+    const journalHeight = journal ? journal.getBoundingClientRect().height : 0;
     const formerHeight = height - journalHeight;
     const scaleX = width / route.width;
     const scaleY = formerHeight / route.height;
-    const insertionY = journalTop / scaleY;
+    const insertionY = journal ? journalTop / scaleY : Infinity;
+    // With Journal paused, attach the original route to the overview page's
+    // real sections so it starts below the hero and reaches the footer.
+    const compactAnchors = [
+      [mobile ? 820 : 1065, relativeY(document.getElementById('advantages'))],
+      [mobile ? 1770 : 1840, relativeY(document.getElementById('services'))],
+      [mobile ? 2580 : 2730, relativeY(document.getElementById('cases') || document.getElementById('contact'))],
+      [mobile ? 3000 : 3132, relativeY(document.getElementById('founders') || document.getElementById('contact'))],
+      [mobile ? 3615 : 3512, relativeY(document.getElementById('contact'))],
+      [route.height, height],
+    ];
+    const compactY = y => {
+      const index = compactAnchors.findIndex((anchor, i) => i > 0 && y <= anchor[0]);
+      const end = index < 0 ? compactAnchors.length - 1 : index;
+      const [a, b] = [compactAnchors[end - 1], compactAnchors[end]];
+      return a[1] + (y - a[0]) / (b[0] - a[0]) * (b[1] - a[1]);
+    };
     const parse = source => {
       const values = source.match(/-?\d+(?:\.\d+)?/g).map(Number);
       const points = [];
       for (let i = 0; i < values.length; i += 2) points.push({ x: values[i], y: values[i + 1] });
       return points;
     };
-    const map = (p, after = p.y >= insertionY) => ({ x: p.x * scaleX, y: p.y * scaleY + (after ? journalHeight : 0) });
+    // Keep a flowing Services curve, easing back to the outer gutter before case cards.
+    const servicePull = y => {
+      const t = clamp((y - 2510) / 220);
+      const minimum = width <= 1100 ? 0.82 : 0.55;
+      return minimum + (1 - minimum) * t * t * (3 - 2 * t);
+    };
+    // Keep the original bends in the real space beside cards and portraits.
+    // A full edge pull flattens every control point into one vertical line.
+    const overviewGutter = Math.min(...['.home-cases__rail', '.home-founders__grid'].map(selector => {
+      const node = story.querySelector(selector);
+      return node ? width - (node.getBoundingClientRect().right - storyRect.left) : width;
+    }));
+    const nearEdge = mobile ? 7 : 10;
+    const farEdge = Math.max(nearEdge, Math.min(mobile ? 32 : 64,
+      overviewGutter - (mobile ? 4.5 : 9) - 4));
+    const ease = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
+    const map = (p, after = p.y >= insertionY) => {
+      // Leave room for the narrower right-hand tablet column. Ease back into
+      // the original route below the introduction rather than bending the stem.
+      const baseX = p.x * scaleX + (tablet ? 40 * clamp((1840 - p.y) / 238) : 0)
+        + (!journal && mobile ? (width - 5 - p.x * scaleX) * Math.min(clamp((p.y - 2320) / 260), clamp((3940 - p.y) / 325)) : 0)
+        + (!journal && !mobile ? (width - 12 - p.x * scaleX)
+          * Math.min(clamp((p.y - 1840) / 180), clamp((3690 - p.y) / 178)) * servicePull(p.y) : 0);
+      const weight = journal ? 0 : ease((p.y - (compactAnchors[2][0] - 180)) / 180)
+        * ease((compactAnchors[4][0] + 180 - p.y) / 180);
+      const chapter = p.y < compactAnchors[3][0] ? 2 : 3;
+      const phase = clamp((p.y - compactAnchors[chapter][0])
+        / (compactAnchors[chapter + 1][0] - compactAnchors[chapter][0]));
+      const bend = (1 - Math.cos(2 * Math.PI * phase)) / 2;
+      const curveX = width - (nearEdge + (farEdge - nearEdge) * bend);
+      return {
+        x: baseX + (curveX - baseX) * weight,
+        y: journal ? p.y * scaleY + (after ? journalHeight : 0) : compactY(p.y),
+      };
+    };
     const pair = p => `${p.x.toFixed(2)} ${p.y.toFixed(2)}`;
     const lerp = (a, b, t) => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
     const split = (p, curve, t) => {
@@ -206,7 +257,20 @@
     let previous = points[0];
     for (let i = 1; i < points.length; i += 3) {
       const curve = points.slice(i, i + 3);
-      if (previous.y < insertionY && curve[2].y >= insertionY) {
+      if (!journal && previous.y >= compactAnchors[2][0] && previous.y < compactAnchors[4][0]) {
+        if (previous.y === compactAnchors[2][0]) {
+          // Two gentle bows share vertical tangents at every join. Mapping the
+          // old control points independently can introduce sharp corners.
+          for (const chapter of [2, 3]) {
+            const top = compactAnchors[chapter][1];
+            const bottom = compactAnchors[chapter + 1][1];
+            const middle = (top + bottom) / 2;
+            const outside = width - nearEdge, inside = width - farEdge;
+            d += `C${pair({ x: outside, y: top + (middle - top) / 2 })} ${pair({ x: inside, y: middle - (middle - top) / 2 })} ${pair({ x: inside, y: middle })}`;
+            d += `C${pair({ x: inside, y: middle + (bottom - middle) / 2 })} ${pair({ x: outside, y: bottom - (bottom - middle) / 2 })} ${pair({ x: outside, y: bottom })}`;
+          }
+        }
+      } else if (previous.y < insertionY && curve[2].y >= insertionY) {
         let low = 0, high = 1;
         for (let n = 0; n < 32; n++) {
           const t = (low + high) / 2;
@@ -229,7 +293,10 @@
         d += `C${cut.right.map(p => pair(map(p, true))).join(' ')}`;
       } else {
         const after = previous.y >= insertionY;
-        d += `C${curve.map(p => pair(map(p, after))).join(' ')}`;
+        const mapped = curve.map(p => map(p, after));
+        if (!journal && curve[2].y === compactAnchors[2][0]) mapped[1].x = mapped[2].x;
+        if (!journal && previous.y === compactAnchors[4][0]) mapped[0].x = map(previous).x;
+        d += `C${mapped.map(pair).join(' ')}`;
       }
       previous = curve[2];
     }
@@ -270,7 +337,7 @@
       if (!node.textContent.trim() ||
           parent.closest('.hero, .sr-only, svg, script, style, [aria-hidden="true"]')) continue;
       range.selectNodeContents(node);
-      const clip = parent.closest('.home-journal__rail, .brand-exchange__viewport')?.getBoundingClientRect();
+      const clip = parent.closest('.home-journal__rail, .home-cases__rail, .brand-lane__viewport')?.getBoundingClientRect();
       [...range.getClientRects()].forEach(r => {
         const left = clip ? Math.max(r.left, clip.left) : r.left;
         const right = clip ? Math.min(r.right, clip.right) : r.right;
@@ -289,15 +356,25 @@
     const branchRoutes = route.branches.map(branch => {
       const points = parse(branch.d);
       const after = points[0].y >= insertionY;
-      return { ...branch, points: points.map(p => map(p, after)) };
+      let mapped = points.map(p => map(p, after));
+      if ((tablet && branch.name.includes('strategy')) || (!journal && (branch.name.includes('services') || branch.name.includes('cases')))) {
+        const anchor = mapped[0];
+        // Short, proportionate sprigs leave the tablet and service-card text clear.
+        const size = branch.name.includes('cases') ? 0.045 : (mobile ? 0.4 : 0.25);
+        mapped = mapped.map(p => ({ x: anchor.x + (p.x - anchor.x) * size,
+          y: anchor.y + (p.y - anchor.y) * size }));
+      }
+      return { ...branch, points: mapped };
     });
     // Continue the same broad branching rhythm above the new editorial section.
+    if (journal) {
     const journalAnchor = stem.getPointAtLength(ratioAtY(journalTop + 25) * length);
     const reach = mobile ? 72 : width * 0.40;
     branchRoutes.push({ name: 'vine-journal', light: false, duration: 0.055, points: [journalAnchor,
       { x: journalAnchor.x - reach * 0.30, y: journalAnchor.y - 18 },
       { x: journalAnchor.x - reach * 0.68, y: journalAnchor.y + 20 },
       { x: journalAnchor.x - reach, y: journalAnchor.y + 2 }] });
+    }
     branchRoutes.forEach((branch, index) => {
       const sourceAnchor = branch.points[0];
       let nearest = 0, nearestDistance = Infinity;

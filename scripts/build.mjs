@@ -1,10 +1,12 @@
 import { readFile, writeFile, mkdir, cp, readdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { load } from "cheerio";
+import { decorate } from "../lib/site.mjs";
+import { composeHomeOverview } from "../lib/home-overview.mjs";
+import { JOURNAL_ENABLED } from "../lib/features.mjs";
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 const templates = {
-  home: await readFile("index.html", "utf8"),
+  home: composeHomeOverview(await readFile("index.html", "utf8"), await readFile("work/index.html", "utf8")),
   journal: await readFile("journal/index.html", "utf8"),
   article: await readFile(
     "journal/translation-beyond-language/index.html",
@@ -34,17 +36,13 @@ async function decorateDir(dir) {
     const p = `${dir}/${entry.name}`;
     if (entry.isDirectory()) await decorateDir(p);
     else if (p.endsWith(".html")) {
-      const $ = load(await readFile(p, "utf8"));
-      $(".footer-bottom").append('<a href="/studio/">Team login</a>');
-      $("head").append(
-        '<link rel="stylesheet" href="/assets/css/journal-cms.css">',
-      );
-      await writeFile(p, $.html());
+      await writeFile(p, decorate(await readFile(p, "utf8")));
     }
   }
 }
 for (const dir of ["about", "contact", "privacy", "services", "work"])
   await decorateDir(`dist/${dir}`);
+if (JOURNAL_ENABLED) {
 const result = spawnSync(
   "node_modules/.bin/sanity",
   ["build", "dist/studio", "--yes"],
@@ -61,4 +59,5 @@ const result = spawnSync(
   },
 );
 if (result.status !== 0) process.exit(result.status || 1);
-console.log("Website and connected Journal Studio built.");
+}
+console.log(JOURNAL_ENABLED ? "Website and connected Journal Studio built." : "Website built. Journal and Studio are paused.");

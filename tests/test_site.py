@@ -37,7 +37,7 @@ class SiteContract(unittest.TestCase):
     def pages(self):
         return [ROOT / 'index.html', *ROOT.glob('about/*.html'), *ROOT.glob('contact/*.html'),
                 *ROOT.glob('privacy/*.html'), *ROOT.glob('work/*.html'),
-                *ROOT.glob('services/*/*.html'), *ROOT.glob('journal/**/*.html')]
+                *ROOT.glob('services/*.html'), *ROOT.glob('services/*/*.html'), *ROOT.glob('journal/**/*.html')]
     def test_navigation_destinations(self):
         for path in self.pages():
             with self.subTest(page=str(path.relative_to(ROOT))):
@@ -61,7 +61,7 @@ class SiteContract(unittest.TestCase):
             self.assertLessEqual(len(words), 600)
     def test_homepage_journal_order(self):
         source = (ROOT / 'index.html').read_text()
-        self.assertLess(source.index('id="cases"'), source.index('id="journal"'))
+        self.assertLess(source.index('id="services"'), source.index('id="journal"'))
         self.assertLess(source.index('id="journal"'), source.index('<footer'))
         for slug in SLUGS: self.assertIn('/journal/' + slug + '/', source)
     def test_local_resources_and_anchors(self):
@@ -76,9 +76,10 @@ class SiteContract(unittest.TestCase):
                     self.assertTrue(target.is_file(), 'Missing local destination')
                     if url.fragment and target.suffix == '.html':
                         self.assertIn(url.fragment, pages.get(target, Page(target)).ids)
-    def test_selected_case_destinations(self):
+    def test_home_service_destinations(self):
         source = (ROOT / 'index.html').read_text()
-        self.assertIn('href="/services/social-media-management/#dram5" aria-label="Explore DRAM5', source)
-        self.assertIn('href="/services/offline-activations/#joybuy" aria-label="Explore Joybuy', source)
+        for service in ['influencer-marketing', 'social-media-management', 'offline-activations']:
+            self.assertIn('class="home-service-card" href="/services/?service=' + service + '"', source)
+        self.assertNotIn('class="selected-case"', source)
 
 if __name__ == '__main__': unittest.main()

@@ -66,5 +66,22 @@
       "source": "/studio/:path*",
       "destination": "/studio/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/services/influencer-marketing/",
+      "destination": "/services/?service=influencer-marketing",
+      "permanent": true
+    },
+    {
+      "source": "/services/social-media-management/",
+      "destination": "/services/?service=social-media-management",
+      "permanent": true
+    },
+    {
+      "source": "/services/offline-activations/",
+      "destination": "/services/?service=offline-activations",
+      "permanent": true
+    }
   ]
 }

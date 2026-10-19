@@ -256,6 +256,16 @@
     brandExchange.classList.toggle("is-paused", paused);
   };
 
+  // Match travel speed across lanes of different lengths, including responsive sizing.
+  const sizeMarquees = () => {
+    brandExchange?.querySelectorAll('.brand-lane__track').forEach(track => {
+      const group = track.querySelector('.brand-lane__group');
+      if (group) track.style.setProperty('--marquee-duration', `${group.getBoundingClientRect().width / 26}s`);
+    });
+  };
+  sizeMarquees();
+  if (brandExchange && 'ResizeObserver' in window) new ResizeObserver(sizeMarquees).observe(brandExchange);
+  document.fonts?.ready.then(sizeMarquees);
   syncDataSaverClass();
 
   if (brandExchange && "IntersectionObserver" in window) {

@@ -2,7 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { load } from "cheerio";
-import { renderPage } from "../lib/site.mjs";
+import { renderPage as renderSitePage, decorate } from "../lib/site.mjs";
+const renderPage = (path, docs, templates, config = {}) =>
+  renderSitePage(path, docs, templates, { ...config, journalEnabled: true });
 import { renderCover } from "../lib/cover.mjs";
 const templates = {
   home: await readFile("index.html", "utf8"),
@@ -34,6 +36,21 @@ const doc = {
   ],
   sample: true,
 };
+test("paused Journal is absent from public pages and direct URLs", () => {
+  const $ = load(renderSitePage("/", [doc], templates, { journalEnabled: false }).html);
+  assert.equal($("#journal").length, 0);
+  assert.equal($('link[href^="/assets/css/site.css"]').length, 1);
+  assert.equal($('script[src^="/assets/js/site.js"]').length, 1);
+  assert.equal($('a[href^="/journal"], a[href^="/studio"]').length, 0);
+  assert.doesNotMatch($.text(), /A new story|Between cultures/);
+  for (const path of ["/journal/", "/journal/new-story/"]) {
+    const page = renderSitePage(path, [doc], templates, { journalEnabled: false });
+    assert.equal(page.status, 404);
+    assert.doesNotMatch(page.html, /A new story/);
+  }
+  const shared = load(decorate(templates.article, false));
+  assert.equal(shared('a[href^="/journal"], a[href^="/studio"]').length, 0);
+});
 test("one published record connects homepage, Journal and direct article without changing templates", () => {
   for (const path of ["/", "/journal/", "/journal/new-story/"]) {
     const page = renderPage(path, [doc], templates);

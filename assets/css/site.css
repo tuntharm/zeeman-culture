@@ -1137,7 +1137,7 @@ a.media-frame:hover img,
 }
 
 .phone-frame {
-  aspect-ratio: 9 / 19.5;
+  aspect-ratio: auto;
   overflow: hidden;
   border: 6px solid var(--ink-deep);
   border-radius: 6px;
@@ -1151,8 +1151,8 @@ a.media-frame:hover img,
 
 .phone-frame img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
 }
 
 .button {
@@ -3264,7 +3264,6 @@ html.motion-ready .advantage-editorial__item:not(.is-visible) .advantage-editori
   animation-duration: 44s;
 }
 
-.brand-lane__viewport:hover .brand-lane__track,
 .brand-lane__viewport:focus-within .brand-lane__track,
 .brand-exchange.is-paused .brand-lane__track {
   animation-play-state: paused;
@@ -4364,17 +4363,9 @@ body.page--home.nav-open .site-nav {
     color 180ms ease;
 }
 
-.page--home .hero__text-link span {
-  transition: transform 200ms var(--home-ease-out);
-}
-
 .page--home .hero__text-link:hover {
   color: var(--home-mint);
   border-color: var(--home-mint);
-}
-
-.page--home .hero__text-link:hover span {
-  transform: translate(4px, 4px);
 }
 
 html.motion-ready .page--home .hero__content > * {
@@ -4663,7 +4654,6 @@ html.motion-ready .page--home .reveal:not(.is-visible) {
   animation-duration: 44s;
 }
 
-.page--home .brand-exchange:has(.brand-lane__viewport:hover) .brand-lane__track,
 .page--home .brand-exchange:has(.brand-lane__viewport:focus-within) .brand-lane__track,
 .page--home .brand-exchange.is-paused .brand-lane__track {
   animation-play-state: paused;
@@ -7064,7 +7054,6 @@ html.motion-ready .page--home .home-chapter__seal {
   border-color: var(--home-gold-line);
 }
 
-.page--home .brand-lane:hover .brand-lane__track,
 .page--home .brand-lane:focus-within .brand-lane__track {
   animation-play-state: paused;
 }
@@ -7476,6 +7465,7 @@ html.no-js .home-scroll-vine { display: none; }
 
 .page--home .home-chapter__line {
   display: block;
+  overflow-wrap: anywhere;
 }
 
 .page--home .home-chapter__title strong {
@@ -7495,6 +7485,22 @@ html.no-js .home-scroll-vine { display: none; }
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.2;
+}
+
+.page--home .advantage-editorial__item,
+.page--home .advantage-editorial__item:first-child {
+  padding-inline: 32px;
+}
+
+.page--home .advantage-editorial__item h3,
+.page--home .advantage-editorial__item p {
+  align-self: center;
+  text-align: center;
+}
+
+.page--home .advantage-editorial__number {
+  align-self: flex-start;
+  text-align: left;
 }
 
 .page--home .advantage-editorial__item h3,
@@ -7786,8 +7792,26 @@ html.no-js .home-scroll-vine { display: none; }
   .page--home .advantage-editorial__item h3,
   .page--home .advantage-editorial__item--lead h3,
   .page--home .advantage-editorial__stack .advantage-editorial__item h3 {
-    padding-bottom: 0.14em;
+    max-width: 100%;
+    padding-bottom: 0;
+    margin: 0;
     font-size: clamp(2.15rem, 10vw, 2.8rem);
+  }
+
+  .page--home .advantage-editorial__item,
+  .page--home .advantage-editorial__item:first-child {
+    min-height: 0;
+    padding: 20px 0;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .page--home .advantage-editorial__number {
+    margin: 0 0 10px;
+  }
+
+  .page--home .advantage-editorial__item p {
+    margin: 12px 0 0;
   }
 
   .page--home .home-services {
@@ -7899,4 +7923,157 @@ html.no-js .page--home .hero__media video {
   html.no-js .page--home .site-header .site-nav > a { color: #0f4a36; opacity: 1; }
   html.no-js .site-header .site-nav > a.nav-contact,
   html.no-js .page--home .site-header .site-nav > a.nav-contact { color: #f7f8f4 !important; background: #0f4a36 !important; }
+}
+
+/* One service overview combines market direction and service destinations. */
+.page--home .home-services--overview .home-services__heading {
+  display: block;
+  text-align: center;
+  margin-bottom: 36px;
+}
+.page--home .home-services--overview .section-heading {
+  max-width: none;
+  margin-inline: auto;
+}
+.home-services--overview .home-services__heading p {
+  margin: 16px 0 0;
+  color: var(--home-mint);
+}
+.page--home .home-services--overview .market-directions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: 32px;
+}
+.page--home .home-services--overview .market-direction {
+  border: 0;
+  padding: 16px 32px;
+  text-align: center;
+  background: transparent;
+}
+.page--home .home-services--overview .market-direction + .market-direction {
+  border-left: 1px solid rgba(199, 224, 209, .3);
+}
+.page--home .home-services--overview .market-direction h3 {
+  max-width: 25ch;
+  margin: 12px auto 0;
+  font-size: clamp(20px, 2vw, 26px);
+}
+.home-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid rgba(199, 224, 209, .35);
+}
+.home-service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 28px;
+  color: var(--home-white);
+  text-align: center;
+  text-decoration: none;
+  background: rgba(247, 248, 244, .035);
+  transition: background 180ms ease;
+}
+.home-service-card + .home-service-card { border-left: 1px solid rgba(199, 224, 209, .35); }
+.home-service-card:hover { background: rgba(247, 248, 244, .09); }
+.home-service-card:focus-visible { outline: 2px solid var(--home-mint); outline-offset: 5px; }
+.home-service-card svg { flex-shrink: 0; fill: none; stroke: var(--home-mint); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.home-service-card h3 { margin: 24px 0 12px; font-size: clamp(21px, 2vw, 28px); line-height: 1.2; font-weight: 500; }
+.home-service-card p { max-width: 28ch; margin: 0 0 24px; color: var(--home-mint); font-size: 16px; line-height: 1.55; }
+.home-service-card > span { margin-top: auto; font-size: 14px; border-bottom: 1px solid rgba(199, 224, 209, .5); padding-bottom: 7px; }
+.home-services__cases { margin-top: 32px; text-align: center; }
+.home-services__cases .text-link { color: var(--home-white); border-color: rgba(199, 224, 209, .5); }
+@media (max-width: 620px) {
+  .page--home .home-services--overview .market-directions { grid-template-columns: 1fr; }
+  .page--home .home-services--overview .home-services__heading { margin-bottom: 24px; }
+  .page--home .home-services--overview .market-direction { padding: 20px 12px; }
+  .page--home .home-services--overview .market-direction + .market-direction { border-left: 0; border-top: 1px solid rgba(199, 224, 209, .3); }
+  .home-service-grid { grid-template-columns: 1fr; }
+  .home-service-card { padding: 24px; }
+  .home-service-card + .home-service-card { border-left: 0; border-top: 1px solid rgba(199, 224, 209, .35); }
+  .home-service-card svg { width: 52px; height: 52px; }
+  .home-service-card h3 { margin-top: 16px; }
+}
+
+/* Keep the phone hero fitted to Safari's stable visible viewport. */
+@media (max-width: 620px) {
+  .page--home .hero {
+    height: 100svh;
+    min-height: 100svh;
+  }
+
+  .page--home .hero__content {
+    align-content: start;
+    padding-top: clamp(180px, 25svh, 220px);
+    padding-bottom: 128px;
+  }
+
+  .page--home .hero__actions {
+    right: 0;
+    bottom: calc(22px + env(safe-area-inset-bottom));
+    left: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* Social-app screenshots keep the complete original interface and proportions. */
+.founder-card:has(.social-screenshot) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.media-frame.social-screenshot {
+  aspect-ratio: auto;
+  background: transparent;
+}
+.media-frame.social-screenshot img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 600px;
+  margin-inline: auto;
+  object-fit: contain;
+}
+.case-feature:hover .media-frame.social-screenshot img {
+  transform: none;
+}
+.social-case-media--single:has(.social-screenshot) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+  min-height: 0;
+}
+.social-case-media--single:has(.social-screenshot) > .media-frame,
+.social-case-media--single:has(.social-screenshot) > .phone-frame {
+  position: static;
+  width: 100%;
+  aspect-ratio: auto;
+  transform: none;
+}
+
+/* Shared public-page rhythm and responsive feedback. */
+.page { --section-space:76px; --interaction-ease:cubic-bezier(.23,1,.32,1); }
+.page:not(.page--home) .section { padding-block:var(--section-space); }
+.page:not(.page--home) .section--compact { padding-block:48px; }
+.page .text-link { transition:color 180ms ease,border-color 180ms ease; }
+.page .text-link__arrow { display:inline-block; transition:transform 220ms var(--interaction-ease); }
+.page .case-card { transition:transform 220ms var(--interaction-ease),border-color 180ms ease; }
+.page .home-cases__controls button, .page .filter-button, .service-tabs a { transition:background-color 180ms ease,color 180ms ease,border-color 180ms ease; }
+.page a:focus-visible, .page button:focus-visible { outline:2px solid currentColor; outline-offset:5px; }
+.page button:active:not(:disabled), .page .button:active { transform:translateY(1px); }
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+ .page .text-link:hover .text-link__arrow { transform:translateX(4px); }
+ .page .case-card:hover { transform:translateY(-4px); }
+ .page .home-founder__portrait { transition:transform 220ms var(--interaction-ease); }
+ .page .home-founder__portrait:hover { transform:translateY(-3px); }
+ html.motion-ready .page:not(.page--home) .page-hero h1,
+ html.motion-ready .page--services .services-intro h1 { animation:page-heading-arrive 420ms var(--interaction-ease) both; }
+}
+@keyframes page-heading-arrive { from { opacity:.65; transform:translateY(12px); } to { opacity:1; transform:none; } }
+@media(max-width:1100px) { .page { --section-space:60px; } }
+@media(max-width:620px) { .page { --section-space:44px; } .page:not(.page--home) .section--compact { padding-block:32px; } }
+@media(hover:none), (pointer:coarse) { .page .case-card:hover { transform:none; } }
+@media(prefers-reduced-motion:reduce) {
+ .page .case-card, .page .text-link__arrow, .page .home-founder__portrait { transition:none; transform:none; }
 }

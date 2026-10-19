@@ -2,6 +2,7 @@ import http from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { resolve, extname } from "node:path";
 import handler from "../api/site.js";
+import { JOURNAL_ENABLED } from "../lib/features.mjs";
 const root = resolve("dist");
 const port = Number(process.env.PORT || 8093);
 const types = {
@@ -43,6 +44,17 @@ http
     }
     const url = new URL(req.url, "http://localhost");
     const path = url.pathname;
+    const legacyService = path.match(/^\/services\/(influencer-marketing|social-media-management|offline-activations)\/?$/);
+    if (legacyService) {
+      url.searchParams.set("service", legacyService[1]);
+      res.writeHead(308, { Location: "/services/?" + url.searchParams.toString() });
+      return res.end();
+    }
+    if (path === "/services") {
+      res.writeHead(308, { Location: "/services/" + url.search });
+      return res.end();
+    }
+
     if (
       path === "/journal" ||
       /^\/journal\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(path) ||
@@ -85,6 +97,6 @@ http
   })
   .listen(port, "127.0.0.1", () =>
     console.log(
-      `Zeeman preview: http://127.0.0.1:${port}/ · Editor: http://127.0.0.1:${port}/studio/`,
+      `Zeeman preview: http://127.0.0.1:${port}/${JOURNAL_ENABLED ? ` · Editor: http://127.0.0.1:${port}/studio/` : " · Journal paused"}`,
     ),
   );

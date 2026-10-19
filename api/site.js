@@ -1,6 +1,7 @@
 import templates from "../lib/generated-templates.mjs";
 import { getArticles, cmsConfig } from "../lib/cms.mjs";
 import { renderPage } from "../lib/site.mjs";
+import { JOURNAL_ENABLED } from "../lib/features.mjs";
 export default async function handler(req, res) {
   const url = new URL(req.url, "http://localhost");
   const path = url.searchParams.get("path") || url.pathname;
@@ -10,7 +11,7 @@ export default async function handler(req, res) {
   try {
     const result = renderPage(
       path,
-      await getArticles(),
+      JOURNAL_ENABLED ? await getArticles() : [],
       templates,
       cmsConfig(),
     );
