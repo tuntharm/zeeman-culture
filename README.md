@@ -35,6 +35,13 @@ To restore it, set the switch to `true`, rebuild, and restart the preview with
 `npm run dev` so the existing `.env.local` CMS settings load. Deploy separately
 after review. Do not delete or recreate Sanity content to restore Journal.
 
+Services and Cases are paused at client request via `PAUSED_SECTIONS` in
+`lib/features.mjs`. Their navigation and call-to-action links are removed,
+homepage cards and logos stay visible but inert, `/services/` and `/work/` show
+a noindex maintenance page, and both leave the built sitemap. To edit them
+locally, build and serve with `SHOW_PAUSED_SECTIONS=1`; to restore them, set
+`PAUSED_SECTIONS` to `[]`.
+
 ## Services and homepage overview
 
 `/services/` contains three progressively enhanced service panels. The query

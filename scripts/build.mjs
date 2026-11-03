@@ -1,9 +1,9 @@
 import { readFile, writeFile, mkdir, cp, readdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { decorate } from "../lib/site.mjs";
+import { decorate, maintenancePage } from "../lib/site.mjs";
 import { composeHomeOverview } from "../lib/home-overview.mjs";
-import { JOURNAL_ENABLED } from "../lib/features.mjs";
+import { JOURNAL_ENABLED, PAUSED_SECTIONS } from "../lib/features.mjs";
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 const templates = {
   home: composeHomeOverview(await readFile("index.html", "utf8"), await readFile("work/index.html", "utf8")),
@@ -42,6 +42,19 @@ async function decorateDir(dir) {
 }
 for (const dir of ["about", "contact", "privacy", "services", "work"])
   await decorateDir(`dist/${dir}`);
+const holding = maintenancePage(await readFile("contact/index.html", "utf8"));
+for (const path of PAUSED_SECTIONS) {
+  await rm(`dist${path}`, { recursive: true, force: true });
+  await mkdir(`dist${path}`, { recursive: true });
+  await writeFile(`dist${path}index.html`, holding);
+}
+const sitemap = await readFile("dist/sitemap.xml", "utf8");
+await writeFile(
+  "dist/sitemap.xml",
+  sitemap.replace(/\s*<url>\s*<loc>https:\/\/zeemanculture\.com(\/[^<]*)<\/loc>\s*<\/url>/g, (entry, path) =>
+    PAUSED_SECTIONS.some((p) => path.startsWith(p)) ? "" : entry,
+  ),
+);
 if (JOURNAL_ENABLED) {
 const result = spawnSync(
   "node_modules/.bin/sanity",

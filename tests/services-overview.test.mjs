@@ -22,11 +22,11 @@ const readHtml = async (path) => {
 const servicesHtml = await readHtml("services/index.html");
 const homeSource = await readFile("index.html", "utf8");
 const workSource = await readFile("work/index.html", "utf8");
-const workHtml = decorate(workSource, false);
+const workHtml = decorate(workSource, false, []);
 const services = load(servicesHtml);
 const work = load(workHtml);
 const templates = { home: composeHomeOverview(homeSource, workSource) };
-const home = load(renderPage("/", [], templates, { journalEnabled: false }).html);
+const home = load(renderPage("/", [], templates, { journalEnabled: false, pausedSections: [] }).html);
 
 function caseWithTitle($, title, selector = ".case-card") {
   return $(selector).filter((_, node) => normalize($(node).find("h2, h3").first().text()) === title);
@@ -208,11 +208,11 @@ test("brand rows contain all 17 distinct entries in the approved market order", 
 test("every public header and footer Services link goes to the unified page", async () => {
   const pages = [
     ["homepage", home.html()],
-    ["services", decorate(servicesHtml, false)],
+    ["services", decorate(servicesHtml, false, [])],
     ["work", workHtml],
   ];
   for (const path of ["about/index.html", "contact/index.html", "privacy/index.html"]) {
-    pages.push([path, decorate(await readFile(path, "utf8"), false)]);
+    pages.push([path, decorate(await readFile(path, "utf8"), false, [])]);
   }
   for (const [name, html] of pages) {
     const $ = load(html);

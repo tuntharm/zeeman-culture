@@ -121,3 +121,25 @@ test("custom cover replaces the full artwork in homepage, Journal and article vi
     assert.match(page.html, /Our own &lt;cover&gt; design/);
   }
 });
+
+test("paused Services and Cases leave no working links and show a holding page", async () => {
+  const { maintenancePage } = await import("../lib/site.mjs");
+  const paused = ["/services/", "/work/"];
+  const pages = [
+    renderSitePage("/", [], templates, { journalEnabled: false, pausedSections: paused }).html,
+    decorate(await readFile("about/index.html", "utf8"), false, paused),
+    decorate(await readFile("contact/index.html", "utf8"), false, paused),
+  ];
+  for (const html of pages) {
+    const $ = load(html);
+    assert.equal($('a[href^="/services/"], a[href^="/work/"]').length, 0);
+    assert.equal($(".site-nav, .footer-links").find("[data-paused-link]").length, 0);
+  }
+  const home = load(pages[0]);
+  assert.equal(home("#services .home-service-card").length, 3);
+  assert.ok(home("#services .home-service-card").is("[data-paused-link]"));
+  const holding = load(maintenancePage(await readFile("contact/index.html", "utf8")));
+  assert.equal(holding('meta[name="robots"]').attr("content"), "noindex,follow");
+  assert.equal(holding('link[rel="canonical"]').length, 0);
+  assert.equal(holding('main a[href="/contact/"]').length, 1);
+});
