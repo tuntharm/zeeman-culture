@@ -143,3 +143,13 @@ test("paused Services and Cases leave no working links and show a holding page",
   assert.equal(holding('link[rel="canonical"]').length, 0);
   assert.equal(holding('main a[href="/contact/"]').length, 1);
 });
+
+test("contact form is replaced by direct email until a real endpoint is set", async () => {
+  const source = await readFile("contact/index.html", "utf8");
+  const $ = load(decorate(source, false, []));
+  assert.equal($("form[data-contact-form]").length, 0);
+  assert.equal($('[data-contact-fallback] a[href^="mailto:team@zeemanculture.com"]').length, 1);
+  const configured = load(decorate(source.replace("REPLACE_WITH_FORM_ID", "abc123"), false, []));
+  assert.equal(configured("form[data-contact-form]").length, 1);
+  assert.equal(configured("[data-contact-fallback]").length, 0);
+});
