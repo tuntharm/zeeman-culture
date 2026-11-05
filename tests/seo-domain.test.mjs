@@ -31,7 +31,7 @@ test("public page metadata and sitemap agree on the primary domain", async () =>
 test("old public hosts redirect permanently without catching the primary domain or previews", async () => {
   const config = JSON.parse(await readFile("vercel.json", "utf8"));
   const rules = config.redirects.filter(rule => rule.has?.some(condition => condition.type === "host"));
-  assert.deepEqual(rules.map(rule => rule.has[0].value).sort(), [
+  assert.deepEqual(rules.map(rule => rule.has[0].value.replaceAll("\\.", ".")).sort(), [
     "zeeman-culture-tharm-s-projects.vercel.app", "zeeman-culture.vercel.app",
   ]);
   for (const rule of rules) {

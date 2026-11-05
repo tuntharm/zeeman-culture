@@ -73,7 +73,7 @@
       "has": [
         {
           "type": "host",
-          "value": "zeeman-culture.vercel.app"
+          "value": "zeeman-culture\\.vercel\\.app"
         }
       ],
       "destination": "https://www.zeemanculture.com/:path*",
@@ -84,7 +84,7 @@
       "has": [
         {
           "type": "host",
-          "value": "zeeman-culture-tharm-s-projects.vercel.app"
+          "value": "zeeman-culture-tharm-s-projects\\.vercel\\.app"
         }
       ],
       "destination": "https://www.zeemanculture.com/:path*",
