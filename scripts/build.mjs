@@ -51,7 +51,7 @@ for (const path of PAUSED_SECTIONS) {
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
 await writeFile(
   "dist/sitemap.xml",
-  sitemap.replace(/\s*<url>\s*<loc>https:\/\/zeemanculture\.com(\/[^<]*)<\/loc>\s*<\/url>/g, (entry, path) =>
+  sitemap.replace(/\s*<url>\s*<loc>https:\/\/www\.zeemanculture\.com(\/[^<]*)<\/loc>\s*<\/url>/g, (entry, path) =>
     PAUSED_SECTIONS.some((p) => path.startsWith(p)) ? "" : entry,
   ),
 );

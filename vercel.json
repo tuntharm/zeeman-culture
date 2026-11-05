@@ -69,6 +69,28 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "zeeman-culture.vercel.app"
+        }
+      ],
+      "destination": "https://www.zeemanculture.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "zeeman-culture-tharm-s-projects.vercel.app"
+        }
+      ],
+      "destination": "https://www.zeemanculture.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/services/influencer-marketing/",
       "destination": "/services/?service=influencer-marketing",
       "permanent": true
