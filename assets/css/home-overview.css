@@ -169,17 +169,20 @@ body.page--home .home-service-card h3 { font-family:var(--home-serif-accent); fo
 .founder-feature__facts mark { padding:0 .12em; background:linear-gradient(transparent 54%, var(--founder-mark) 54%); color:inherit; font-size:1.16em; font-weight:800; }
 .founder-feature--yang .founder-feature__text { text-align:right; }
 @media (prefers-reduced-motion:reduce) { .founder-feature__social { transition:none; } }
-/* Hand-drawn vine after the client's footer reference: a pale tube with inked
-   edges whose width follows the curve (built in home-vine.js), veined leaves
-   straight off the stem, curled tendrils and fine branches. */
-.home-scroll-vine__stroke--wash, .home-scroll-vine__stroke--main { opacity:0; }
-.home-scroll-vine__ribbon { stroke-width:1.4; stroke-linejoin:round; }
-.home-scroll-vine__branch { stroke-width:2.2; }
-.home-scroll-vine__leaf { --leaf-vein:#0f4a36; fill:#e6efe3; stroke:#0f4a36; stroke-width:1.3; stroke-linejoin:round; }
-.home-scroll-vine__leaf--light { --leaf-vein:#0f4a36; fill:#dfe9dc; stroke:#dfe9dc; color:#dfe9dc; }
-.home-scroll-vine__leaf-cut { fill:none; stroke-width:.9; stroke-linecap:round; opacity:.85; }
+/* Hand-drawn vine after the client's footer sketch. Stem and branches are
+   shaded tubes built in home-vine.js (body, two shade bands, highlight);
+   their colours come from section gradients: dark ink on ivory, light green
+   on the green bands. The stroked paths only carry geometry. */
+.home-scroll-vine__stroke--wash, .home-scroll-vine__stroke--main, .home-scroll-vine__branch { visibility:hidden; }
+.home-scroll-vine__tube-body { stroke-width:1.15; stroke-linejoin:round; }
+.home-scroll-vine__tube-shade { opacity:.3; }
+.home-scroll-vine__tube-deep { opacity:.38; }
+.home-scroll-vine__tube-glint { stroke-width:.85; stroke-linecap:round; stroke-linejoin:round; opacity:.75; }
+.home-scroll-vine__leaf { --leaf-vein:#0f4a36; --leaf-shade:rgba(47,107,79,.3); fill:#dcebe0; stroke:#0f4a36; stroke-width:1.25; stroke-linejoin:round; }
+.home-scroll-vine__leaf--light { --leaf-vein:#2c5a45; --leaf-shade:rgba(92,138,111,.5); fill:#e3eedf; stroke:#e3eedf; color:#e3eedf; }
+.home-scroll-vine__leaf-cut { fill:none; stroke-width:.8; stroke-linecap:round; opacity:.85; }
 .home-scroll-vine__tendril { fill:none; stroke:#0f4a36; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round; }
-.home-scroll-vine__tendril--light { stroke:#dfe9dc; }
+.home-scroll-vine__tendril--light { stroke:#dcebdc; }
 /* The footer copy no longer needs a solid plate; it cut a notch into the stem. */
 .page--home .home-footer__action p { background:transparent; }
 @media (max-width:620px) {
@@ -210,7 +213,8 @@ body.page--home .home-service-card h3 { font-family:var(--home-serif-accent); fo
   .founder-feature__facts { gap:6px; margin-top:10px; font-size:11.5px; line-height:1.4; }
   .founder-feature--yang .founder-feature__text { text-align:left; }
   .home-scroll-vine__branch { stroke-width:1.5; }
-  .home-scroll-vine__ribbon, .home-scroll-vine__tendril { stroke-width:1.05; }
+  .home-scroll-vine__tube-body, .home-scroll-vine__tendril { stroke-width:.95; }
+  .home-scroll-vine__tube-glint { stroke-width:.7; }
   body.page--home .market-direction__destination { font-size:32px; }
   body.page--home .home-service-card h3 { font-size:24px; }
 }

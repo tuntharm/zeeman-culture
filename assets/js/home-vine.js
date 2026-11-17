@@ -16,7 +16,7 @@
   "desktop": {
     "width": 1440,
     "height": 4000,
-    "main": "M1440 1065C1424 1100 1400 1134 1382 1176C1358 1224 1334 1266 1318 1308C1300 1352 1314 1408 1354 1450C1398 1494 1432 1512 1424 1578C1432 1630 1434 1744 1388 1840C1368 1884 1370 1952 1408 2020C1434 2068 1420 2122 1388 2160C1348 2210 1310 2254 1286 2318C1262 2384 1298 2450 1360 2510C1422 2570 1426 2650 1388 2730C1348 2814 1288 2870 1266 2942C1244 3014 1292 3070 1360 3132C1424 3192 1432 3280 1398 3370C1368 3440 1324 3476 1288 3512C1244 3558 1268 3630 1330 3690C1392 3750 1424 3826 1410 3892C1398 3946 1420 3982 1440 4000",
+    "main": "M1440 1065C1424 1100 1400 1134 1382 1176C1358 1224 1334 1266 1318 1308C1300 1352 1314 1408 1354 1450C1398 1494 1432 1512 1424 1578C1432 1630 1434 1744 1388 1840C1368 1884 1370 1952 1408 2020C1434 2068 1420 2122 1388 2160C1348 2210 1310 2254 1286 2318C1262 2384 1298 2450 1360 2510C1422 2570 1426 2650 1388 2730C1348 2814 1288 2870 1266 2942C1244 3014 1292 3070 1360 3132C1424 3192 1432 3280 1398 3370C1368 3440 1324 3476 1288 3512C1244 3558 1268 3630 1330 3690C1392 3750 1424 3800 1408 3858",
     "branches": [
       {
         "d": "M1382 1176C1348 1132 1294 1112 1236 1128C1168 1146 1122 1198 1056 1192C992 1186 944 1146 882 1160C828 1172 784 1202 748 1238",
@@ -71,7 +71,7 @@
   "mobile": {
     "width": 390,
     "height": 4400,
-    "main": "M390 820C384 880 376 940 366 1000C356 1060 350 1120 360 1180C372 1240 388 1300 384 1380C380 1500 374 1650 386 1770C390 1850 388 1930 384 1990C376 2100 366 2200 374 2320C380 2420 390 2500 386 2580C382 2700 372 2860 380 3000C388 3180 390 3420 386 3615C382 3720 374 3820 380 3940C386 4080 382 4240 356 4400",
+    "main": "M390 820C384 880 376 940 366 1000C356 1060 350 1120 360 1180C372 1240 388 1300 384 1380C380 1500 374 1650 386 1770C390 1850 388 1930 384 1990C376 2100 366 2200 374 2320C380 2420 390 2500 386 2580C382 2700 372 2860 380 3000C388 3180 390 3420 386 3615C382 3720 374 3820 380 3940C386 4080 384 4170 378 4232",
     "branches": [
       {
         "d": "M366 1000C356 1000 346 1008 340 1020C334 1032 326 1038 316 1036",
@@ -139,26 +139,100 @@
   let layoutPending = true;
   let originY = 0;
   let height = 0;
-  // The visible stem is a hand-drawn tube: a pale fill with inked edges. The
-  // stroked path only supplies geometry. A second gradient tints the fill.
+  let reach = [];
+  // Tone gradients share the stem gradient's section stops: dark ink on the
+  // ivory sections, light green on the dark green bands.
   const inkGradient = svg.querySelector('[data-vine-gradient]');
-  const fillGradient = inkGradient.cloneNode(true);
-  fillGradient.id = 'vine-fill';
-  fillGradient.querySelectorAll('stop').forEach(stop => {
-    stop.setAttribute('stop-color', stop.getAttribute('stop-color') === '#0f4a36' ? '#e6efe3' : '#dfe9dc');
-  });
-  inkGradient.after(fillGradient);
-  const ribbon = document.createElementNS(NS, 'path');
-  ribbon.setAttribute('class', 'home-scroll-vine__ribbon');
-  ribbon.setAttribute('fill', 'url(#vine-fill)');
-  ribbon.setAttribute('stroke', 'url(#vine-ink)');
-  details.before(ribbon);
-  let ribbonNormals = [];
-  let ribbonWidths = [];
-  let ribbonWobble = [];
-  let ribbonDrawn = -1;
+  const tone = (id, canvas, band) => {
+    const gradient = inkGradient.cloneNode(true);
+    gradient.id = id;
+    gradient.querySelectorAll('stop').forEach(stop => {
+      stop.setAttribute('stop-color', stop.getAttribute('stop-color') === '#0f4a36' ? canvas : band);
+    });
+    inkGradient.after(gradient);
+  };
+  tone('vine-outline', '#0f4a36', '#dcebdc');
+  tone('vine-fill', '#b9d5c2', '#cfe3d1');
+  tone('vine-shade', '#2f6b4f', '#5c8a6f');
+  tone('vine-glint', '#ffffff', '#f4f8ef');
+  const layerGroup = className => {
+    const node = document.createElementNS(NS, 'g');
+    node.setAttribute('class', className);
+    details.before(node);
+    return node;
+  };
+  // Branches sit under the stem so their roots disappear into it.
+  const branchLayer = layerGroup('home-scroll-vine__branches');
+  const stemLayer = layerGroup('home-scroll-vine__trunk');
+  let stemNormals = [];
+  let stemWidths = [];
+  let stemTube = null;
   let stemLeaves = [];
   let tendrils = [];
+  let finalLeaf = null;
+  // Every vine piece is a shaded tube: a light-green body with an inked edge,
+  // two bands of shade on the side away from the light and a fine highlight.
+  const makeTube = (parent, points, widths) => {
+    const layer = (name, paint) => {
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('class', `home-scroll-vine__tube-${name}`);
+      Object.entries(paint).forEach(([key, value]) => path.setAttribute(key, value));
+      parent.append(path);
+      return path;
+    };
+    const normals = points.map((p, i) => {
+      const a = points[Math.max(0, i - 1)], b = points[Math.min(points.length - 1, i + 1)];
+      const size = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      return { x: -(b.y - a.y) / size, y: (b.x - a.x) / size };
+    });
+    // Light comes from the upper left; the highlight faces it.
+    const facing = normals.reduce((sum, n) => sum - 0.45 * n.x - 0.9 * n.y, 0) >= 0 ? 1 : -1;
+    return {
+      points, widths, drawn: -1,
+      normals: normals.map(n => ({ x: n.x * facing, y: n.y * facing })),
+      body: layer('body', { fill: 'url(#vine-fill)', stroke: 'url(#vine-outline)' }),
+      shade: layer('shade', { fill: 'url(#vine-shade)' }),
+      deep: layer('deep', { fill: 'url(#vine-shade)' }),
+      glint: layer('glint', { fill: 'none', stroke: 'url(#vine-glint)' }),
+    };
+  };
+  const renderTube = (tube, progress) => {
+    const count = tube.points.length;
+    let last = Math.round(clamp(progress) * (count - 1));
+    if (tube.ratios) {
+      // Unevenly spaced points: find the last one the drawing has reached.
+      let low = 0, high = count - 1;
+      while (low < high) {
+        const middle = (low + high + 1) >> 1;
+        if (tube.ratios[middle] <= progress) low = middle;
+        else high = middle - 1;
+      }
+      last = low;
+    }
+    if (last === tube.drawn) return;
+    tube.drawn = last;
+    const layers = [tube.body, tube.shade, tube.deep, tube.glint];
+    if (last < 2) { layers.forEach(path => path.removeAttribute('d')); return; }
+    const lit = [], dark = [], shadeEdge = [], inner = [], deepEdge = [], glint = [];
+    const at = (p, n, k) => `${(p.x + n.x * k).toFixed(1)} ${(p.y + n.y * k).toFixed(1)}`;
+    for (let i = 0; i <= last; i++) {
+      // A growing tip while drawing; finished pieces keep their own taper.
+      const gap = tube.ratios ? (tube.ratios[last] - tube.ratios[i]) * tube.length / 6 : last - i;
+      const tip = progress >= 1 ? 1 : Math.min(1, 0.2 + gap / 16);
+      const w = tube.widths[i] * tip, p = tube.points[i], n = tube.normals[i];
+      lit.push(at(p, n, w));
+      dark.push(at(p, n, -w));
+      shadeEdge.push(at(p, n, w * 0.05));
+      inner.push(at(p, n, -w * 0.86));
+      deepEdge.push(at(p, n, -w * 0.4));
+      glint.push(at(p, n, w * 0.48));
+    }
+    const ring = (a, b) => `M${a.join('L')}L${b.reverse().join('L')}Z`;
+    tube.body.setAttribute('d', ring(lit, dark));
+    tube.shade.setAttribute('d', ring(shadeEdge, [...inner]));
+    tube.deep.setAttribute('d', ring(deepEdge, inner));
+    tube.glint.setAttribute('d', `M${glint.join('L')}`);
+  };
 
   const element = (tag, attributes, parent = details) => {
     const node = document.createElementNS(NS, tag);
@@ -172,15 +246,16 @@
     path.dataset.drawProgress = progress.toFixed(4);
   };
   const ratioAtY = y => {
-    if (!samples.length || y <= samples[0].y) return 0;
-    if (y >= samples.at(-1).y) return 1;
-    let low = 0, high = samples.length - 1;
+    // Search the running lowest point, so the closing loop cannot confuse it.
+    if (!reach.length || y <= reach[0]) return 0;
+    if (y >= reach.at(-1)) return 1;
+    let low = 0, high = reach.length - 1;
     while (high - low > 1) {
       const middle = Math.floor((low + high) / 2);
-      if (samples[middle].y < y) low = middle;
+      if (reach[middle] < y) low = middle;
       else high = middle;
     }
-    const mix = clamp((y - samples[low].y) / Math.max(0.01, samples[high].y - samples[low].y));
+    const mix = clamp((y - reach[low]) / Math.max(0.01, reach[high] - reach[low]));
     return (low + mix) / (samples.length - 1);
   };
 
@@ -275,6 +350,7 @@
     const points = parse(route.main);
     let d = `M${pair(map(points[0], false))}`;
     let previous = points[0];
+    let joint = null;
     for (let i = 1; i < points.length; i += 3) {
       const curve = points.slice(i, i + 3);
       if (!journal && previous.y >= compactAnchors[2][0] && previous.y < compactAnchors[4][0]) {
@@ -290,6 +366,7 @@
             d += `C${pair({ x: inside, y: middle + (bottom - middle) / 2 })} ${pair({ x: outside, y: bottom - (bottom - middle) / 2 })} ${pair({ x: outside, y: bottom })}`;
           }
         }
+        joint = null;
       } else if (previous.y < insertionY && curve[2].y >= insertionY) {
         let low = 0, high = 1;
         for (let n = 0; n < 32; n++) {
@@ -311,24 +388,65 @@
         d += `C${pair({ x: from.x + entering.x, y: from.y + entering.y })} ${pair({ x: middle.x, y: middle.y - journalHeight / 6 })} ${pair(middle)}`;
         d += `C${pair({ x: middle.x, y: middle.y + journalHeight / 6 })} ${pair({ x: to.x - leaving.x, y: to.y - leaving.y })} ${pair(to)}`;
         d += `C${cut.right.map(p => pair(map(p, true))).join(' ')}`;
+        joint = null;
       } else {
         const after = previous.y >= insertionY;
         const mapped = curve.map(p => map(p, after));
         if (!journal && curve[2].y === compactAnchors[2][0]) mapped[1].x = mapped[2].x;
         if (!journal && previous.y === compactAnchors[4][0]) mapped[0].x = map(previous).x;
+        else if (joint) {
+          // Neighbouring control points are mapped differently; keep each join
+          // smooth so the shaded stem never shows a corner.
+          const handle = Math.hypot(mapped[0].x - joint.end.x, mapped[0].y - joint.end.y);
+          const dx = joint.end.x - joint.control.x, dy = joint.end.y - joint.control.y;
+          const size = Math.hypot(dx, dy) || 1;
+          mapped[0] = { x: joint.end.x + dx / size * handle, y: joint.end.y + dy / size * handle };
+        }
         d += `C${mapped.map(pair).join(' ')}`;
+        joint = { control: mapped[1], end: mapped[2] };
       }
       previous = curve[2];
     }
+    // Finish as in the footer sketch: a small loop, an S-shaped tail and a
+    // hanging leaf, all inside the footer.
+    stem.setAttribute('d', d);
+    const routeEnd = stem.getTotalLength();
+    const end = stem.getPointAtLength(routeEnd), before = stem.getPointAtLength(routeEnd - 2);
+    const endSize = Math.hypot(end.x - before.x, end.y - before.y) || 1;
+    const forward = { x: (end.x - before.x) / endSize, y: (end.y - before.y) / endSize };
+    let inward = { x: -forward.y, y: forward.x };
+    if (inward.x * (width / 2 - end.x) < 0) inward = { x: -inward.x, y: -inward.y };
+    const room = height - 14 - end.y;
+    const unit = Math.min(mobile ? 0.62 : 1, Math.max(0.5, room / 115));
+    const loopAdvance = 5 * unit, loopRadius = 16 * unit;
+    const finish = [];
+    for (let i = 1; i <= 48; i++) {
+      const theta = Math.PI + 2 * Math.PI * i / 48;
+      const along = loopAdvance * (theta - Math.PI) - loopRadius * Math.sin(theta);
+      const across = loopRadius * (1 + Math.cos(theta));
+      finish.push({ x: end.x + forward.x * along + inward.x * across, y: end.y + forward.y * along + inward.y * across });
+    }
+    const tailStart = finish.at(-1);
+    // The tail swings outward, so the last leaf hangs away from the text,
+    // unless the stem already runs along the page edge.
+    const outwardRoom = end.x > width / 2 ? width - end.x : end.x;
+    const swing = outwardRoom > 26 ? -1 : 1;
+    for (let i = 1; i <= 20; i++) {
+      const t = i / 20, along = 42 * unit * t, across = swing * 11 * unit * (1 - Math.cos(Math.PI * t / 2));
+      finish.push({ x: tailStart.x + forward.x * along + inward.x * across, y: tailStart.y + forward.y * along + inward.y * across });
+    }
+    d += finish.map(p => `L${pair(p)}`).join('');
     strokes.forEach(path => path.setAttribute('d', d));
     length = stem.getTotalLength();
     samples = Array.from({ length: 1001 }, (_, i) => {
       const p = stem.getPointAtLength(length * i / 1000);
       return { x: p.x, y: p.y };
     });
+    let lowest = -Infinity;
+    reach = samples.map(p => (lowest = Math.max(lowest, p.y)));
     // Brush width: a tilted nib swells near-vertical strokes and thins the
-    // diagonals, a slow pressure swell varies it further, and both ends taper.
-    const [thin, thick] = mobile ? [1.5, 3.4] : [2.4, 5.6];
+    // diagonals, a slow pressure swell varies it further; both ends taper.
+    const [thin, thick] = mobile ? [1.7, 3.1] : [2.6, 4.9];
     const nibAngle = 0.42;
     const rawWidths = samples.map((point, i) => {
       const a = samples[Math.max(0, i - 3)], b = samples[Math.min(samples.length - 1, i + 3)];
@@ -336,42 +454,51 @@
       const t = i / (samples.length - 1);
       const nib = Math.abs(Math.sin(angle - nibAngle));
       const pressure = 0.5 + 0.5 * Math.sin(t * Math.PI * 2 * (mobile ? 5 : 7) + 1.3);
-      const taper = Math.min(1, t / 0.03) * (0.3 + 0.7 * Math.min(1, (1 - t) / 0.06));
+      const taper = Math.min(1, length * t / 40) * (0.22 + 0.78 * ease(length * (1 - t) / (mobile ? 55 : 80)));
       return (thin + (thick - thin) * clamp(0.6 * nib * nib + 0.4 * pressure)) * taper;
     });
-    ribbonWidths = rawWidths.map((_, i) => {
+    stemWidths = rawWidths.map((_, i) => {
       let sum = 0, count = 0;
       for (let j = Math.max(0, i - 8); j <= Math.min(rawWidths.length - 1, i + 8); j++) { sum += rawWidths[j]; count++; }
       return sum / count;
     });
-    ribbonNormals = samples.map((point, i) => {
+    stemNormals = samples.map((point, i) => {
       const a = samples[Math.max(0, i - 1)], b = samples[Math.min(samples.length - 1, i + 1)];
       const size = Math.hypot(b.x - a.x, b.y - a.y) || 1;
       return { x: -(b.y - a.y) / size, y: (b.x - a.x) / size };
     });
-    // Slightly uneven edges, independent on each side, read as a pen line.
-    const wobble = mobile ? 0.35 : 0.6;
-    ribbonWobble = samples.map((_, i) => {
-      const distance = length * i / (samples.length - 1);
-      return [
-        wobble * (0.6 * Math.sin(distance / 14 + 0.7) + 0.4 * Math.sin(distance / 5.3 + 2.1)),
-        wobble * (0.6 * Math.sin(distance / 17 + 2.4) + 0.4 * Math.sin(distance / 6.1 + 0.3)),
-      ];
+    // The tube follows the stem samples, but traces the closing loop finely.
+    const tubePoints = [], tubeRatios = [];
+    samples.forEach((p, i) => {
+      if (i / 1000 * length < routeEnd) { tubePoints.push(p); tubeRatios.push(i / 1000); }
     });
-    ribbonDrawn = -1;
+    for (let distance = routeEnd; distance < length + 1.2; distance += 1.2) {
+      const p = stem.getPointAtLength(Math.min(length, distance));
+      tubePoints.push({ x: p.x, y: p.y });
+      tubeRatios.push(Math.min(1, distance / length));
+    }
+    const tubeWidths = tubeRatios.map(ratio => {
+      const f = ratio * 1000, i = Math.min(999, Math.floor(f)), t = f - i;
+      return stemWidths[i] * (1 - t) + stemWidths[i + 1] * t;
+    });
+    stemLayer.replaceChildren();
+    stemTube = makeTube(stemLayer, tubePoints, tubeWidths);
+    stemTube.ratios = tubeRatios;
+    stemTube.length = length;
     const gradient = svg.querySelector('[data-vine-gradient]');
-    gradient.setAttribute('y2', height);
-    fillGradient.setAttribute('y2', height);
+    svg.querySelectorAll('[data-vine-gradient]').forEach(node => node.setAttribute('y2', height));
     const services = document.getElementById('services');
     const footer = document.getElementById('contact');
+    // A short blend where the vine crosses between ivory and green sections.
+    const blend = mobile ? 12 : 18;
     const offsets = {
       base: 0,
-      'services-before': (relativeY(services) - 2) / height,
-      'services-start': (relativeY(services) + 2) / height,
-      'services-end': (relativeY(services) + services.offsetHeight - 2) / height,
-      'services-after': (relativeY(services) + services.offsetHeight + 2) / height,
-      'footer-before': (relativeY(footer) - 2) / height,
-      'footer-start': (relativeY(footer) + 2) / height,
+      'services-before': (relativeY(services) - blend) / height,
+      'services-start': (relativeY(services) + blend) / height,
+      'services-end': (relativeY(services) + services.offsetHeight - blend) / height,
+      'services-after': (relativeY(services) + services.offsetHeight + blend) / height,
+      'footer-before': (relativeY(footer) - blend) / height,
+      'footer-start': (relativeY(footer) + blend) / height,
       'footer-end': 1,
     };
     svg.querySelectorAll('[data-vine-tone-stop]').forEach(stop => {
@@ -406,6 +533,7 @@
     const overlaps = box => box.left < storyRect.left + 4 || box.right > storyRect.right - 4 ||
       protectedRects.some(r => intersects(box, r)) || placedLeafRects.some(r => intersects(box, r));
     details.replaceChildren();
+    branchLayer.replaceChildren();
     branches = [];
     const branchRoutes = route.branches.map(branch => {
       const points = parse(branch.d);
@@ -451,6 +579,45 @@
       const total = path.getTotalLength();
       const leafNodes = [];
       const returning = branch.name.includes('return');
+      // The visible branch: as thick as the stem allows at its root, fine at
+      // the tip, finishing in a small curl like the sketch.
+      const segments = Math.max(8, Math.round(total / (mobile ? 2.5 : 3)));
+      const tubePoints = Array.from({ length: segments + 1 }, (_, i) => {
+        const p = path.getPointAtLength(total * i / segments);
+        return { x: p.x, y: p.y };
+      });
+      // The footer branch travels off the page first and sweeps back in from
+      // the lower left, as in the sketch; only that sweep is drawn.
+      const root = returning ? tubePoints.reduce((best, p, i) => (p.x < tubePoints[best].x ? i : best), 0) : 0;
+      // Like the sketch, a branch may pass behind text, but its tip stops short
+      // of any text in its last stretch and curls there instead.
+      const blocked = tubePoints.findIndex((p, i) => i > root + 0.6 * (segments - root) && protectedRects.some(r => {
+        const x = p.x + storyRect.left, y = p.y + storyRect.top;
+        return x > r.left && x < r.right && y > r.top && y < r.bottom;
+      }));
+      if (blocked > 0) tubePoints.length = Math.max(root + 8, blocked - 2);
+      const reachAt = (tubePoints.length - 1) / segments;
+      if (total * (reachAt - root / segments) > 60) {
+        const tipEnd = tubePoints.at(-1), tipBefore = tubePoints.at(-3);
+        const size = Math.hypot(tipEnd.x - tipBefore.x, tipEnd.y - tipBefore.y) || 1;
+        const along = { x: (tipEnd.x - tipBefore.x) / size, y: (tipEnd.y - tipBefore.y) / size };
+        let up = { x: -along.y, y: along.x };
+        if (up.y > 0) up = { x: -up.x, y: -up.y };
+        const radius = mobile ? 3.5 : 6;
+        const center = { x: tipEnd.x + up.x * radius, y: tipEnd.y + up.y * radius };
+        const start = Math.atan2(tipEnd.y - center.y, tipEnd.x - center.x);
+        const turn = along.x * up.y - along.y * up.x > 0 ? 1 : -1;
+        for (let i = 1; i <= 14; i++) {
+          const angle = start + turn * Math.PI * 1.25 * i / 14, r = radius * (1 - 0.35 * i / 14);
+          tubePoints.push({ x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r });
+        }
+      }
+      const visible = tubePoints.slice(root);
+      const baseWidth = Math.min(stemWidths[nearest] * 0.72, 0.9 + total * 0.02);
+      const tubeWidths = visible.map((p, i) => 0.45 + (baseWidth - 0.45) * Math.pow(1 - i / Math.max(1, visible.length - 1), 0.85));
+      const tube = makeTube(branchLayer, visible, tubeWidths);
+      tube.from = root / segments;
+      tube.to = reachAt;
       const count = returning ? 9 : clamp(Math.round(total / (mobile ? 24 : 105)), mobile ? 3 : 4, mobile ? 4 : 7);
       const rhythms = {
         3: [0.19, 0.52, 0.88], 4: [0.18, 0.39, 0.64, 0.88],
@@ -459,6 +626,7 @@
       };
       const positions = returning ? Array.from({ length: count }, (_, i) => 0.70 + i * 0.24 / (count - 1)) : rhythms[count];
       positions.forEach((at, leafIndex) => {
+        if (at > reachAt - 0.03) return;
         const angle = [38, -56, 45, -40, 58, -47, 34][leafIndex % 7];
         const scale = mobile ? [0.66, 0.60, 0.70, 0.63][leafIndex % 4] : [1.10, 0.95, 1.20, 1, 1.12, 0.92, 1][leafIndex % 7];
         const group = element('g', { class: `home-scroll-vine__leaf${dark ? ' home-scroll-vine__leaf--light' : ''}`,
@@ -471,7 +639,7 @@
         element('use', { href: `#vine-leaf-${shape}` }, blade);
         let accepted = false;
         for (const shift of [0, -0.035, 0.035, -0.07, 0.07]) {
-          const candidate = clamp(at + shift, returning ? 0.70 : 0.10, returning ? 0.95 : 0.93);
+          const candidate = clamp(at + shift, returning ? 0.70 : 0.10, Math.min(returning ? 0.95 : 0.93, reachAt - 0.03));
           const distance = total * candidate;
           const node = path.getPointAtLength(distance);
           const before = path.getPointAtLength(Math.max(0, distance - 1));
@@ -504,7 +672,7 @@
         if (!accepted) group.remove();
       });
       const start = clamp(anchorDistance / length + 12 / length, 0, 0.98);
-      branches.push({ path, total, start, end: Math.min(1, start + branch.duration), leaves: leafNodes });
+      branches.push({ path, total, tube, start, end: Math.min(1, start + branch.duration), leaves: leafNodes });
     });
     // Leaves and curled tendrils straight off the stem, as in the hand-drawn
     // footer reference: alternating sides, kept clear of text like branch leaves.
@@ -517,7 +685,7 @@
       const i = Math.round(clamp(ratio) * (samples.length - 1));
       const a = samples[Math.max(0, i - 2)], b = samples[Math.min(samples.length - 1, i + 2)];
       return { ...samples[i], tangent: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI,
-        normal: ribbonNormals[i], width: ribbonWidths[i] };
+        normal: stemNormals[i], width: stemWidths[i] };
     };
     const claim = node => {
       const r = node.getBoundingClientRect();
@@ -581,26 +749,24 @@
       }
       if (!accepted) group.remove();
     }
+    finalLeaf = null;
+    {
+      const tip = samples.at(-1), back = samples.at(-6);
+      const heading = Math.atan2(tip.y - back.y, tip.x - back.x) * 180 / Math.PI;
+      const leaf = element('g', { class: `home-scroll-vine__leaf${onDark(tip.y) ? ' home-scroll-vine__leaf--light' : ''}`,
+        'data-vine-leaf': '', 'data-leaf-branch': 'stem-end' });
+      element('path', { class: 'home-scroll-vine__leaf-petiole', d: 'M0 0Q4 -1 7 0' }, leaf);
+      const blade = element('g', { 'data-vine-leaf-blade': '' }, element('g', { transform: 'translate(7 0)' }, leaf));
+      element('use', { href: '#vine-leaf-full' }, blade);
+      for (const bend of [0, -18, 18, -34, 34]) {
+        leaf.setAttribute('transform', `translate(${tip.x} ${tip.y}) rotate(${heading + bend}) scale(${mobile ? 0.62 : 0.95})`);
+        if (claim(leaf)) { finalLeaf = { group: leaf, blade }; break; }
+      }
+      if (!finalLeaf) leaf.remove();
+    }
     vine.dataset.geometryWidth = width;
     vine.dataset.geometryHeight = height;
     document.documentElement.classList.add('vine-ready');
-  };
-
-  const drawRibbon = progress => {
-    const last = Math.round(progress * (samples.length - 1));
-    if (last === ribbonDrawn) return;
-    ribbonDrawn = last;
-    if (last < 2) { ribbon.removeAttribute('d'); return; }
-    const left = [], right = [];
-    for (let i = 0; i <= last; i++) {
-      // A growing tip while drawing; the full stroke keeps its own taper.
-      const tip = progress >= 1 ? 1 : Math.min(1, 0.2 + (last - i) / 16);
-      const w = ribbonWidths[i] * tip, n = ribbonNormals[i], p = samples[i];
-      const l = Math.max(0.5, w + ribbonWobble[i][0] * tip), r = Math.max(0.5, w + ribbonWobble[i][1] * tip);
-      left.push(`${(p.x + n.x * l).toFixed(1)} ${(p.y + n.y * l).toFixed(1)}`);
-      right.push(`${(p.x - n.x * r).toFixed(1)} ${(p.y - n.y * r).toFixed(1)}`);
-    }
-    ribbon.setAttribute('d', `M${left.join('L')}L${right.reverse().join('L')}Z`);
   };
 
   const draw = () => {
@@ -615,7 +781,14 @@
     vine.dataset.vineState = staticMode() ? 'static' : (progress > 0 ? 'drawing' : 'ready');
     vine.dataset.drawProgress = progress.toFixed(4);
     strokes.forEach(path => setProgress(path, length, progress));
-    drawRibbon(progress);
+    if (stemTube) renderTube(stemTube, progress);
+    if (finalLeaf) {
+      const reveal = staticMode() ? 1 : clamp((progress - 0.985) / 0.015);
+      const eased = reveal * reveal * (3 - 2 * reveal);
+      finalLeaf.group.style.opacity = (eased * 0.95).toFixed(3);
+      finalLeaf.group.style.visibility = reveal > 0 ? 'visible' : 'hidden';
+      finalLeaf.blade.setAttribute('transform', `scale(${(0.7 + 0.3 * eased).toFixed(3)})`);
+    }
     stemLeaves.forEach(leaf => {
       const reveal = staticMode() ? 1 : clamp((progress - leaf.at) / 0.014);
       const eased = reveal * reveal * (3 - 2 * reveal);
@@ -630,8 +803,7 @@
     });
     branches.forEach(branch => {
       const local = staticMode() ? 1 : clamp((progress - branch.start) / Math.max(0.001, branch.end - branch.start));
-      setProgress(branch.path, branch.total, local);
-      branch.path.style.opacity = local > 0 ? '0.8' : '0';
+      renderTube(branch.tube, clamp((local - branch.tube.from) / Math.max(0.001, branch.tube.to - branch.tube.from)));
       branch.leaves.forEach(leaf => {
         const start = leaf.at + leaf.clearance;
         const reveal = staticMode() ? 1 : clamp((local - start) / Math.min(0.08, Math.max(0.02, 1 - start)));
