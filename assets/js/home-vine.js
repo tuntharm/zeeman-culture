@@ -909,6 +909,8 @@
   story.addEventListener('transitionend', event => {
     if (event.propertyName === 'transform' && event.target.matches('.reveal')) schedule(true);
   });
+  // Opening a service moves the rows below it without resizing the section.
+  story.addEventListener('toggle', () => { schedule(true); setTimeout(() => schedule(true), 500); }, true);
   motion.addEventListener?.('change', () => schedule());
   connection?.addEventListener?.('change', () => schedule());
   document.fonts?.ready.then(() => schedule(true));
