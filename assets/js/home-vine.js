@@ -139,6 +139,14 @@
   let layoutPending = true;
   let originY = 0;
   let height = 0;
+  // The visible stem is a filled brush stroke; the stroked path only supplies geometry.
+  const ribbon = document.createElementNS(NS, 'path');
+  ribbon.setAttribute('class', 'home-scroll-vine__ribbon');
+  ribbon.setAttribute('fill', 'url(#vine-ink)');
+  details.before(ribbon);
+  let ribbonNormals = [];
+  let ribbonWidths = [];
+  let ribbonDrawn = -1;
 
   const element = (tag, attributes, parent = details) => {
     const node = document.createElementNS(NS, tag);
@@ -306,6 +314,30 @@
       const p = stem.getPointAtLength(length * i / 1000);
       return { x: p.x, y: p.y };
     });
+    // Brush width: a tilted nib swells near-vertical strokes and thins the
+    // diagonals, a slow pressure swell varies it further, and both ends taper.
+    const [thin, thick] = mobile ? [0.9, 5] : [2.2, 9.5];
+    const nibAngle = 0.42;
+    const rawWidths = samples.map((point, i) => {
+      const a = samples[Math.max(0, i - 3)], b = samples[Math.min(samples.length - 1, i + 3)];
+      const angle = Math.atan2(b.y - a.y, b.x - a.x);
+      const t = i / (samples.length - 1);
+      const nib = Math.abs(Math.sin(angle - nibAngle));
+      const pressure = 0.5 + 0.5 * Math.sin(t * Math.PI * 2 * (mobile ? 5 : 7) + 1.3);
+      const taper = Math.min(1, t / 0.03) * (0.3 + 0.7 * Math.min(1, (1 - t) / 0.06));
+      return (thin + (thick - thin) * clamp(0.6 * nib * nib + 0.4 * pressure)) * taper;
+    });
+    ribbonWidths = rawWidths.map((_, i) => {
+      let sum = 0, count = 0;
+      for (let j = Math.max(0, i - 8); j <= Math.min(rawWidths.length - 1, i + 8); j++) { sum += rawWidths[j]; count++; }
+      return sum / count;
+    });
+    ribbonNormals = samples.map((point, i) => {
+      const a = samples[Math.max(0, i - 1)], b = samples[Math.min(samples.length - 1, i + 1)];
+      const size = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      return { x: -(b.y - a.y) / size, y: (b.x - a.x) / size };
+    });
+    ribbonDrawn = -1;
     const gradient = svg.querySelector('[data-vine-gradient]');
     gradient.setAttribute('y2', height);
     const services = document.getElementById('services');
@@ -457,6 +489,22 @@
     document.documentElement.classList.add('vine-ready');
   };
 
+  const drawRibbon = progress => {
+    const last = Math.round(progress * (samples.length - 1));
+    if (last === ribbonDrawn) return;
+    ribbonDrawn = last;
+    if (last < 2) { ribbon.removeAttribute('d'); return; }
+    const left = [], right = [];
+    for (let i = 0; i <= last; i++) {
+      // A growing tip while drawing; the full stroke keeps its own taper.
+      const tip = progress >= 1 ? 1 : Math.min(1, 0.2 + (last - i) / 16);
+      const w = ribbonWidths[i] * tip, n = ribbonNormals[i], p = samples[i];
+      left.push(`${(p.x + n.x * w).toFixed(1)} ${(p.y + n.y * w).toFixed(1)}`);
+      right.push(`${(p.x - n.x * w).toFixed(1)} ${(p.y - n.y * w).toFixed(1)}`);
+    }
+    ribbon.setAttribute('d', `M${left.join('L')}L${right.reverse().join('L')}Z`);
+  };
+
   const draw = () => {
     const storyTop = story.getBoundingClientRect().top + scrollY;
     const travel = Math.max(1, height - innerHeight);
@@ -469,6 +517,7 @@
     vine.dataset.vineState = staticMode() ? 'static' : (progress > 0 ? 'drawing' : 'ready');
     vine.dataset.drawProgress = progress.toFixed(4);
     strokes.forEach(path => setProgress(path, length, progress));
+    drawRibbon(progress);
     branches.forEach(branch => {
       const local = staticMode() ? 1 : clamp((progress - branch.start) / Math.max(0.001, branch.end - branch.start));
       setProgress(branch.path, branch.total, local);

@@ -136,20 +136,47 @@ body.page--home .home-services__heading .section-heading { font-family:var(--hom
 .page--home .brand-lane__item .partner-mark--jd { max-width:104px; max-height:38px; }
 .page--home .brand-lane__item .partner-mark--moutai { max-width:58px; max-height:56px; }
 .page--home .brand-lane__item .partner-mark--trip-com { max-width:96px; max-height:46px; }
-/* Founders: cut-out portraits standing on offset sage blocks. */
-.home-founder__portrait { position:relative; overflow:visible; padding:18px 18px 0 0; }
-.home-founder__portrait::before { position:absolute; inset:34% 0 0 0; content:""; background:var(--home-mint); opacity:.85; }
-.home-founder__portrait::after { position:absolute; top:0; right:0; width:28%; height:22%; content:""; background:var(--home-mint); opacity:.45; }
-.home-founder__portrait img { position:relative; z-index:1; display:block; aspect-ratio:auto; height:auto; object-fit:contain; object-position:center bottom; }
-.home-founder h3 span span[lang] { display:inline; margin:0 .4em 0 0; font-size:inherit; font-weight:600; }
-.home-founder .eyebrow span[lang] { margin-left:.4em; letter-spacing:.04em; }
-/* Hand-drawn vine: thinner stem, no halo, outlined leaves like the footer sprig. */
-.home-scroll-vine__stroke--wash { opacity:0; }
-.home-scroll-vine__stroke--main { opacity:.9; stroke-width:6; }
-.home-scroll-vine__branch { stroke-width:3; }
-.home-scroll-vine__leaf { fill:var(--home-canvas,#f7f8f4); stroke:#0f4a36; stroke-width:1.5; stroke-linejoin:round; }
-.home-scroll-vine__leaf--light { fill:#0f4a36; stroke:#c7e0d1; }
-.home-scroll-vine__leaf-cut { stroke:#0f4a36; stroke-width:1.1; }
+/* Founders, after the client's deck: cut-out portrait on sage blocks, their
+   social profiles fanned behind, Chinese and English names, highlighted facts. */
+.home-founders__motto { margin:14px 0 0; color:var(--home-forest); font-size:15px; }
+.home-founders__motto span { margin-right:.7em; font-weight:700; letter-spacing:.08em; }
+.page--home .home-founders__grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(32px,4.5vw,72px); padding-top:40px; }
+.founder-feature { --founder-mark:rgba(233,196,92,.62); display:grid; align-content:start; gap:26px; }
+.founder-feature--yang { --founder-mark:rgba(140,190,236,.6); }
+.founder-feature__visual { position:relative; z-index:0; display:block; height:clamp(280px,24vw,360px); }
+.founder-feature__visual::before, .founder-feature__visual::after { position:absolute; z-index:-1; content:""; background:var(--home-mint); }
+.founder-feature__visual::before { top:26%; right:12%; bottom:0; left:30%; opacity:.9; }
+.founder-feature__visual::after { top:6%; right:4%; width:15%; height:24%; opacity:.5; }
+.founder-feature--yang .founder-feature__visual::before { right:30%; left:12%; }
+.founder-feature--yang .founder-feature__visual::after { top:auto; right:auto; bottom:0; left:2%; }
+.founder-feature__portrait { position:absolute; z-index:2; bottom:0; left:60%; width:auto; max-width:none; height:100%; transform:translateX(-50%); }
+.founder-feature--yang .founder-feature__portrait { left:40%; }
+.founder-feature__social { position:absolute; z-index:1; width:37%; height:auto; border-radius:6px; box-shadow:0 14px 30px rgba(16,21,18,.16); transition:transform .45s cubic-bezier(.2,.7,.2,1); }
+.founder-feature--betty .founder-feature__social--one { top:9%; left:0; }
+.founder-feature--betty .founder-feature__social--two { top:50%; left:6%; }
+.founder-feature--yang .founder-feature__social--one { top:3%; right:0; }
+.founder-feature--yang .founder-feature__social--two { top:47%; right:6%; }
+.founder-feature__visual:hover .founder-feature__social--one { transform:translateY(-6px); }
+.founder-feature__visual:hover .founder-feature__social--two { transform:translateY(4px); }
+.founder-feature__role { margin:0 0 8px; color:var(--home-forest); font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+.founder-feature__role span { margin-right:.45em; letter-spacing:.12em; }
+.page--home .founder-feature h3 { margin:0; color:var(--home-forest); font-size:clamp(34px,3vw,46px); font-weight:800; line-height:1.05; letter-spacing:.06em; }
+.page--home .founder-feature h3 em { margin-left:.25em; font-family:var(--home-serif-accent); font-style:italic; font-weight:400; letter-spacing:0; }
+.founder-feature__fullname { margin:6px 0 0; color:rgba(16,21,18,.58); font-size:13px; }
+.founder-feature__facts { display:grid; gap:7px; margin:16px 0 0; padding:0; color:var(--home-forest); font-size:15.5px; line-height:1.45; list-style:none; }
+.founder-feature__facts mark { padding:0 .12em; background:linear-gradient(transparent 54%, var(--founder-mark) 54%); color:inherit; font-size:1.16em; font-weight:800; }
+.founder-feature--yang .founder-feature__text { text-align:right; }
+@media (prefers-reduced-motion:reduce) { .founder-feature__social { transition:none; } }
+/* Brush-drawn vine: a filled stem whose width follows the curve (built in
+   home-vine.js), tinted leaves with an inked outline like the footer sprig. */
+.home-scroll-vine__stroke--wash, .home-scroll-vine__stroke--main { opacity:0; }
+.home-scroll-vine__ribbon { opacity:.94; }
+/* The footer copy no longer needs a solid plate; it cut a notch into the stem. */
+.page--home .home-footer__action p { background:transparent; }
+.home-scroll-vine__branch { stroke-width:3.4; }
+.home-scroll-vine__leaf { fill:#d4e6d9; stroke:#0f4a36; stroke-width:1.35; stroke-linejoin:round; }
+.home-scroll-vine__leaf--light { fill:rgba(199,224,209,.16); stroke:#c7e0d1; }
+.home-scroll-vine__leaf-cut { stroke:#0f4a36; stroke-width:1.05; }
 .home-scroll-vine__leaf--light .home-scroll-vine__leaf-cut { stroke:#c7e0d1; }
 @media (max-width:620px) {
   /* Shorter still cover, a single row of advantages, side-by-side founders. */
@@ -161,15 +188,22 @@ body.page--home .home-services__heading .section-heading { font-family:var(--hom
   body.page--home .advantage-editorial .advantage-editorial__item p { display:none; }
   body.page--home .advantage-editorial .advantage-editorial__number { font-size:10px; }
   body.page--home .home-services__heading .section-heading { font-size:38px; }
-  .home-founders__grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
-  .home-founder { grid-template-columns:1fr; gap:12px; }
-  .home-founder__portrait { padding:10px 10px 0 0; }
-  .home-founder .eyebrow span[lang] { display:none; }
-  .home-founder__portrait img { min-height:0; max-height:none; }
-  .home-founder h3 { font-size:22px; margin-bottom:6px; }
-  .home-founder h3 span { font-size:12px; margin-top:4px; }
-  .home-founder p { font-size:12.5px; line-height:1.5; }
-  .home-founder .eyebrow { font-size:10px; }
-  .home-scroll-vine__stroke--main { stroke-width:3.5; }
+  .home-founders__motto { font-size:12.5px; }
+  .home-founders__motto span { display:block; margin:0 0 2px; }
+  .page--home .home-founders__grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; padding-top:24px; }
+  .founder-feature { gap:14px; }
+  .founder-feature__visual { height:188px; }
+  .founder-feature__portrait { width:86%; height:auto; }
+  .founder-feature__social { width:60%; border-radius:4px; box-shadow:0 8px 16px rgba(16,21,18,.14); }
+  .founder-feature--betty .founder-feature__social--one { top:4%; left:-4%; }
+  .founder-feature--betty .founder-feature__social--two { top:40%; left:0; }
+  .founder-feature--yang .founder-feature__social--one { top:2%; right:-4%; }
+  .founder-feature--yang .founder-feature__social--two { top:38%; right:0; }
+  .founder-feature__role { margin-bottom:5px; font-size:10px; }
+  .page--home .founder-feature h3 { font-size:21px; }
+  .page--home .founder-feature h3 em { display:block; margin:3px 0 0; font-size:19px; }
+  .founder-feature__fullname { margin-top:3px; font-size:11px; }
+  .founder-feature__facts { gap:6px; margin-top:10px; font-size:11.5px; line-height:1.4; }
+  .founder-feature--yang .founder-feature__text { text-align:left; }
   .home-scroll-vine__branch { stroke-width:2; }
 }
