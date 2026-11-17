@@ -4,6 +4,9 @@
 .page--home .brand-exchange__heading { display:block; padding-block:16px; margin-bottom:0; }
 .page--home .brand-exchange__heading .home-section-label { display:none; }
 .brand-exchange__caption { margin:0; color:var(--home-forest); font-size:13px; }
+/* Editorial caption: serif italic after a short gold rule. */
+body.page--home .brand-exchange__caption { display:flex; align-items:center; gap:14px; font-family:var(--home-serif-accent); font-size:clamp(20px,1.7vw,25px); font-style:italic; line-height:1.25; }
+body.page--home .brand-exchange__caption::before { flex:0 0 36px; height:1px; content:""; background:var(--home-gold); }
 .page--home .brand-lane__track, .page--home .brand-lane--reverse .brand-lane__track { width:max-content; animation-duration:var(--marquee-duration, 80s); }
 .page--home .brand-lane__group { display:flex; width:max-content; flex:0 0 auto; min-width:100vw; justify-content:space-around; }
 .page--home .brand-lane__group .brand-lane__item { flex:0 0 clamp(240px,18vw,280px); width:clamp(240px,18vw,280px); min-height:120px; padding:24px 32px; border-right:0; background:transparent; color:var(--home-forest); }
@@ -215,6 +218,13 @@ body.page--home .home-service-card h3 { font-family:var(--home-serif-accent); fo
   .home-scroll-vine__branch { stroke-width:1.5; }
   .home-scroll-vine__tube-body, .home-scroll-vine__tendril { stroke-width:.95; }
   .home-scroll-vine__tube-glint { stroke-width:.7; }
-  body.page--home .market-direction__destination { font-size:32px; }
+  body.page--home .brand-exchange__caption { gap:10px; font-size:18px; }
+  body.page--home .brand-exchange__caption::before { flex-basis:24px; }
+  /* The two market directions sit side by side, divided by a hairline. */
+  body.page--home .home-services--overview .market-directions { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  body.page--home .home-services--overview .market-direction { padding:20px 10px 22px; }
+  body.page--home .home-services--overview .market-direction + .market-direction { padding:20px 10px 22px; border-top:0; border-left:1px solid var(--line-light); }
+  body.page--home .home-services--overview .market-direction__origin { font-size:13.5px; line-height:1.35; }
+  body.page--home .market-direction__destination { margin-top:4px; font-size:25px; line-height:1.05; text-wrap:balance; }
   body.page--home .home-service-card h3 { font-size:24px; }
 }
