@@ -576,7 +576,7 @@
         d: pathData, stroke: dark ? '#c7e0d1' : '#0f4a36',
         'data-anchor-x': anchor.x, 'data-anchor-y': anchor.y, 'data-vine-branch': branch.name,
       });
-      const total = path.getTotalLength();
+      let total = path.getTotalLength();
       const leafNodes = [];
       const returning = branch.name.includes('return');
       // The visible branch: as thick as the stem allows at its root, fine at
@@ -589,6 +589,31 @@
       // The footer branch travels off the page first and sweeps back in from
       // the lower left, as in the sketch; only that sweep is drawn.
       const root = returning ? tubePoints.reduce((best, p, i) => (p.x < tubePoints[best].x ? i : best), 0) : 0;
+      if (returning) {
+        // The footer sweep dips smoothly under any copy it would cross, so no
+        // line of text is cut. Leaves then follow the adjusted curve.
+        const spread = Math.round(80 / (mobile ? 2.5 : 3));
+        for (let pass = 0; pass < 4; pass++) {
+          // The tip is left to the stop-short rule below rather than dipped.
+          const needed = tubePoints.map((p, i) => {
+            if (i < root || i > root + 0.6 * (segments - root)) return 0;
+            const x = p.x + storyRect.left, y = p.y + storyRect.top;
+            return protectedRects.reduce((most, r) =>
+              (x > r.left && x < r.right && y > r.top - 4 && y < r.bottom ? Math.max(most, r.bottom - y + 4) : most), 0);
+          });
+          if (!needed.some(Boolean)) break;
+          const drop = needed.map((_, i) => {
+            let most = 0;
+            for (let j = Math.max(root, i - spread); j <= Math.min(needed.length - 1, i + spread); j++) {
+              if (needed[j]) most = Math.max(most, needed[j] * Math.cos(Math.abs(i - j) / spread * Math.PI / 2) ** 2);
+            }
+            return most;
+          });
+          tubePoints.forEach((p, i) => { p.y += drop[i]; });
+        }
+        path.setAttribute('d', `M${tubePoints.map(pair).join('L')}`);
+        total = path.getTotalLength();
+      }
       // Like the sketch, a branch may pass behind text, but its tip stops short
       // of any text in its last stretch and curls there instead.
       const blocked = tubePoints.findIndex((p, i) => i > root + 0.6 * (segments - root) && protectedRects.some(r => {
