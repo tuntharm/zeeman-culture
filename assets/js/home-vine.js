@@ -139,14 +139,26 @@
   let layoutPending = true;
   let originY = 0;
   let height = 0;
-  // The visible stem is a filled brush stroke; the stroked path only supplies geometry.
+  // The visible stem is a hand-drawn tube: a pale fill with inked edges. The
+  // stroked path only supplies geometry. A second gradient tints the fill.
+  const inkGradient = svg.querySelector('[data-vine-gradient]');
+  const fillGradient = inkGradient.cloneNode(true);
+  fillGradient.id = 'vine-fill';
+  fillGradient.querySelectorAll('stop').forEach(stop => {
+    stop.setAttribute('stop-color', stop.getAttribute('stop-color') === '#0f4a36' ? '#e6efe3' : '#dfe9dc');
+  });
+  inkGradient.after(fillGradient);
   const ribbon = document.createElementNS(NS, 'path');
   ribbon.setAttribute('class', 'home-scroll-vine__ribbon');
-  ribbon.setAttribute('fill', 'url(#vine-ink)');
+  ribbon.setAttribute('fill', 'url(#vine-fill)');
+  ribbon.setAttribute('stroke', 'url(#vine-ink)');
   details.before(ribbon);
   let ribbonNormals = [];
   let ribbonWidths = [];
+  let ribbonWobble = [];
   let ribbonDrawn = -1;
+  let stemLeaves = [];
+  let tendrils = [];
 
   const element = (tag, attributes, parent = details) => {
     const node = document.createElementNS(NS, tag);
@@ -316,7 +328,7 @@
     });
     // Brush width: a tilted nib swells near-vertical strokes and thins the
     // diagonals, a slow pressure swell varies it further, and both ends taper.
-    const [thin, thick] = mobile ? [0.9, 5] : [2.2, 9.5];
+    const [thin, thick] = mobile ? [1.5, 3.4] : [2.4, 5.6];
     const nibAngle = 0.42;
     const rawWidths = samples.map((point, i) => {
       const a = samples[Math.max(0, i - 3)], b = samples[Math.min(samples.length - 1, i + 3)];
@@ -337,9 +349,19 @@
       const size = Math.hypot(b.x - a.x, b.y - a.y) || 1;
       return { x: -(b.y - a.y) / size, y: (b.x - a.x) / size };
     });
+    // Slightly uneven edges, independent on each side, read as a pen line.
+    const wobble = mobile ? 0.35 : 0.6;
+    ribbonWobble = samples.map((_, i) => {
+      const distance = length * i / (samples.length - 1);
+      return [
+        wobble * (0.6 * Math.sin(distance / 14 + 0.7) + 0.4 * Math.sin(distance / 5.3 + 2.1)),
+        wobble * (0.6 * Math.sin(distance / 17 + 2.4) + 0.4 * Math.sin(distance / 6.1 + 0.3)),
+      ];
+    });
     ribbonDrawn = -1;
     const gradient = svg.querySelector('[data-vine-gradient]');
     gradient.setAttribute('y2', height);
+    fillGradient.setAttribute('y2', height);
     const services = document.getElementById('services');
     const footer = document.getElementById('contact');
     const offsets = {
@@ -352,7 +374,7 @@
       'footer-start': (relativeY(footer) + 2) / height,
       'footer-end': 1,
     };
-    gradient.querySelectorAll('[data-vine-tone-stop]').forEach(stop => {
+    svg.querySelectorAll('[data-vine-tone-stop]').forEach(stop => {
       stop.setAttribute('offset', clamp(offsets[stop.dataset.vineToneStop]));
     });
     // Protect the ink on each text line, rather than the whitespace in a whole heading/card.
@@ -484,6 +506,81 @@
       const start = clamp(anchorDistance / length + 12 / length, 0, 0.98);
       branches.push({ path, total, start, end: Math.min(1, start + branch.duration), leaves: leafNodes });
     });
+    // Leaves and curled tendrils straight off the stem, as in the hand-drawn
+    // footer reference: alternating sides, kept clear of text like branch leaves.
+    stemLeaves = [];
+    tendrils = [];
+    const servicesTop = relativeY(services), servicesBottom = servicesTop + services.offsetHeight;
+    const footerTop = relativeY(footer);
+    const onDark = y => (y > servicesTop && y < servicesBottom) || y > footerTop;
+    const pointAt = ratio => {
+      const i = Math.round(clamp(ratio) * (samples.length - 1));
+      const a = samples[Math.max(0, i - 2)], b = samples[Math.min(samples.length - 1, i + 2)];
+      return { ...samples[i], tangent: Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI,
+        normal: ribbonNormals[i], width: ribbonWidths[i] };
+    };
+    const claim = node => {
+      const r = node.getBoundingClientRect();
+      const box = { left: r.left - 2, right: r.right + 2, top: r.top - 2, bottom: r.bottom + 2 };
+      if (overlaps(box)) return false;
+      placedLeafRects.push(box);
+      return true;
+    };
+    (mobile ? [0.22, 0.47, 0.72, 0.95] : [0.17, 0.36, 0.55, 0.74, 0.93]).forEach((at, k) => {
+      const point = pointAt(at);
+      const size = mobile ? 0.65 : 1;
+      for (const side of k % 2 ? [1, -1] : [-1, 1]) {
+        const out = { x: point.normal.x * side, y: point.normal.y * side };
+        const start = { x: point.x + out.x * point.width, y: point.y + out.y * point.width };
+        const heading = Math.atan2(out.y, out.x) - side * 0.6;
+        const reach = 18 * size, radius = 8 * size;
+        const points = Array.from({ length: 9 }, (_, i) => ({
+          x: start.x + Math.cos(heading) * reach * i / 8,
+          y: start.y + Math.sin(heading) * reach * i / 8 - Math.sin(Math.PI * i / 8) * 2 * size,
+        }));
+        // A tightening spiral that leaves the run along its own tangent.
+        const end = points.at(-1);
+        const center = { x: end.x + Math.cos(heading + side * Math.PI / 2) * radius,
+          y: end.y + Math.sin(heading + side * Math.PI / 2) * radius };
+        const from = heading - side * Math.PI / 2;
+        for (let i = 1; i <= 36; i++) {
+          const t = i / 36, theta = from + side * t * Math.PI * 2.15, r = radius * (1 - 0.7 * t);
+          points.push({ x: center.x + Math.cos(theta) * r, y: center.y + Math.sin(theta) * r });
+        }
+        const path = element('path', { class: `home-scroll-vine__tendril${onDark(point.y) ? ' home-scroll-vine__tendril--light' : ''}`,
+          d: `M${points.map(pair).join('L')}` });
+        if (!claim(path)) { path.remove(); continue; }
+        tendrils.push({ path, total: path.getTotalLength(), at });
+        break;
+      }
+    });
+    const leafCount = Math.floor(length / (mobile ? 88 : 150));
+    for (let n = 1; n < leafCount; n++) {
+      const at = n / leafCount;
+      if (at < 0.035) continue;
+      const point = pointAt(at);
+      const dark = onDark(point.y);
+      const group = element('g', { class: `home-scroll-vine__leaf home-scroll-vine__leaf--stem${dark ? ' home-scroll-vine__leaf--light' : ''}`,
+        'data-vine-leaf': '', 'data-leaf-branch': 'stem' });
+      element('path', { class: 'home-scroll-vine__leaf-petiole', d: 'M0 0Q4 -1 7 0' }, group);
+      const blade = element('g', { 'data-vine-leaf-blade': '' }, element('g', { transform: 'translate(7 0)' }, group));
+      element('use', { href: `#vine-leaf-${n % 3 === 2 ? 'narrow' : 'full'}` }, blade);
+      const scale = mobile ? [0.6, 0.68, 0.56][n % 3] : [1.02, 0.88, 1.12][n % 3];
+      let accepted = false;
+      for (const side of n % 2 ? [1, -1] : [-1, 1]) {
+        for (const angle of [48, 34, 62]) {
+          const x = point.x + point.normal.x * point.width * side, y = point.y + point.normal.y * point.width * side;
+          // Point upward and outward, like a climbing vine.
+          group.setAttribute('transform', `translate(${x} ${y}) rotate(${point.tangent + 180 - angle * side}) scale(${scale})`);
+          if (!claim(group)) continue;
+          stemLeaves.push({ group, blade, at, turn: side > 0 ? 8 : -8 });
+          accepted = true;
+          break;
+        }
+        if (accepted) break;
+      }
+      if (!accepted) group.remove();
+    }
     vine.dataset.geometryWidth = width;
     vine.dataset.geometryHeight = height;
     document.documentElement.classList.add('vine-ready');
@@ -499,8 +596,9 @@
       // A growing tip while drawing; the full stroke keeps its own taper.
       const tip = progress >= 1 ? 1 : Math.min(1, 0.2 + (last - i) / 16);
       const w = ribbonWidths[i] * tip, n = ribbonNormals[i], p = samples[i];
-      left.push(`${(p.x + n.x * w).toFixed(1)} ${(p.y + n.y * w).toFixed(1)}`);
-      right.push(`${(p.x - n.x * w).toFixed(1)} ${(p.y - n.y * w).toFixed(1)}`);
+      const l = Math.max(0.5, w + ribbonWobble[i][0] * tip), r = Math.max(0.5, w + ribbonWobble[i][1] * tip);
+      left.push(`${(p.x + n.x * l).toFixed(1)} ${(p.y + n.y * l).toFixed(1)}`);
+      right.push(`${(p.x - n.x * r).toFixed(1)} ${(p.y - n.y * r).toFixed(1)}`);
     }
     ribbon.setAttribute('d', `M${left.join('L')}L${right.reverse().join('L')}Z`);
   };
@@ -518,6 +616,18 @@
     vine.dataset.drawProgress = progress.toFixed(4);
     strokes.forEach(path => setProgress(path, length, progress));
     drawRibbon(progress);
+    stemLeaves.forEach(leaf => {
+      const reveal = staticMode() ? 1 : clamp((progress - leaf.at) / 0.014);
+      const eased = reveal * reveal * (3 - 2 * reveal);
+      leaf.group.style.opacity = (eased * 0.95).toFixed(3);
+      leaf.group.style.visibility = reveal > 0 ? 'visible' : 'hidden';
+      leaf.blade.setAttribute('transform', `rotate(${(leaf.turn * (1 - eased)).toFixed(2)}) scale(${(0.7 + 0.3 * eased).toFixed(3)})`);
+    });
+    tendrils.forEach(tendril => {
+      const local = staticMode() ? 1 : clamp((progress - tendril.at) / 0.02);
+      setProgress(tendril.path, tendril.total, local);
+      tendril.path.style.opacity = local > 0 ? '1' : '0';
+    });
     branches.forEach(branch => {
       const local = staticMode() ? 1 : clamp((progress - branch.start) / Math.max(0.001, branch.end - branch.start));
       setProgress(branch.path, branch.total, local);
