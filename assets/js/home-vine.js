@@ -532,6 +532,72 @@
     const placedLeafRects = [];
     const overlaps = box => box.left < storyRect.left + 4 || box.right > storyRect.right - 4 ||
       protectedRects.some(r => intersects(box, r)) || placedLeafRects.some(r => intersects(box, r));
+    // A smooth y(x) through a few layout points (monotone cubic, so it only
+    // turns where a point is a peak), sampled every few pixels.
+    const footerSweep = tipSource => {
+      const grid = footer.querySelector('.footer-grid');
+      const brandColumn = grid?.firstElementChild;
+      const bottomRow = footer.querySelector('.footer-bottom');
+      const links = footer.querySelector('.footer-links');
+      if (!brandColumn || !bottomRow || !links) return null;
+      const box = node => {
+        const r = node.getBoundingClientRect();
+        return { left: r.left - storyRect.left, right: r.right - storyRect.left, top: r.top - storyRect.top, bottom: r.bottom - storyRect.top };
+      };
+      const brand = { left: Infinity, right: -Infinity, bottom: -Infinity };
+      const walker = document.createTreeWalker(brandColumn, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        if (!node.textContent.trim()) continue;
+        range.selectNodeContents(node);
+        [...range.getClientRects()].forEach(r => {
+          brand.left = Math.min(brand.left, r.left - storyRect.left);
+          brand.right = Math.max(brand.right, r.right - storyRect.left);
+          brand.bottom = Math.max(brand.bottom, r.bottom - storyRect.top);
+        });
+      }
+      const rule = box(bottomRow).top, linksLeft = box(links).left, gridTop = box(grid).top;
+      // Needs a real gap under the copy and open space before the links.
+      if (!(rule - brand.bottom > 22) || linksLeft - brand.right < 160) return null;
+      // Under the copy the branch is already climbing: low by the left edge,
+      // just under the last line at the right, continuing the same rise
+      // back to the page edge, so the whole sweep reads as one S-curve.
+      const low = { x: Math.max(-4, brand.left - 8), y: rule - 6 };
+      const under = { x: brand.right + 24, y: brand.bottom + 6 };
+      const rise = (low.y - under.y) / (under.x - low.x);
+      const tip = { x: Math.min(tipSource.x, linksLeft - 56), y: tipSource.y };
+      // Keep the crest gentle when the open space is narrow: climb at most
+      // half a pixel per pixel, and let the tip fall back no more steeply.
+      const crestX = under.x + 0.55 * (tip.x - under.x);
+      const crest = { x: crestX, y: Math.min(tip.y - 18, Math.max(gridTop + 10, under.y - 0.5 * (crestX - under.x))) };
+      tip.y = Math.min(tip.y, crest.y + 0.45 * (tip.x - crest.x));
+      const knots = [
+        { x: -24, y: Math.min(height - 10, low.y + rise * (low.x + 24)) },
+        low, under, crest, tip,
+      ];
+      if (knots.some((k, i) => i && k.x <= knots[i - 1].x + 8)) return null;
+      const n = knots.length, h = [], slope = [], m = [];
+      for (let i = 0; i < n - 1; i++) {
+        h[i] = knots[i + 1].x - knots[i].x;
+        slope[i] = (knots[i + 1].y - knots[i].y) / h[i];
+      }
+      m[0] = slope[0];
+      m[n - 1] = slope[n - 2];
+      for (let i = 1; i < n - 1; i++) {
+        const w1 = 2 * h[i] + h[i - 1], w2 = h[i] + 2 * h[i - 1];
+        m[i] = slope[i - 1] * slope[i] <= 0 ? 0 : (w1 + w2) / (w1 / slope[i - 1] + w2 / slope[i]);
+      }
+      const points = [];
+      for (let i = 0; i < n - 1; i++) {
+        const steps = Math.max(2, Math.round(h[i] / 3));
+        for (let k = i ? 1 : 0; k <= steps; k++) {
+          const t = k / steps, t2 = t * t, t3 = t2 * t;
+          points.push({ x: knots[i].x + h[i] * t,
+            y: (2 * t3 - 3 * t2 + 1) * knots[i].y + (t3 - 2 * t2 + t) * h[i] * m[i]
+              + (-2 * t3 + 3 * t2) * knots[i + 1].y + (t3 - t2) * h[i] * m[i + 1] });
+        }
+      }
+      return points;
+    };
     details.replaceChildren();
     branchLayer.replaceChildren();
     branches = [];
@@ -581,48 +647,34 @@
       const returning = branch.name.includes('return');
       // The visible branch: as thick as the stem allows at its root, fine at
       // the tip, finishing in a small curl like the sketch.
-      const segments = Math.max(8, Math.round(total / (mobile ? 2.5 : 3)));
+      let segments = Math.max(8, Math.round(total / (mobile ? 2.5 : 3)));
       const tubePoints = Array.from({ length: segments + 1 }, (_, i) => {
         const p = path.getPointAtLength(total * i / segments);
         return { x: p.x, y: p.y };
       });
-      // The footer branch travels off the page first and sweeps back in from
-      // the lower left, as in the sketch; only that sweep is drawn.
-      const root = returning ? tubePoints.reduce((best, p, i) => (p.x < tubePoints[best].x ? i : best), 0) : 0;
+      // The footer sweep is rebuilt from the footer's own layout as one smooth
+      // rise: in from the lower left, through the gap between the brand copy
+      // and the copyright line, up to a crest in the open middle, then easing
+      // down to the tip. It never crosses text and never wavers.
+      // Where the footer columns leave no open space for it, the sweep is left
+      // out rather than drawn across the copy.
       if (returning) {
-        // The footer sweep dips smoothly under any copy it would cross, so no
-        // line of text is cut. Leaves then follow the adjusted curve.
-        const spread = Math.round(80 / (mobile ? 2.5 : 3));
-        for (let pass = 0; pass < 4; pass++) {
-          // The tip is left to the stop-short rule below rather than dipped.
-          const needed = tubePoints.map((p, i) => {
-            if (i < root || i > root + 0.6 * (segments - root)) return 0;
-            const x = p.x + storyRect.left, y = p.y + storyRect.top;
-            return protectedRects.reduce((most, r) =>
-              (x > r.left && x < r.right && y > r.top - 4 && y < r.bottom ? Math.max(most, r.bottom - y + 4) : most), 0);
-          });
-          if (!needed.some(Boolean)) break;
-          const drop = needed.map((_, i) => {
-            let most = 0;
-            for (let j = Math.max(root, i - spread); j <= Math.min(needed.length - 1, i + spread); j++) {
-              if (needed[j]) most = Math.max(most, needed[j] * Math.cos(Math.abs(i - j) / spread * Math.PI / 2) ** 2);
-            }
-            return most;
-          });
-          tubePoints.forEach((p, i) => { p.y += drop[i]; });
-        }
+        const sweep = footerSweep(tubePoints.at(-1));
+        if (!sweep) { path.remove(); return; }
+        tubePoints.splice(0, tubePoints.length, ...sweep);
+        segments = tubePoints.length - 1;
         path.setAttribute('d', `M${tubePoints.map(pair).join('L')}`);
         total = path.getTotalLength();
       }
-      // Like the sketch, a branch may pass behind text, but its tip stops short
-      // of any text in its last stretch and curls there instead.
-      const blocked = tubePoints.findIndex((p, i) => i > root + 0.6 * (segments - root) && protectedRects.some(r => {
+      // A branch's tip stops short of any text in its last stretch and curls
+      // there instead.
+      const blocked = tubePoints.findIndex((p, i) => i > 0.6 * segments && protectedRects.some(r => {
         const x = p.x + storyRect.left, y = p.y + storyRect.top;
         return x > r.left && x < r.right && y > r.top && y < r.bottom;
       }));
-      if (blocked > 0) tubePoints.length = Math.max(root + 8, blocked - 2);
+      if (blocked > 0) tubePoints.length = Math.max(8, blocked - 2);
       const reachAt = (tubePoints.length - 1) / segments;
-      if (total * (reachAt - root / segments) > 60) {
+      if (total * reachAt > 60) {
         const tipEnd = tubePoints.at(-1), tipBefore = tubePoints.at(-3);
         const size = Math.hypot(tipEnd.x - tipBefore.x, tipEnd.y - tipBefore.y) || 1;
         const along = { x: (tipEnd.x - tipBefore.x) / size, y: (tipEnd.y - tipBefore.y) / size };
@@ -637,11 +689,9 @@
           tubePoints.push({ x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r });
         }
       }
-      const visible = tubePoints.slice(root);
       const baseWidth = Math.min(stemWidths[nearest] * 0.72, 0.9 + total * 0.02);
-      const tubeWidths = visible.map((p, i) => 0.45 + (baseWidth - 0.45) * Math.pow(1 - i / Math.max(1, visible.length - 1), 0.85));
-      const tube = makeTube(branchLayer, visible, tubeWidths);
-      tube.from = root / segments;
+      const tubeWidths = tubePoints.map((p, i) => 0.45 + (baseWidth - 0.45) * Math.pow(1 - i / Math.max(1, tubePoints.length - 1), 0.85));
+      const tube = makeTube(branchLayer, tubePoints, tubeWidths);
       tube.to = reachAt;
       const count = returning ? 9 : clamp(Math.round(total / (mobile ? 24 : 105)), mobile ? 3 : 4, mobile ? 4 : 7);
       const rhythms = {
@@ -649,7 +699,8 @@
         5: [0.16, 0.34, 0.52, 0.70, 0.88], 6: [0.14, 0.26, 0.43, 0.57, 0.73, 0.89],
         7: [0.13, 0.23, 0.37, 0.49, 0.64, 0.77, 0.90],
       };
-      const positions = returning ? Array.from({ length: count }, (_, i) => 0.70 + i * 0.24 / (count - 1)) : rhythms[count];
+      const leafFrom = 0.1;
+      const positions = returning ? Array.from({ length: count }, (_, i) => leafFrom + (0.94 - leafFrom) * i / (count - 1)) : rhythms[count];
       positions.forEach((at, leafIndex) => {
         if (at > reachAt - 0.03) return;
         const angle = [38, -56, 45, -40, 58, -47, 34][leafIndex % 7];
@@ -664,7 +715,7 @@
         element('use', { href: `#vine-leaf-${shape}` }, blade);
         let accepted = false;
         for (const shift of [0, -0.035, 0.035, -0.07, 0.07]) {
-          const candidate = clamp(at + shift, returning ? 0.70 : 0.10, Math.min(returning ? 0.95 : 0.93, reachAt - 0.03));
+          const candidate = clamp(at + shift, leafFrom, Math.min(returning ? 0.95 : 0.93, reachAt - 0.03));
           const distance = total * candidate;
           const node = path.getPointAtLength(distance);
           const before = path.getPointAtLength(Math.max(0, distance - 1));
@@ -828,7 +879,7 @@
     });
     branches.forEach(branch => {
       const local = staticMode() ? 1 : clamp((progress - branch.start) / Math.max(0.001, branch.end - branch.start));
-      renderTube(branch.tube, clamp((local - branch.tube.from) / Math.max(0.001, branch.tube.to - branch.tube.from)));
+      renderTube(branch.tube, clamp(local / Math.max(0.001, branch.tube.to)));
       branch.leaves.forEach(leaf => {
         const start = leaf.at + leaf.clearance;
         const reveal = staticMode() ? 1 : clamp((local - start) / Math.min(0.08, Math.max(0.02, 1 - start)));
