@@ -332,8 +332,12 @@
   let heroLoopResetTimer = 0;
   let heroLoopResetting = false;
 
+  // Phones show the still poster only (client feedback, Nov 2026).
   const shouldLoadVideo = () =>
-    Boolean(video) && !reducedMotion.matches && !connection?.saveData;
+    Boolean(video) &&
+    !mobileVideo.matches &&
+    !reducedMotion.matches &&
+    !connection?.saveData;
 
   const setHeroPlaybackRate = () => {
     if (!video) return;

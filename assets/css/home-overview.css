@@ -127,3 +127,49 @@
 .page--home.data-saver .brand-lane__viewport { overflow-x:auto; }
 .page--home.data-saver .brand-lane__track { animation:none; transform:none; }
 .page--home.data-saver .brand-lane__group[aria-hidden] { display:none; }
+
+/* Client feedback, 13 Nov 2026 */
+/* Quieter advantage words; Services title shares their serif. */
+body.page--home .advantage-editorial .advantage-editorial__item h3 { max-width:none; font-size:clamp(30px,2.6vw,40px); white-space:nowrap; }
+body.page--home .home-services__heading .section-heading { font-family:var(--home-serif-accent); font-style:italic; font-weight:400; font-size:clamp(40px,3.6vw,54px); letter-spacing:0; }
+/* Partner logos sit on the canvas without boxes. */
+.page--home .brand-lane__item .partner-mark--jd { max-width:104px; max-height:38px; }
+.page--home .brand-lane__item .partner-mark--moutai { max-width:58px; max-height:56px; }
+.page--home .brand-lane__item .partner-mark--trip-com { max-width:96px; max-height:46px; }
+/* Founders: cut-out portraits standing on offset sage blocks. */
+.home-founder__portrait { position:relative; overflow:visible; padding:18px 18px 0 0; }
+.home-founder__portrait::before { position:absolute; inset:34% 0 0 0; content:""; background:var(--home-mint); opacity:.85; }
+.home-founder__portrait::after { position:absolute; top:0; right:0; width:28%; height:22%; content:""; background:var(--home-mint); opacity:.45; }
+.home-founder__portrait img { position:relative; z-index:1; display:block; aspect-ratio:auto; height:auto; object-fit:contain; object-position:center bottom; }
+.home-founder h3 span span[lang] { display:inline; margin:0 .4em 0 0; font-size:inherit; font-weight:600; }
+.home-founder .eyebrow span[lang] { margin-left:.4em; letter-spacing:.04em; }
+/* Hand-drawn vine: thinner stem, no halo, outlined leaves like the footer sprig. */
+.home-scroll-vine__stroke--wash { opacity:0; }
+.home-scroll-vine__stroke--main { opacity:.9; stroke-width:6; }
+.home-scroll-vine__branch { stroke-width:3; }
+.home-scroll-vine__leaf { fill:var(--home-canvas,#f7f8f4); stroke:#0f4a36; stroke-width:1.5; stroke-linejoin:round; }
+.home-scroll-vine__leaf--light { fill:#0f4a36; stroke:#c7e0d1; }
+.home-scroll-vine__leaf-cut { stroke:#0f4a36; stroke-width:1.1; }
+.home-scroll-vine__leaf--light .home-scroll-vine__leaf-cut { stroke:#c7e0d1; }
+@media (max-width:620px) {
+  /* Shorter still cover, a single row of advantages, side-by-side founders. */
+  .page--home .hero { height:74svh; min-height:500px; }
+  body.page--home .advantage-editorial { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding-right:22px; }
+  body.page--home .advantage-editorial .advantage-editorial__item { grid-column:auto; min-height:0; padding:18px 8px 20px; border-top:0; text-align:center; }
+  body.page--home .advantage-editorial .advantage-editorial__item + .advantage-editorial__item { border-top:0; border-left:1px solid var(--home-line); }
+  body.page--home .advantage-editorial .advantage-editorial__item h3 { font-size:18px; line-height:1.1; white-space:normal; }
+  body.page--home .advantage-editorial .advantage-editorial__item p { display:none; }
+  body.page--home .advantage-editorial .advantage-editorial__number { font-size:10px; }
+  body.page--home .home-services__heading .section-heading { font-size:38px; }
+  .home-founders__grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .home-founder { grid-template-columns:1fr; gap:12px; }
+  .home-founder__portrait { padding:10px 10px 0 0; }
+  .home-founder .eyebrow span[lang] { display:none; }
+  .home-founder__portrait img { min-height:0; max-height:none; }
+  .home-founder h3 { font-size:22px; margin-bottom:6px; }
+  .home-founder h3 span { font-size:12px; margin-top:4px; }
+  .home-founder p { font-size:12.5px; line-height:1.5; }
+  .home-founder .eyebrow { font-size:10px; }
+  .home-scroll-vine__stroke--main { stroke-width:3.5; }
+  .home-scroll-vine__branch { stroke-width:2; }
+}

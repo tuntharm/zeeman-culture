@@ -174,8 +174,9 @@ test("homepage presents the approved section order, both founder destinations an
   assert.match(normalize(founders.text()), /Yang.*Jinghang Yang/s);
   assert.equal(founders.find('img[src*="mengzhu-cao"]').length, 1);
   assert.equal(founders.find('img[src*="jinghang-yang"]').length, 1);
-  assert.equal(founders.find('a[href="/about/"]').length, 1);
+  assert.equal(founders.find('a[href="/about/#founders"]').length, 1);
   const about = load(await readFile("about/index.html", "utf8"));
+  assert.equal(about("#founders #mengzhu-cao, #founders #jinghang-yang").length, 2, "About founders section holds both profiles");
   for (const [id, name] of [["mengzhu-cao", "Mengzhu Cao"], ["jinghang-yang", "Jinghang Yang"]]) {
     assert.equal(founders.find(`a[href="/about/#${id}"]`).length, 1, `${name} has a direct founder link`);
     assert.equal(about(`#${id}`).length, 1, `${name} has one destination on About`);
