@@ -20,11 +20,12 @@
     <link rel="preload" href="/assets/fonts/manrope-latin-variable-v1.woff2" as="font" type="font/woff2" crossorigin="">
     <link rel="preload" href="/assets/fonts/bluu-next-bold-latin-v1.woff2" as="font" type="font/woff2" crossorigin="">
     <link rel="stylesheet" href="/assets/css/site.css?v=botanical-journal-v1">
-    <script src="/assets/js/site.js?v=feedback-1113" defer=""></script>
-    <link rel="stylesheet" href="/assets/css/home-overview.css?v=3"><script src="/assets/js/home-cases.js?v=1" defer=""></script>
+    <script src="/assets/js/site.js?v=overview-1" defer=""></script>
+    <link rel="stylesheet" href="/assets/css/home-overview.css?v=4"><script src="/assets/js/home-cases.js?v=1" defer=""></script>
     <link rel="stylesheet" href="/assets/css/home-journal.css?v=1">
     <script src="/assets/js/home-journal.js?v=1" defer=""></script>
-    <script src="/assets/js/home-vine.js?v=tube-v6" defer=""></script>
+    <script src="/assets/js/home-vine.js?v=tube-v7" defer=""></script>
+    <script src="/assets/js/home-overview.js?v=1" defer=""></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -135,27 +136,40 @@
           </h2>
         </div>
         <div class="section-shell">
-          <div class="advantage-editorial" aria-label="Our three advantages">
-            <article class="advantage-editorial__item reveal">
-              <span class="advantage-editorial__number" aria-hidden="true">01</span>
-              <h3>Creator Network</h3>
-              <p>
-                Relationships with creators and communities across both markets.
-              </p>
+          <div class="proof-grid" aria-label="Our three advantages">
+            <article class="proof-card proof-card--photo reveal" data-vine-avoid="">
+              <img class="proof-card__image" src="/assets/images/influencer/creator-gathering.webp" width="1200" height="676" loading="lazy" alt="Creators gathered with the Zeeman Culture team at V Club Bond Street">
+              <div class="proof-card__body">
+                <div class="proof-card__intro">
+                  <span class="proof-card__number" aria-hidden="true">01</span>
+                  <h3>Creator Network</h3>
+                  <p>Relationships with creators and communities across both markets.</p>
+                </div>
+                <p class="proof-card__stat"><strong data-count-up="">5M+</strong> <span>combined followers at our London creator gathering</span></p>
+                <a class="proof-card__link" href="/services/?service=influencer-marketing#creator-network">See the network <span aria-hidden="true">→</span></a>
+              </div>
             </article>
-            <article class="advantage-editorial__item reveal">
-              <span class="advantage-editorial__number" aria-hidden="true">02</span>
-              <h3>Virality</h3>
-              <p>
-                Ideas designed to travel naturally across platforms and cultures.
-              </p>
+            <article class="proof-card proof-card--forest reveal" data-vine-avoid="">
+              <div class="proof-card__body">
+                <div class="proof-card__intro">
+                  <span class="proof-card__number" aria-hidden="true">02</span>
+                  <h3>Virality</h3>
+                  <p>Ideas designed to travel naturally across platforms and cultures.</p>
+                </div>
+                <p class="proof-card__stat"><strong data-count-up="">1,069</strong> <span>shares of Lotus Realm’s founder-led room tours</span></p>
+                <a class="proof-card__link" href="/services/?service=social-media-management#lotus-realm">See Lotus Realm <span aria-hidden="true">→</span></a>
+              </div>
             </article>
-            <article class="advantage-editorial__item reveal">
-              <span class="advantage-editorial__number" aria-hidden="true">03</span>
-              <h3>Authenticity</h3>
-              <p>
-                Local insight that makes brands feel understood, not simply translated.
-              </p>
+            <article class="proof-card proof-card--mint reveal" data-vine-avoid="">
+              <div class="proof-card__body">
+                <div class="proof-card__intro">
+                  <span class="proof-card__number" aria-hidden="true">03</span>
+                  <h3>Authenticity</h3>
+                  <p>Local insight that makes brands feel understood, not simply translated.</p>
+                </div>
+                <p class="proof-card__stat"><strong data-count-up="">+50</strong> <span>new Chinese customers a week for Khao So-i</span></p>
+                <a class="proof-card__link" href="/services/?service=influencer-marketing#khao-soi">See Khao So-i <span aria-hidden="true">→</span></a>
+              </div>
             </article>
           </div>
         </div>
@@ -185,35 +199,59 @@
       </section>
 
       <section class="section home-services home-services--overview reveal vine-static-section" id="services" aria-labelledby="services-title">
-        <div class="section-shell">
-          <div class="home-services__heading">
+        <div class="section-shell services-panel">
+          <div class="services-panel__header">
             <h2 class="section-heading" id="services-title">Our services.</h2>
             <p>Local insight. Both directions.</p>
           </div>
           <div class="market-directions" aria-label="Markets we connect">
-            <article class="market-direction">
+            <a class="market-direction market-direction--china" href="/services/?service=influencer-marketing#rednote" data-vine-avoid="">
               <h3><span class="market-direction__origin">UK brands reaching</span> <strong class="market-direction__destination">Chinese audiences</strong></h3>
-            </article>
-            <article class="market-direction">
+              <span class="market-direction__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="market-direction market-direction--europe" href="/services/?service=influencer-marketing#instagram" data-vine-avoid="">
               <h3><span class="market-direction__origin">Chinese brands reaching</span> <strong class="market-direction__destination">Europe</strong></h3>
-            </article>
+              <span class="market-direction__arrow" aria-hidden="true">→</span>
+            </a>
           </div>
-          <div class="home-service-grid">
-            <a class="home-service-card" href="/services/?service=influencer-marketing">
-              <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="26"></circle><circle cx="32" cy="25" r="9"></circle><path d="M15 50c1-10 8-15 17-15s16 5 17 15"></path></svg>
-              <h3>Influencer Marketing</h3>
-              <p>Creators. Communities. Connection.</p>
-            </a>
-            <a class="home-service-card" href="/services/?service=social-media-management">
-              <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false"><path d="M12 19h17L48 9v40L29 39H12zM12 24H7v10h5M21 39l4 16h9l-5-16M48 23c10 0 10 12 0 12M56 16l4-4M57 42l4 4"></path></svg>
-              <h3>Social Media Management</h3>
-              <p>Local content. A consistent voice.</p>
-            </a>
-            <a class="home-service-card" href="/services/?service=offline-activations">
-              <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true" focusable="false"><path d="M10 29l6-15h32l6 15M10 29c0 8 11 8 11 0 0 8 11 8 11 0 0 8 11 8 11 0 0 8 11 8 11 0M14 36v19h36V36M26 55V42h12v13M32 4v4M8 10l4 4M56 10l-4 4"></path></svg>
-              <h3>Offline Activations</h3>
-              <p>Pop-ups. Events. Shared experiences.</p>
-            </a>
+          <div class="services-visual" aria-hidden="true" data-vine-avoid="">
+            <div class="services-visual__item services-visual__item--phones is-active" data-service-visual="influencer-marketing">
+              <img src="/assets/images/influencer/khao-soi-creator.webp" width="354" height="767" loading="lazy" alt="">
+              <img src="/assets/images/influencer/azuki-room-post.webp" width="362" height="787" loading="lazy" alt="">
+            </div>
+            <div class="services-visual__item services-visual__item--phones services-visual__item--ivory" data-service-visual="social-media-management">
+              <img src="/assets/images/social/dram5-founder-post.webp" width="289" height="498" loading="lazy" alt="">
+              <img src="/assets/images/social/lotus-room-tour.webp" width="362" height="680" loading="lazy" alt="">
+            </div>
+            <div class="services-visual__item services-visual__item--photo" data-service-visual="offline-activations">
+              <img src="/assets/images/offline/joybuy-popup.webp" width="1401" height="653" loading="lazy" alt="">
+            </div>
+          </div>
+          <div class="services-list" data-services-list="">
+            <details class="service-item" name="home-services" data-service="influencer-marketing" open="">
+              <summary><span class="service-item__number" aria-hidden="true">01</span><h3>Influencer Marketing</h3><span class="service-item__toggle" aria-hidden="true" data-vine-avoid=""></span></summary>
+              <div class="service-item__panel">
+                <p class="service-item__lead">Creators. Communities. Connection.</p>
+                <p>We find the right creators and shape culturally fluent ideas with them, from Instagram stories in Europe to Rednote recommendations for Chinese audiences.</p>
+                <a class="home-service-card" href="/services/?service=influencer-marketing">Explore influencer marketing <span aria-hidden="true">→</span></a>
+              </div>
+            </details>
+            <details class="service-item" name="home-services" data-service="social-media-management">
+              <summary><span class="service-item__number" aria-hidden="true">02</span><h3>Social Media Management</h3><span class="service-item__toggle" aria-hidden="true" data-vine-avoid=""></span></summary>
+              <div class="service-item__panel">
+                <p class="service-item__lead">Local content. A consistent voice.</p>
+                <p>We build brand-owned social channels from positioning and production through to community, search visibility and performance review.</p>
+                <a class="home-service-card" href="/services/?service=social-media-management">Explore social media <span aria-hidden="true">→</span></a>
+              </div>
+            </details>
+            <details class="service-item" name="home-services" data-service="offline-activations">
+              <summary><span class="service-item__number" aria-hidden="true">03</span><h3>Offline Activations</h3><span class="service-item__toggle" aria-hidden="true" data-vine-avoid=""></span></summary>
+              <div class="service-item__panel">
+                <p class="service-item__lead">Pop-ups. Events. Shared experiences.</p>
+                <p>Culturally fluent experiences designed to mean something in the room, then travel naturally through creators, content and conversation.</p>
+                <a class="home-service-card" href="/services/?service=offline-activations">Explore offline activations <span aria-hidden="true">→</span></a>
+              </div>
+            </details>
           </div>
         </div>
       </section>

@@ -153,7 +153,7 @@
   const staggerRevealItems = () => {
     document
       .querySelectorAll(
-        ".case-grid, .founder-grid, .process-grid, .related-services, .advantage-editorial, .home-service-list, .selected-case-grid",
+        ".case-grid, .founder-grid, .process-grid, .related-services, .advantage-editorial, .proof-grid, .home-service-list, .selected-case-grid",
       )
       .forEach((group) => {
         [...group.children]

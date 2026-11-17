@@ -528,6 +528,8 @@
       });
     }
     story.querySelectorAll('button, a.button').forEach(node => protect(node.getBoundingClientRect()));
+    // Cards sit above the vine; leaves are placed only where they stay visible.
+    story.querySelectorAll('[data-vine-avoid]').forEach(node => protect(node.getBoundingClientRect()));
     const intersects = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
     const placedLeafRects = [];
     const overlaps = box => box.left < storyRect.left + 4 || box.right > storyRect.right - 4 ||
